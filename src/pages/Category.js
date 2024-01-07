@@ -7,43 +7,18 @@ function Category() {
     {
       index: 1,
       name: 'North Indian',
-      items: [1, 2, 8, 5, 6],
+      len: 12,
     },
     {
       index: 2,
       name: 'Punjabi',
-      items: [],
+      len: 1,
     },
     {
       index: 3,
       name: 'Russian',
-      items: [0],
-    },
-    {
-      index: 3,
-      name: 'Russian',
-      items: [0],
-    },
-    {
-      index: 3,
-      name: 'Russian',
-      items: [0],
-    },
-    {
-      index: 3,
-      name: 'Russian',
-      items: [0],
-    },
-    {
-      index: 3,
-      name: 'Russian',
-      items: [0],
-    },
-    {
-      index: 3,
-      name: 'Russian',
-      items: [0],
-    },
+      len: 69,
+    }
   ]
   return (
     <div className='relative w-[100vw] min-h-[100vh] py-4'>

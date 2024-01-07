@@ -28,7 +28,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/category" element={<Category />} />
-        <Route path="/admin/items" element={<Items />} />
+        <Route path="/admin/items/:id" element={<Items />} />
         <Route path="/counter/:id" element={<CounterRoute />} />
         <Route path="/:id" element={<OrderPage />} />
         <Route path="/404" element={<NotFoundPage />} />
