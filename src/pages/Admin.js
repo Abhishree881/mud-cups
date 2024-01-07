@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function AdminPage() {
   const navigate = useNavigate();
   const navigateToEditMenu = () => {
-    navigate("./edit");
+    navigate("./category");
   };
   return (
     <div className="w-[100%] h-[100%] flex flex-col">

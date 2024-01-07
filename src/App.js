@@ -1,11 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams, } from "react-router-dom";
 import Home from "./pages/Home";
 import AdminPage from "./pages/Admin";
 import OrderPage from "./pages/OrderPage";
@@ -34,7 +28,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/category" element={<Category />} />
-        <Route path="/admin/item" element={<Items />} />
+        <Route path="/admin/items" element={<Items />} />
         <Route path="/counter/:id" element={<CounterRoute />} />
         <Route path="/:id" element={<OrderPage />} />
         <Route path="/404" element={<NotFoundPage />} />
