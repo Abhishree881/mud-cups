@@ -1,9 +1,22 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { FaPlus } from "react-icons/fa6";
+import ItemCard from '../components/itemCard';
 
 function Items() {
   const { id } = useParams();
+  const data = [
+    {
+      index: 1,
+      name: 'Chole Bhature',
+      imgUrl: '',
+      desc: '',
+      counter: 1,
+      isVeg: true,
+      waitTime: 20,
+      price: 230.00,
+    }
+  ]
   return (
     <div className='relative w-[100vw] h-[100vh] pt-[36px] bg-blue-600 flex'>
       <div className='flex flex-col flex-[6]'>
