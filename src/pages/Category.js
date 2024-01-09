@@ -21,18 +21,18 @@ function Category() {
     }
   ]
   return (
-    <div className='relative w-[100vw] min-h-[100vh] py-4'>
-      <div className='font-bold text-3xl px-1'>Categories</div>
+    <div className='relative w-[100vw] min-h-[100vh] py-4' style={{ background: "linear-gradient(#fce0b9, #f5ce8a)" }}>
+      <div className='font-bold text-3xl pl-4 pb-2'>All Categories</div>
       <div className='flex flex-col gap-[10px] px-4 py-2 h-auto mb-6'>
         {data.map((index) => {
           return <CategoryCard data={index} key={index.index} />
         })}
       </div>
-      <div className='fixed z-[100] bottom-[20px] right-[20px]'>
+      {/* <div className='fixed z-[100] bottom-[20px] right-[20px]'>
         <div className='w-[48px] h-[48px] bg-blue-500 rounded-[50%] flex items-center justify-center'>
           <FaPlus fontSize={"25px"} color='white' />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
