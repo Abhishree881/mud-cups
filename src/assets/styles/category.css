@@ -1,0 +1,27 @@
+.category {
+    font-family: 'Quicksand', sans-serif;
+    background-color: whitesmoke;
+}
+
+.category-header {
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    color: #818181;
+    margin-bottom: 3%;
+    font-family: 'Quicksand', sans-serif;
+
+}
+
+.category-sub-header {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+}
+
+.category-card {
+    box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.category-card-logo {
+    aspect-ratio: 1/1;
+}
