@@ -96,7 +96,7 @@ const SampleData = [
     },
     {
         index: 2,
-        name: 'starters',
+        name: 'Starters',
         items: [
             {
                 index: 1,

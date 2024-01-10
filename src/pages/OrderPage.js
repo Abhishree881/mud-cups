@@ -8,12 +8,15 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import SampleData from '../components/sampleData';
+import rData from '../components/recommendedData';
 import ItemCardSmall from '../components/itemCardSmall';
+import { MdOutlineRestaurantMenu } from "react-icons/md";
 
 function OrderPage() {
     let { id } = useParams();
     const [isVisible, setIsVisible] = useState(true);
     const [isActive, setIsActive] = useState(true)
+    const [activeCategoryIndex, setActiveCategoryIndex] = useState(1)
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsVisible(false);
@@ -21,9 +24,10 @@ function OrderPage() {
 
         return () => clearTimeout(timer);
     }, []);
+
     const fData = []
     return (
-        <div className='w-[100vw] h-[100vh] flex justify-center'>
+        <div className='w-[100vw] h-fit overflow-scroll flex justify-center '>
             <div className='w-full max-w-[450px] h-full flex flex-col relative'>
                 {/* Top navbar starts here */}
                 <div className='flex h-[50px] items-center border justify-between px-[12px]'>
@@ -60,7 +64,7 @@ function OrderPage() {
                 </div>
                 {/* recommended/favourites section */}
                 <div className='overflow-scroll h-[170px] my-[10px] px-[12px] flex gap-[12px]'>
-                    {isActive && SampleData[0].items.map((index) => {
+                    {isActive && rData.map((index) => {
                         return <ItemCardSmall data={index} key={index.index} />
                     })}
                     {!isActive && (fData.length > 0 ? fData.map((index) => { }) : <div className='w-full h-full flex items-center justify-center italic'>No favourites added yet</div>)}
@@ -70,10 +74,21 @@ function OrderPage() {
                     <div className='h-[1px] w-full absolute top-[50%] horizontal-line'></div>
                     <span className='text-[#a2630b] text-[12px] font-[700] bg-white z-[1] px-2 tracking-wider'>EXPLORE</span>
                 </div>
+                <div className='w-full h-[100vh]'>
 
+                </div>
                 {/* bottom navbar */}
-                <div className='absolute h-[50px] w-full bottom-0 border'>
 
+            </div>
+            <div className='fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px]'>
+                <div className='flex-[4] w-full h-full flex overflow-scroll pl-[6px]'>
+                    {SampleData.map((index) => {
+                        return <div className='w-fit flex items-center text-[14px] justify-center h-full' onClick={() => setActiveCategoryIndex(index.index)}><span className={`min-w-[100px] text-center ${activeCategoryIndex === index.index && 'bg-[#fcecd5] text-[#a2630b] font-[600] px-[8px] pb-[2px] rounded-[6px]'}`}>{index.name}</span></div>
+                    })}
+                </div>
+                <div className='flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px]'>
+                    <MdOutlineRestaurantMenu color='white' />
+                    <div className='text-white font-[500]'>Menu</div>
                 </div>
             </div>
         </div>
