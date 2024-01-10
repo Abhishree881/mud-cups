@@ -7,6 +7,7 @@ import { TbLogout } from "react-icons/tb";
 import { IoSearch } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
+import SampleData from '../components/sampleData';
 import ItemCardSmall from '../components/itemCardSmall';
 
 function OrderPage() {
@@ -20,44 +21,6 @@ function OrderPage() {
 
         return () => clearTimeout(timer);
     }, []);
-    const rData = [
-        {
-            index: 1,
-            name: 'Ragi Dosa',
-            price: 220.00,
-            imgUrl: 'https://img-mm.manoramaonline.com/content/dam/mm/mo/pachakam/readers-recipe/images/2023/10/27/Square--ragi-dosa.jpg',
-            category: 'South Indian',
-        },
-        {
-            index: 2,
-            name: 'Veg Biryani',
-            price: 150.75,
-            imgUrl: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png',
-            category: 'Rice',
-        },
-        {
-            index: 3,
-            name: 'Paneer Tikka Masala',
-            price: 180.00,
-            imgUrl: 'https://silkroadrecipes.com/wp-content/uploads/2021/12/Paneer-Butter-Masala-square.jpg',
-            category: 'North Indian',
-        },
-        {
-            index: 4,
-            name: 'Burger',
-            price: 190.00,
-            imgUrl: 'https://img.freepik.com/premium-photo/hamburger-with-toothpick-it-small-toothpick-top_442337-492.jpg',
-            category: 'Chinese',
-        },
-
-        {
-            index: 5,
-            name: 'Veg Momos',
-            price: 250.50,
-            imgUrl: 'https://media.istockphoto.com/id/1292635321/photo/veg-steam-momo-nepalese-traditional-dish-momo-stuffed-with-vegetables-and-then-cooked-and.jpg?s=612x612&w=0&k=20&c=NyxQvDnBq7Ki09Zi21JEMxpuZ_uVr45ZBSavqXJ2T1s=',
-            category: 'Chinese',
-        },
-    ]
     const fData = []
     return (
         <div className='w-[100vw] h-[100vh] flex justify-center'>
@@ -97,7 +60,7 @@ function OrderPage() {
                 </div>
                 {/* recommended/favourites section */}
                 <div className='overflow-scroll h-[170px] my-[10px] px-[12px] flex gap-[12px]'>
-                    {isActive && rData.map((index) => {
+                    {isActive && SampleData[0].items.map((index) => {
                         return <ItemCardSmall data={index} key={index.index} />
                     })}
                     {!isActive && (fData.length > 0 ? fData.map((index) => { }) : <div className='w-full h-full flex items-center justify-center italic'>No favourites added yet</div>)}
