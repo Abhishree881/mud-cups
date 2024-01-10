@@ -43,11 +43,11 @@ function Category() {
           return <CategoryCard data={index} key={index.index} />;
         })}
       </div>
-      {/* <div className='fixed z-[100] bottom-[20px] right-[20px]'>
-        <div className='w-[48px] h-[48px] bg-blue-500 rounded-[50%] flex items-center justify-center'>
-          <FaPlus fontSize={"25px"} color='white' />
+      <div className="fixed z-[100] bottom-[20px] right-[20px]">
+        <div className="add-item-button w-[48px] h-[48px] bg-blue-700 rounded-[15px] flex items-center justify-center">
+          <FaPlus fontSize={"25px"} color="white" />
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
