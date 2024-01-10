@@ -61,7 +61,7 @@ function OrderPage() {
     const fData = []
     return (
         <div className='w-[100vw] h-[100vh] flex justify-center'>
-            <div className='w-full max-w-[450px] h-full flex flex-col'>
+            <div className='w-full max-w-[450px] h-full flex flex-col relative'>
                 {/* Top navbar starts here */}
                 <div className='flex h-[50px] items-center border justify-between px-[12px]'>
                     <div className='flex items-center gap-2'>
@@ -81,8 +81,13 @@ function OrderPage() {
                     <div className='px-[6px] search-icon relative h-[80%] flex items-center'><IoSearch fontSize={"18px"} color={"#4b3619"} /></div>
                     <div className='italic text-[14px] pl-[6px]'>Search</div>
                 </div>
+                {/* for you heading */}
+                <div className='h-fit w-full my-[6px] flex items-center justify-center relative'>
+                    <div className='h-[1px] w-full absolute top-[50%] horizontal-line'></div>
+                    <span className='text-[#a2630b] text-[12px] font-[700] bg-white z-[1] px-2 tracking-wider'>FOR YOU</span>
+                </div>
                 {/* option to choose recommended or favourites */}
-                <div className='flex w-full h-[28px] my-[12px] justify-center'>
+                <div className='flex w-full h-[28px] my-[6px] justify-center'>
                     <div className='border w-full max-w-[224px] h-full rounded-[10px] flex text-[12px] overflow-hidden'>
                         <div className={`w-full h-full flex items-center justify-center border gap-1 ${isActive && 'activeChannelLeft'}`} onClick={() => setIsActive(!isActive)} >Recommended</div>
                         <div className={`w-full h-full flex items-center justify-center border gap-1 ${!isActive && 'activeChannelRight'}`} onClick={() => setIsActive(!isActive)} >
@@ -91,11 +96,21 @@ function OrderPage() {
                     </div>
                 </div>
                 {/* recommended/favourites section */}
-                <div className='overflow-scroll h-[188px] my-[10px] px-[12px] flex gap-[12px]'>
+                <div className='overflow-scroll h-[170px] my-[10px] px-[12px] flex gap-[12px]'>
                     {isActive && rData.map((index) => {
                         return <ItemCardSmall data={index} key={index.index} />
                     })}
                     {!isActive && (fData.length > 0 ? fData.map((index) => { }) : <div className='w-full h-full flex items-center justify-center italic'>No favourites added yet</div>)}
+                </div>
+                {/* Explore heading */}
+                <div className='h-fit w-full my-[6px] flex items-center justify-center relative'>
+                    <div className='h-[1px] w-full absolute top-[50%] horizontal-line'></div>
+                    <span className='text-[#a2630b] text-[12px] font-[700] bg-white z-[1] px-2 tracking-wider'>EXPLORE</span>
+                </div>
+
+                {/* bottom navbar */}
+                <div className='absolute h-[50px] w-full bottom-0 border'>
+
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 import React from 'react'
 import CategoryCard from '../components/categoryCard'
-import { FaPlus } from "react-icons/fa6";
 
 function Category() {
   const data = [
