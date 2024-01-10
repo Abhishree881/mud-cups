@@ -81,9 +81,9 @@ function OrderPage() {
 
             </div>
             <div className='fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px]'>
-                <div className='flex-[4] w-full h-full flex overflow-scroll pl-[6px]'>
+                <div className='flex-[4] w-full h-full flex overflow-scroll pl-[6px] gap-[12px]'>
                     {SampleData.map((index) => {
-                        return <div className='w-fit flex items-center text-[14px] justify-center h-full' onClick={() => setActiveCategoryIndex(index.index)}><span className={`min-w-[100px] text-center ${activeCategoryIndex === index.index && 'bg-[#fcecd5] text-[#a2630b] font-[600] px-[8px] pb-[2px] rounded-[6px]'}`}>{index.name}</span></div>
+                        return <div className='w-fit flex items-center text-[14px] justify-center h-full' onClick={() => setActiveCategoryIndex(index.index)}><span className={`w-fit whitespace-nowrap px-[8px] text-center ${activeCategoryIndex === index.index && 'bg-[#fcecd5] text-[#a2630b] font-[600] pb-[2px] rounded-[6px]'}`}>{index.name}</span></div>
                     })}
                 </div>
                 <div className='flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px]'>

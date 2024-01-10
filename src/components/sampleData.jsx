@@ -127,6 +127,11 @@ const SampleData = [
         index: 4,
         name: 'Desserts',
         items: [],
+    },
+    {
+        index: 5,
+        name: 'Salads',
+        items: [],
     }
 ]
 
