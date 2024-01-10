@@ -9,21 +9,29 @@ function Category() {
       index: 1,
       name: "North Indian",
       len: 12,
+      imgUrl:
+        "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png",
     },
     {
       index: 2,
       name: "Punjabi",
       len: 1,
+      imgUrl:
+        "https://silkroadrecipes.com/wp-content/uploads/2021/12/Paneer-Butter-Masala-square.jpg",
     },
     {
       index: 3,
-      name: "Russian",
-      len: 69,
+      name: "American",
+      len: 25,
+      imgUrl:
+        "https://img.freepik.com/premium-photo/hamburger-with-toothpick-it-small-toothpick-top_442337-492.jpg",
     },
     {
       index: 4,
       name: "South Indian",
       len: 30,
+      imgUrl:
+        "https://img-mm.manoramaonline.com/content/dam/mm/mo/pachakam/readers-recipe/images/2023/10/27/Square--ragi-dosa.jpg",
     },
   ];
   return (
