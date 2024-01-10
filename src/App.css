@@ -22,3 +22,6 @@
     background: #fcecd5;
     font-weight: 500;
 }
+.horizontal-line{
+    background: linear-gradient(to right,white,#a2630b,white );
+}
