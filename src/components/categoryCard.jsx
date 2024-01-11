@@ -20,7 +20,7 @@ function CategoryCard(props) {
           </div>
         </div>
         <div className="flex-[1] flex justify-center">
-          <FaChevronRight className="text-[#8283ad] " />
+          <FaChevronRight className="text-[#a2630b] " />
         </div>
       </div>
     </Link>

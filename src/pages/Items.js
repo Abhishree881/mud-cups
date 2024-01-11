@@ -6,7 +6,7 @@ function Items() {
   const { id } = useParams();
   return (
     <div className="">
-      <div className="relative w-[100vw] h-[100vh] pt-[36px] bg-[#837762] flex">
+      <div className="relative w-[100vw] h-[100vh] pt-[36px] bg-[#A2630B] flex">
         <div className=" flex flex-col flex-[6]">
           <div
             className="text-white font-semibold text-[32px] pl-[20px]"

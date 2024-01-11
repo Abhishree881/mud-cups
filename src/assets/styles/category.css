@@ -8,11 +8,20 @@
     width: 100%;
     text-align: center;
     font-weight: 700;
-    color: #818181;
+    /* color: #818181; */
     font-family: 'Quicksand', sans-serif;
-    border-radius: 0 0 15px 15px;
+    /* border-radius: 0 0 15px 15px; */
     box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1), 0 0 5px rgba(31, 25, 29, 0.5);
     margin-bottom: 3%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-header img {
+    aspect-ratio: 1/1;
+    width: 45px;
+    border-radius: 50%;
 }
 
 .category-sub-header {

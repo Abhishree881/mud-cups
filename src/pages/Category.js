@@ -3,6 +3,7 @@ import CategoryCard from "../components/categoryCard";
 import { FaPlus } from "react-icons/fa6";
 import "../assets/styles/category.css";
 import logo from "../assets/image/logo.jpeg";
+import { Link } from "react-router-dom";
 
 function Category() {
   const data = [
@@ -37,9 +38,18 @@ function Category() {
   ];
   return (
     <div className="category relative w-[100vw] min-h-[100vh] ">
-      <div className="watermark"></div>
-      <div className="category-header py-4 px-2">Create Category</div>
-      <div className="category-sub-header px-[20px]">All Categories</div>
+      <Link to="/admin">
+        <div className="category-header py-1 px-2">
+          <img src={logo} alt="logo" />
+          <span>Mud Cups</span>
+        </div>
+      </Link>
+      <div className="h-fit w-full my-[10px] flex items-center justify-center relative">
+        <div className="h-[1px] w-full absolute top-[50%] horizontal-line"></div>
+        <span className="text-[#a2630b] text-[12px] font-[700] bg-[#f3eee6] z-[1] px-2 tracking-wider">
+          All Categories
+        </span>
+      </div>
       <div className="flex flex-col gap-[10px] px-5 py-2 h-auto mb-6 z-10">
         {data.map((index) => {
           return <CategoryCard data={index} key={index.index} />;
