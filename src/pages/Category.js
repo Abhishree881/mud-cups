@@ -2,6 +2,7 @@ import React from "react";
 import CategoryCard from "../components/categoryCard";
 import { FaPlus } from "react-icons/fa6";
 import "../assets/styles/category.css";
+import logo from "../assets/image/logo.jpeg";
 
 function Category() {
   const data = [
@@ -35,10 +36,11 @@ function Category() {
     },
   ];
   return (
-    <div className="category relative w-[100vw] min-h-[100vh] py-4 px-2">
-      <div className="category-header">Create Category</div>
-      <div className="category-sub-header px-[16px]">All Categories</div>
-      <div className="flex flex-col gap-[10px] px-4 py-2 h-auto mb-6">
+    <div className="category relative w-[100vw] min-h-[100vh] ">
+      <div className="watermark"></div>
+      <div className="category-header py-4 px-2">Create Category</div>
+      <div className="category-sub-header px-[20px]">All Categories</div>
+      <div className="flex flex-col gap-[10px] px-5 py-2 h-auto mb-6 z-10">
         {data.map((index) => {
           return <CategoryCard data={index} key={index.index} />;
         })}
