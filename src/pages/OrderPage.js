@@ -7,12 +7,16 @@ import { TbLogout } from "react-icons/tb";
 import { IoSearch } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
+import SampleData from '../components/sampleData';
+import rData from '../components/recommendedData';
 import ItemCardSmall from '../components/itemCardSmall';
+import { MdOutlineRestaurantMenu } from "react-icons/md";
 
 function OrderPage() {
     let { id } = useParams();
     const [isVisible, setIsVisible] = useState(true);
     const [isActive, setIsActive] = useState(true)
+    const [activeCategoryIndex, setActiveCategoryIndex] = useState(1)
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsVisible(false);
@@ -20,47 +24,10 @@ function OrderPage() {
 
         return () => clearTimeout(timer);
     }, []);
-    const rData = [
-        {
-            index: 1,
-            name: 'Ragi Dosa',
-            price: 220.00,
-            imgUrl: 'https://img-mm.manoramaonline.com/content/dam/mm/mo/pachakam/readers-recipe/images/2023/10/27/Square--ragi-dosa.jpg',
-            category: 'South Indian',
-        },
-        {
-            index: 2,
-            name: 'Veg Biryani',
-            price: 150.75,
-            imgUrl: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png',
-            category: 'Rice',
-        },
-        {
-            index: 3,
-            name: 'Paneer Tikka Masala',
-            price: 180.00,
-            imgUrl: 'https://silkroadrecipes.com/wp-content/uploads/2021/12/Paneer-Butter-Masala-square.jpg',
-            category: 'North Indian',
-        },
-        {
-            index: 4,
-            name: 'Burger',
-            price: 190.00,
-            imgUrl: 'https://img.freepik.com/premium-photo/hamburger-with-toothpick-it-small-toothpick-top_442337-492.jpg',
-            category: 'Chinese',
-        },
 
-        {
-            index: 5,
-            name: 'Veg Momos',
-            price: 250.50,
-            imgUrl: 'https://media.istockphoto.com/id/1292635321/photo/veg-steam-momo-nepalese-traditional-dish-momo-stuffed-with-vegetables-and-then-cooked-and.jpg?s=612x612&w=0&k=20&c=NyxQvDnBq7Ki09Zi21JEMxpuZ_uVr45ZBSavqXJ2T1s=',
-            category: 'Chinese',
-        },
-    ]
     const fData = []
     return (
-        <div className='w-[100vw] h-[100vh] flex justify-center'>
+        <div className='w-[100vw] h-fit overflow-scroll flex justify-center '>
             <div className='w-full max-w-[450px] h-full flex flex-col relative'>
                 {/* Top navbar starts here */}
                 <div className='flex h-[50px] items-center border justify-between px-[12px]'>
@@ -107,10 +74,21 @@ function OrderPage() {
                     <div className='h-[1px] w-full absolute top-[50%] horizontal-line'></div>
                     <span className='text-[#a2630b] text-[12px] font-[700] bg-white z-[1] px-2 tracking-wider'>EXPLORE</span>
                 </div>
+                <div className='w-full h-[100vh]'>
 
+                </div>
                 {/* bottom navbar */}
-                <div className='absolute h-[50px] w-full bottom-0 border'>
 
+            </div>
+            <div className='fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px]'>
+                <div className='flex-[4] w-full h-full flex overflow-scroll pl-[6px] gap-[12px]'>
+                    {SampleData.map((index) => {
+                        return <div className='w-fit flex items-center text-[14px] justify-center h-full' onClick={() => setActiveCategoryIndex(index.index)}><span className={`w-fit whitespace-nowrap px-[8px] text-center ${activeCategoryIndex === index.index && 'bg-[#fcecd5] text-[#a2630b] font-[600] pb-[2px] rounded-[6px]'}`}>{index.name}</span></div>
+                    })}
+                </div>
+                <div className='flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px]'>
+                    <MdOutlineRestaurantMenu color='white' />
+                    <div className='text-white font-[500]'>Menu</div>
                 </div>
             </div>
         </div>
