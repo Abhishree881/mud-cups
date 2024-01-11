@@ -23,7 +23,7 @@ function ItemCardLarge(props) {
     }
     const [expand, setExpand] = useState(false)
     return (
-        <div className={`w-full ${expand ? 'h-[200px]' : 'h-[140px]'} relative transition-all duration-[500ms] flex justify-between`} onClick={HandleClick}>
+        <div className={`w-full ${expand ? 'h-[200px]' : 'h-[140px]'} relative transition-all duration-[500ms] flex justify-between`} >
             <div className='w-auto h-full flex flex-col'>
                 <div className='w-[18px] h-[18px] relative' style={{ backgroundImage: `url(${props.data.isVeg ? VegIcon : NonVegIcon})`, backgroundSize: '100% 100%' }}>
 
@@ -37,7 +37,7 @@ function ItemCardLarge(props) {
                     <FaRupeeSign fontSize={'14px'} />
                     <span className='leading-[16px]'>{props.data.price.toFixed(2)}</span>
                 </div>
-                <div className='w-fit h-[16px] py-[8px] pl-[8px] pr-[4px] border rounded-[12px] font-[700] text-[12px] flex items-center justify-center gap-[2px]'>
+                <div className='w-fit h-[16px] py-[8px] pl-[8px] pr-[4px] border rounded-[12px] font-[700] text-[12px] flex items-center justify-center gap-[2px]' onClick={HandleClick}>
                     {expand ? 'Less Details' : 'More Details'}
                     <div className={`flex items-center transition-all duration-[500ms] justify-center ${expand && 'rotate-180'}`}><MdKeyboardArrowDown fontSize={'14px'} /></div>
                 </div>
