@@ -1,6 +1,6 @@
 .category {
     font-family: 'Quicksand', sans-serif;
-    background-color: whitesmoke;
+    background-color: #f3eee6;
     font-size: 1.2rem;
 }
 
@@ -9,9 +9,10 @@
     text-align: center;
     font-weight: 700;
     color: #818181;
-    margin-bottom: 3%;
     font-family: 'Quicksand', sans-serif;
-
+    border-radius: 0 0 15px 15px;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1), 0 0 5px rgba(31, 25, 29, 0.5);
+    margin-bottom: 3%;
 }
 
 .category-sub-header {
@@ -20,7 +21,10 @@
 }
 
 .category-card {
+    /* background-color: rgb(215, 229, 237); */
+    background-color: #e3ddd4;
     box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
 }
 
 .category-card-logo {
