@@ -11,6 +11,7 @@ import SampleData from '../components/sampleData';
 import rData from '../components/recommendedData';
 import ItemCardSmall from '../components/itemCardSmall';
 import { MdOutlineRestaurantMenu } from "react-icons/md";
+import ItemCardLarge from '../components/itemCardLarge';
 
 function OrderPage() {
     let { id } = useParams();
@@ -26,6 +27,8 @@ function OrderPage() {
     }, []);
 
     const fData = []
+    const [expanded, setExpanded] = useState([])
+
     return (
         <div className='w-[100vw] h-fit overflow-scroll flex justify-center '>
             <div className='w-full max-w-[450px] h-full flex flex-col relative'>
@@ -74,13 +77,18 @@ function OrderPage() {
                     <div className='h-[1px] w-full absolute top-[50%] horizontal-line'></div>
                     <span className='text-[#a2630b] text-[12px] font-[700] bg-white z-[1] px-2 tracking-wider'>EXPLORE</span>
                 </div>
-                <div className='w-full h-[100vh]'>
-
+                {/* menu contents */}
+                <div className='w-full h-fit flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]'>
+                    {SampleData.map((index) => {
+                        return index.items.map((item) => {
+                            return <ItemCardLarge data={item} expanded={expanded} setExpanded={setExpanded} />
+                        })
+                    })}
                 </div>
-                {/* bottom navbar */}
 
             </div>
-            <div className='fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px]'>
+            {/* bottom navbar */}
+            <div className='fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px] bg-white'>
                 <div className='flex-[4] w-full h-full flex overflow-scroll pl-[6px] gap-[12px]'>
                     {SampleData.map((index) => {
                         return <div className='w-fit flex items-center text-[14px] justify-center h-full' onClick={() => setActiveCategoryIndex(index.index)}><span className={`w-fit whitespace-nowrap px-[8px] text-center ${activeCategoryIndex === index.index && 'bg-[#fcecd5] text-[#a2630b] font-[600] pb-[2px] rounded-[6px]'}`}>{index.name}</span></div>
