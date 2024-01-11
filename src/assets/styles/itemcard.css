@@ -1,0 +1,47 @@
+.itemcard {
+    width: 85%;
+    margin: 1vh auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem;
+    background-color: #fcecd5;
+    box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+.itemcard-body {
+    display: flex;
+    width: 85%;
+    align-items: center;
+    border-right: 2px solid gray
+}
+
+.itemcard-item {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.itemcard-name {
+    font-weight: 700;
+}
+
+.itemcard-desc {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.itemcard-price {
+    transform: rotate(270deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    font-size: 0.9rem;
+}
+
+.checkbox {
+    background-color: #fcecd5;
+}
