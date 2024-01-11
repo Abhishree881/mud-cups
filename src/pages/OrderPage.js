@@ -11,6 +11,7 @@ import SampleData from "../components/sampleData";
 import rData from "../components/recommendedData";
 import ItemCardSmall from "../components/itemCardSmall";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
+import ItemCardLarge from "../components/itemCardLarge";
 
 function OrderPage() {
   let { id } = useParams();
@@ -69,7 +70,7 @@ function OrderPage() {
         {/* for you heading */}
         <div className="h-fit w-full my-[6px] flex items-center justify-center relative">
           <div className="h-[1px] w-full absolute top-[50%] horizontal-line"></div>
-          <span className="text-[#a2630b] text-[12px] font-[700] bg-[#f3eee6] z-[1] px-2 tracking-wider">
+          <span className="text-[#a2630b] text-[12px] font-[700] bg-white z-[1] px-2 tracking-wider">
             FOR YOU
           </span>
         </div>
