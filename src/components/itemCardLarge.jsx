@@ -12,14 +12,12 @@ function ItemCardLarge(props) {
             let temp = props.expanded;
             temp.push(props.data.index);
             props.setExpanded(temp)
-            console.log(props.expanded)
             setExpand(true)
         }
         else {
             let temp = props.expanded;
             temp.splice(i, 1)
             props.setExpanded(temp)
-            console.log(props.expanded)
             setExpand(false)
         }
     }
@@ -43,7 +41,7 @@ function ItemCardLarge(props) {
                     {expand ? 'Less Details' : 'More Details'}
                     <div className={`flex items-center transition-all duration-[500ms] justify-center ${expand && 'rotate-180'}`}><MdKeyboardArrowDown fontSize={'14px'} /></div>
                 </div>
-                <div className={`max-w-[200px] text-[12px] font-[700] italic text-gray-400 pt-[6px]`}>
+                <div className={`max-w-[200px] overflow-hidden text-[12px] font-[700] italic text-gray-400 pt-[6px] ${expand ? 'h-[60px] delay-500' : 'h-[0] delay-0'}`}>
                     {props.data.description}
                 </div>
             </div>
