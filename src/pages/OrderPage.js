@@ -27,6 +27,8 @@ function OrderPage() {
   }, []);
 
   const fData = [];
+  const [expanded, setExpanded] = useState([]);
+
   return (
     <div className="w-[100vw] h-fit overflow-scroll flex justify-center ">
       <div className="w-full max-w-[450px] h-full flex flex-col relative">
@@ -124,10 +126,26 @@ function OrderPage() {
             EXPLORE
           </span>
         </div>
-        <div className="w-full h-[100vh]"></div>
-        {/* bottom navbar */}
+        {/* menu contents */}
+        <div className="w-full h-fit flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]">
+          {SampleData.map((index) => {
+            return (
+              activeCategoryIndex === index.index &&
+              index.items.map((item) => {
+                return (
+                  <ItemCardLarge
+                    data={item}
+                    expanded={expanded}
+                    setExpanded={setExpanded}
+                  />
+                );
+              })
+            );
+          })}
+        </div>
       </div>
-      <div className="fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px]">
+      {/* bottom navbar */}
+      <div className="fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px] bg-white">
         <div className="flex-[4] w-full h-full flex overflow-scroll pl-[6px] gap-[12px]">
           {SampleData.map((index) => {
             return (
