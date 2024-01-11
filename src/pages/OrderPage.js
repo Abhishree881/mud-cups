@@ -80,7 +80,7 @@ function OrderPage() {
                 {/* menu contents */}
                 <div className='w-full h-fit flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]'>
                     {SampleData.map((index) => {
-                        return index.items.map((item) => {
+                        return activeCategoryIndex === index.index && index.items.map((item) => {
                             return <ItemCardLarge data={item} expanded={expanded} setExpanded={setExpanded} />
                         })
                     })}
