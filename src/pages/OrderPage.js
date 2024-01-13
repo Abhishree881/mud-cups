@@ -19,15 +19,9 @@ function OrderPage() {
   const [isActive, setIsActive] = useState(true);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(1);
   const HandleCategoryClick = (index) => {
-    let x = index.index;
-    let count = 0
-    setActiveCategoryIndex(x)
-    for (let i = 0; i < x - 1; i++) {
-      count += SampleData[i].items.length
-    }
-    const categoryRef = containerRef.current.children[count]
+    setActiveCategoryIndex(index.index)
+    const categoryRef = containerRef.current.children[index.index - 1]
     categoryRef.scrollIntoView({ behavior: 'smooth' });
-
   }
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -138,18 +132,22 @@ function OrderPage() {
           </span>
         </div>
         {/* menu contents */}
-        <div className="w-full h-fit flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]" ref={containerRef}>
+        <div className="w-full flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]" ref={containerRef}>
           {SampleData.map((index) => {
             return (
-              index.items.map((item) => {
-                return (
-                  <ItemCardLarge
-                    data={item}
-                    expanded={expanded}
-                    setExpanded={setExpanded}
-                  />
-                );
-              })
+              <div className="w-full h-fit flex flex-col gap-[16px]">
+                <div className="w-full h-[20px] font-[700] text-[#55555585]" style={{}}>{index.name}</div>
+                {index.items.map((item) => {
+                  return (
+                    <ItemCardLarge
+                      data={item}
+                      expanded={expanded}
+                      setExpanded={setExpanded}
+                      len={index.items.length}
+                    />
+                  );
+                })}
+              </div>
             );
 
           })}
@@ -165,7 +163,7 @@ function OrderPage() {
                 onClick={() => { HandleCategoryClick(index) }}
               >
                 <span
-                  className={`w-fit whitespace-nowrap px-[8px] text-center ${activeCategoryIndex === index.index &&
+                  className={`w-fit whitespace-nowrap px-[8px] cursor-pointer text-center ${activeCategoryIndex === index.index &&
                     "bg-[#fcecd5] text-[#a2630b] font-[600] pb-[2px] rounded-[6px]"
                     }`}
                 >
