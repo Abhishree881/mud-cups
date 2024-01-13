@@ -30,6 +30,28 @@ function OrderPage() {
 
     return () => clearTimeout(timer);
   }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const arr = []
+      SampleData.forEach((itr) => {
+        arr[itr.index - 1] = containerRef.current.children[itr.index - 1].offsetTop
+      })
+      arr[0] = 0
+      let temp = SampleData.length;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] <= scrollPosition + 12) {
+          temp = i + 1;
+        }
+      }
+      setActiveCategoryIndex(temp)
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [])
+
 
   const fData = [];
   const [expanded, setExpanded] = useState([]);
