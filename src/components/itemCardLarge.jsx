@@ -75,7 +75,10 @@ function ItemCardLarge(props) {
                 }}
             >
                 <div className="absolute bottom-[-10px] cursor-pointer border bg-[#f7e8d1] border-[#a2630e] w-[100px] rounded-[4px] h-[30px] flex items-center justify-center">
-                    <span className="text-[14px] font-[600]" onClick={() => props.setIsVisible(!props.isVisible)}>Add Item</span>
+                    <span className="text-[14px] font-[600]" onClick={() => {
+                        props.setIsVisible(!props.isVisible);
+                        props.setAddCartData(props.data)
+                    }}>Add Item</span>
                 </div>
             </div>
             <div className="absolute w-full h-[0.25px] bottom-[-8px]" style={{ background: "#ded6cd" }}></div>
