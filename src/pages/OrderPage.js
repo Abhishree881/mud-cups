@@ -12,12 +12,14 @@ import rData from "../components/recommendedData";
 import ItemCardSmall from "../components/itemCardSmall";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import ItemCardLarge from "../components/itemCardLarge";
+import AddToCart from "../components/addToCart";
 
 function OrderPage() {
   let { id } = useParams();
   const [isVisible, setIsVisible] = useState(true);
   const [isActive, setIsActive] = useState(true);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(1);
+  const [isInFrame, setInFrame] = useState(false)
   const HandleCategoryClick = (index) => {
     setActiveCategoryIndex(index.index)
     const categoryRef = containerRef.current.children[index.index - 1]
@@ -59,7 +61,7 @@ function OrderPage() {
   const containerRef = useRef(null);
 
   return (
-    <div className="w-[100vw] h-fit overflow-scroll flex justify-center ">
+    <div className="w-[100vw] h-fit overflow-y-scroll flex justify-center relative">
       <div className="w-full max-w-[450px] h-full flex flex-col relative">
         {/* Top navbar starts here */}
         <div className="flex h-[50px] items-center border justify-between px-[12px]">
@@ -158,7 +160,7 @@ function OrderPage() {
           {SampleData.map((index) => {
             return (
               <div className="w-full h-fit flex flex-col gap-[16px]">
-                <div className="w-full h-[20px] font-[700] text-[#55555585]" style={{}}>{index.name}</div>
+                <div className="w-full h-[20px] font-[700] italic text-[#55555585]">{index.name}</div>
                 {index.items.map((item) => {
                   return (
                     <ItemCardLarge
@@ -166,6 +168,8 @@ function OrderPage() {
                       expanded={expanded}
                       setExpanded={setExpanded}
                       len={index.items.length}
+                      isVisible={isInFrame}
+                      setIsVisible={setInFrame}
                     />
                   );
                 })}
@@ -195,11 +199,17 @@ function OrderPage() {
             );
           })}
         </div>
+
         <div className="flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px]">
           <MdOutlineRestaurantMenu color="white" />
           <div className="text-white font-[500]">Menu</div>
+
+        </div>
+        <div className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-[500px] w-full ${isInFrame ? 'right-[0px]' : 'right-[450px]'} `}>
+          <AddToCart />
         </div>
       </div>
+
     </div>
   );
 }
