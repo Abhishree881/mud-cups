@@ -1,12 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { IoMdAdd } from "react-icons/io";
 import { RiSubtractFill } from "react-icons/ri";
 import { MdCurrencyRupee } from "react-icons/md";
 
 function AddToCart(props) {
     const [price, setPrice] = useState(props.data.price)
+    const [startX, setStartX] = useState(null);
+    const popupRef = useRef(null);
+    const [offset, setOffset] = useState(0);
+    const handleTouchStart = (e) => {
+        setStartX(e.touches[0].clientX);
+    };
+
+    const handleTouchMove = (e) => {
+        if (startX === null) {
+            return;
+        }
+
+        const currentX = e.touches[0].clientX;
+        const distance = startX - currentX;
+
+        if (Math.abs(distance) > 100) {
+            props.setIsVisible(!props.isVisible);
+            setStartX(null);
+            setOffset(0)
+        }
+        else {
+            setOffset(-distance / 5)
+        }
+    }
+    const handleTouchEnd = () => {
+        setStartX(null);
+        setOffset(0);
+    };
     return (
-        <div className='w-full h-full flex flex-col justify-between border bg-[#fffaf7] pt-[16px] px-[12px] rounded-tl-[16px] rounded-tr-[16px]'>
+        <div className='w-full h-full flex flex-col justify-between border bg-[#fffaf7] pt-[16px] px-[12px] rounded-tl-[16px] rounded-tr-[16px]' ref={popupRef} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={{ transform: `translateX(${offset}px)` }}>
             <div className='h-[70px] w-full flex'>
                 <div className='h-full w-full flex-[21] max-w-[70px] bg-gray-200 rounded-[6px]' style={{
                     backgroundImage: `url(${props.data.imgUrl})`,

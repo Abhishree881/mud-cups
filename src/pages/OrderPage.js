@@ -208,7 +208,7 @@ function OrderPage() {
           <div className="text-white font-[500]">Menu</div>
 
         </div>
-        <div className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${isInFrame ? 'right-[0px]' : 'right-[450px]'} `}>
+        <div className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${isInFrame ? 'right-[0px]' : 'right-[100%]'} `}>
           <AddToCart isVisible={isInFrame} setIsVisible={setInFrame} data={addCartData} />
         </div>
       </div>
