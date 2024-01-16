@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IoMdAdd } from "react-icons/io";
 import { RiSubtractFill } from "react-icons/ri";
 import { MdCurrencyRupee } from "react-icons/md";
 
 function AddToCart(props) {
+    const [price, setPrice] = useState(props.data.price)
     return (
         <div className='w-full h-full flex flex-col justify-between border bg-[#fffaf7] pt-[16px] px-[12px] rounded-tl-[16px] rounded-tr-[16px]'>
             <div className='h-[70px] w-full flex'>
@@ -20,7 +21,7 @@ function AddToCart(props) {
             <div className='w-full h-fit font-[700] pb-[6px] pt-[12px]'>Add-Ons</div>
             <div className="w-full h-[0.25px]" style={{ background: "#ded6cd" }}></div>
 
-            {props.data.addOn.map((index) => {
+            {props.data.addOn?.map((index) => {
                 return <div className='w-full h-fit flex flex-col justify-center'>
                     <div className='w-full h-full flex items-center py-[6px]'>{index.name}</div>
                     <div className="w-full h-[1px]" style={{ background: "#ded6cd" }}></div>
@@ -32,7 +33,7 @@ function AddToCart(props) {
                     <span className='text-[16px] font-[700] w-[40%] h-full flex items-center justify-center'>1</span>
                     <span className='w-[30%] h-full flex items-center justify-center'><RiSubtractFill /></span>
                 </div>
-                <div className='flex-[70] w-full h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center'>Add Item {<MdCurrencyRupee />}500</div>
+                <div className='flex-[70] w-full h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center'>Add Item {<MdCurrencyRupee />} {price}</div>
             </div>
         </div>
     )

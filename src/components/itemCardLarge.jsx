@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import NonVegIcon from "../assets/image/nonveg.png";
 import VegIcon from "../assets/image/veg.png";
 import { FaStar } from "react-icons/fa6";
-import { FaRupeeSign } from "react-icons/fa";
+import { MdCurrencyRupee } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 function ItemCardLarge(props) {
@@ -44,7 +44,7 @@ function ItemCardLarge(props) {
                     <FaStar fontSize={"12px"} color="white" />
                 </div>
                 <div className="text-[14px] font-[700] flex items-center py-[12px]">
-                    <FaRupeeSign fontSize={"14px"} />
+                    <span className="pt-[1px]"><MdCurrencyRupee fontSize={"15px"} /></span>
                     <span className="leading-[16px]">{props.data.price.toFixed(2)}</span>
                 </div>
                 <div
