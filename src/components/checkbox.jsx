@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaCheck } from "react-icons/fa";
 
 function CheckBox(props) {
+
     const [checked, setIsChecked] = useState(false)
+    useEffect(() => {
+        setIsChecked(false)
+    }, [props.isVisible])
     const HandleClick = () => {
         if (!checked) {
             props.setPrice(props.price + props.addPrice)

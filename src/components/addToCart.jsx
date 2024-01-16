@@ -7,7 +7,8 @@ import CheckBox from './checkbox';
 function AddToCart(props) {
     const [startX, setStartX] = useState(null);
     const popupRef = useRef(null);
-    const [price, setPrice] = useState()
+    const [price, setPrice] = useState(0)
+    const [finalPrice, setFinalPrice] = useState(0)
     const [offset, setOffset] = useState(0);
     const [count, setCount] = useState(1)
 
@@ -18,7 +19,12 @@ function AddToCart(props) {
     useEffect(() => {
         setPrice(props.data.price)
         setCount(1)
+        setFinalPrice(price)
     }, [props])
+
+    useEffect(() => {
+        setFinalPrice(price * count)
+    }, [count, price])
 
     const handleTouchMove = (e) => {
         if (startX === null) {
@@ -77,7 +83,7 @@ function AddToCart(props) {
                             <span className='pr-[6px] font-[700] text-[#00000085]'>{index.name}</span>
                             <div className='bg-[#a2630e] pl-[2px] pr-[4px] py-[1px] rounded-[4px] flex items-center font-[600] text-white text-[12px]'><MdCurrencyRupee fontSize={'12px'} color='white' />{index.cost}</div>
                         </div>
-                        <CheckBox price={price} setPrice={setPrice} addPrice={index.cost} />
+                        <CheckBox price={price} setPrice={setPrice} addPrice={index.cost} isVisible={props.isVisible} />
                     </div>
                     <div className="w-full h-[1px]" style={{ background: "#ded6cd" }}></div>
                 </div>
@@ -88,7 +94,7 @@ function AddToCart(props) {
                     <span className='text-[16px] font-[700] w-[40%] h-full flex items-center justify-center'>{count}</span>
                     <span className='w-[30%] h-full flex items-center justify-center' onClick={() => HandleClick(false)}><RiSubtractFill /></span>
                 </div>
-                <div className='flex-[70] w-full h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center'>Add Item{<MdCurrencyRupee />} {price?.toFixed(2)}</div>
+                <div className='flex-[70] w-full h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center'>Add Item{<MdCurrencyRupee />} {finalPrice?.toFixed(2)}</div>
             </div>
         </div>
     )
