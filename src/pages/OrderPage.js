@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../App.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Logo from "../assets/image/logo.jpeg";
 import Hi from "../assets/gifs/hi.gif";
 import { TbLogout } from "react-icons/tb";
@@ -9,8 +9,8 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import SampleData from "../components/sampleData";
 import rData from "../components/recommendedData";
+import { FaShoppingCart } from "react-icons/fa";
 import ItemCardSmall from "../components/itemCardSmall";
-import { MdOutlineRestaurantMenu } from "react-icons/md";
 import ItemCardLarge from "../components/itemCardLarge";
 import AddToCart from "../components/addToCart";
 
@@ -203,11 +203,12 @@ function OrderPage() {
           })}
         </div>
 
-        <div className="flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px]">
-          <MdOutlineRestaurantMenu color="white" />
-          <div className="text-white font-[500]">Menu</div>
-
-        </div>
+        <Link to={`/${id}/cart`}>
+          <div className="flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px] px-[6px]">
+            <FaShoppingCart color="white" />
+            <div className="text-white font-[500]">Cart</div>
+          </div>
+        </Link>
         <div className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${isInFrame ? 'right-[0px]' : 'right-[100%]'} `}>
           <AddToCart isVisible={isInFrame} setIsVisible={setInFrame} data={addCartData} />
         </div>
