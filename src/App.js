@@ -1,5 +1,11 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate, useParams, } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import AdminPage from "./pages/Admin";
 import OrderPage from "./pages/OrderPage";
@@ -7,6 +13,9 @@ import Category from "./pages/Category";
 import Counter from "./pages/Counter";
 import NotFoundPage from "./pages/NotFound";
 import Items from "./pages/Items";
+import Login from "./pages/Login";
+import { AuthProvider } from "./AuthContext";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   const isValidCounterId = (value) => {
@@ -25,12 +34,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" component={<Login />} />
         <Route exact path="/" element={<Home />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/category" element={<Category />} />
         <Route path="/admin/items/:id" element={<Items />} />
         <Route path="/counter/:id" element={<CounterRoute />} />
-        <Route path="/:id" element={<OrderPage />} />
+        <PrivateRoute path="/:id" element={<OrderPage />} />
         <Route path="/404" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
