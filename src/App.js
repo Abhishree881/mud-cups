@@ -31,7 +31,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" component={<Login />} />
+        {/* <Route path="/login" component={<Login />} /> */}
         <Route exact path="/" element={<Home />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/category" element={<Category />} />
