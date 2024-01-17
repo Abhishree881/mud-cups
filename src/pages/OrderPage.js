@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "../App.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Logo from "../assets/image/logo.jpeg";
 import Hi from "../assets/gifs/hi.gif";
 import { TbLogout } from "react-icons/tb";
@@ -9,15 +9,25 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import SampleData from "../components/sampleData";
 import rData from "../components/recommendedData";
+import { FaShoppingCart } from "react-icons/fa";
 import ItemCardSmall from "../components/itemCardSmall";
-import { MdOutlineRestaurantMenu } from "react-icons/md";
 import ItemCardLarge from "../components/itemCardLarge";
+import AddToCart from "../components/addToCart";
 
 function OrderPage() {
   let { id } = useParams();
   const [isVisible, setIsVisible] = useState(true);
   const [isActive, setIsActive] = useState(true);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(1);
+  const [isInFrame, setInFrame] = useState(false)
+  const [expanded, setExpanded] = useState([]);
+  const [addCartData, setAddCartData] = useState([])
+
+  const HandleCategoryClick = (index) => {
+    setActiveCategoryIndex(index.index)
+    const categoryRef = containerRef.current.children[index.index - 1]
+    categoryRef.scrollIntoView({ behavior: 'smooth' });
+  }
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
@@ -25,12 +35,35 @@ function OrderPage() {
 
     return () => clearTimeout(timer);
   }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const arr = []
+      SampleData.forEach((itr) => {
+        arr[itr.index - 1] = containerRef.current.children[itr.index - 1].offsetTop
+      })
+      arr[0] = 0
+      let temp = SampleData.length;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] <= scrollPosition + 12) {
+          temp = i + 1;
+        }
+      }
+      setActiveCategoryIndex(temp)
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [])
+
 
   const fData = [];
-  const [expanded, setExpanded] = useState([]);
+
+  const containerRef = useRef(null);
 
   return (
-    <div className="w-[100vw] h-fit overflow-scroll flex justify-center ">
+    <div className="w-[100vw] h-fit overflow-y-scroll flex justify-center relative">
       <div className="w-full max-w-[450px] h-full flex flex-col relative">
         {/* Top navbar starts here */}
         <div className="flex h-[50px] items-center border justify-between px-[12px]">
@@ -80,17 +113,15 @@ function OrderPage() {
         <div className="flex w-full h-[28px] my-[6px] justify-center">
           <div className="border w-full max-w-[224px] h-full rounded-[10px] flex text-[12px] overflow-hidden">
             <div
-              className={`w-full h-full flex items-center justify-center border gap-1 ${
-                isActive && "activeChannelLeft"
-              }`}
+              className={`w-full h-full flex items-center justify-center border gap-1 ${isActive && "activeChannelLeft"
+                }`}
               onClick={() => setIsActive(!isActive)}
             >
               Recommended
             </div>
             <div
-              className={`w-full h-full flex items-center justify-center border gap-1 ${
-                !isActive && "activeChannelRight"
-              }`}
+              className={`w-full h-full flex items-center justify-center border gap-1 ${!isActive && "activeChannelRight"
+                }`}
               onClick={() => setIsActive(!isActive)}
             >
               <div className="pt-[1px]">
@@ -112,7 +143,7 @@ function OrderPage() {
             })}
           {!isActive &&
             (fData.length > 0 ? (
-              fData.map((index) => {})
+              fData.map((index) => { })
             ) : (
               <div className="w-full h-full flex items-center justify-center italic">
                 No favourites added yet
@@ -127,20 +158,27 @@ function OrderPage() {
           </span>
         </div>
         {/* menu contents */}
-        <div className="w-full h-fit flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]">
+        <div className="w-full flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]" ref={containerRef}>
           {SampleData.map((index) => {
             return (
-              activeCategoryIndex === index.index &&
-              index.items.map((item) => {
-                return (
-                  <ItemCardLarge
-                    data={item}
-                    expanded={expanded}
-                    setExpanded={setExpanded}
-                  />
-                );
-              })
+              <div className="w-full h-fit flex flex-col gap-[16px]">
+                <div className="w-full h-[20px] font-[700] italic text-[#55555585]">{index.name}</div>
+                {index.items.map((item) => {
+                  return (
+                    <ItemCardLarge
+                      data={item}
+                      expanded={expanded}
+                      setExpanded={setExpanded}
+                      len={index.items.length}
+                      isVisible={isInFrame}
+                      setIsVisible={setInFrame}
+                      setAddCartData={setAddCartData}
+                    />
+                  );
+                })}
+              </div>
             );
+
           })}
         </div>
       </div>
@@ -151,13 +189,12 @@ function OrderPage() {
             return (
               <div
                 className="w-fit flex items-center text-[14px] justify-center h-full"
-                onClick={() => setActiveCategoryIndex(index.index)}
+                onClick={() => { HandleCategoryClick(index) }}
               >
                 <span
-                  className={`w-fit whitespace-nowrap px-[8px] text-center ${
-                    activeCategoryIndex === index.index &&
+                  className={`w-fit whitespace-nowrap px-[8px] cursor-pointer text-center ${activeCategoryIndex === index.index &&
                     "bg-[#fcecd5] text-[#a2630b] font-[600] pb-[2px] rounded-[6px]"
-                  }`}
+                    }`}
                 >
                   {index.name}
                 </span>
@@ -165,11 +202,18 @@ function OrderPage() {
             );
           })}
         </div>
-        <div className="flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px]">
-          <MdOutlineRestaurantMenu color="white" />
-          <div className="text-white font-[500]">Menu</div>
+
+        <Link to={`/${id}/cart`}>
+          <div className="flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px] px-[6px]">
+            <FaShoppingCart color="white" />
+            <div className="text-white font-[500]">Cart</div>
+          </div>
+        </Link>
+        <div className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${isInFrame ? 'right-[0px]' : 'right-[100%]'} `}>
+          <AddToCart isVisible={isInFrame} setIsVisible={setInFrame} data={addCartData} />
         </div>
       </div>
+
     </div>
   );
 }

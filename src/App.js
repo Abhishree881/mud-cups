@@ -13,9 +13,6 @@ import Category from "./pages/Category";
 import Counter from "./pages/Counter";
 import NotFoundPage from "./pages/NotFound";
 import Items from "./pages/Items";
-import Login from "./pages/Login";
-import { AuthProvider } from "./AuthContext";
-import PrivateRoute from "./PrivateRoute";
 
 function App() {
   const isValidCounterId = (value) => {
@@ -40,7 +37,7 @@ function App() {
         <Route path="/admin/category" element={<Category />} />
         <Route path="/admin/items/:id" element={<Items />} />
         <Route path="/counter/:id" element={<CounterRoute />} />
-        <PrivateRoute path="/:id" element={<OrderPage />} />
+        <Route path="/:id" element={<OrderPage />} />
         <Route path="/404" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
