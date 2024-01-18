@@ -1,13 +1,14 @@
 const initialState = {
-  count: 0,
+  currentCart: []
 };
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "INCREMENT":
-      return { ...state, count: state.count + 1 };
-    case "DECREMENT":
-      return { ...state, count: state.count - 1 };
+    case "ADD_TO_CART":
+      return Object.assign({}, state, {
+        currentCart: [...state.currentCart, action.newCartItem]
+      });
+
     default:
       return state;
   }

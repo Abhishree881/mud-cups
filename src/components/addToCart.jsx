@@ -3,8 +3,13 @@ import { IoMdAdd } from "react-icons/io";
 import { RiSubtractFill } from "react-icons/ri";
 import { MdCurrencyRupee } from "react-icons/md";
 import CheckBox from './checkbox';
+import { connect } from 'react-redux';
+
 
 function AddToCart(props) {
+    const top = props.currentCart.length - 1
+    console.log(props.currentCart)
+
     const [startX, setStartX] = useState(null);
     const popupRef = useRef(null);
     const [price, setPrice] = useState(0)
@@ -17,7 +22,7 @@ function AddToCart(props) {
     };
 
     useEffect(() => {
-        setPrice(props.data.price)
+        setPrice(props.currentCart[top]?.price)
         setCount(1)
         setFinalPrice(price)
     }, [props])
@@ -63,20 +68,20 @@ function AddToCart(props) {
         <div className='w-full h-full flex flex-col justify-between border bg-[#fffaf7] pt-[16px] px-[12px] rounded-tl-[16px] rounded-tr-[16px]' ref={popupRef} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={{ transform: `translateX(${offset}px)` }}>
             <div className='h-[70px] w-full flex'>
                 <div className='h-full w-full flex-[21] max-w-[70px] bg-gray-200 rounded-[6px]' style={{
-                    backgroundImage: `url(${props.data.imgUrl})`,
+                    backgroundImage: `url(${props.currentCart[top]?.imgUrl})`,
                     backgroundSize: "100% 100%",
                 }}></div>
                 <div className='h-full w-full flex flex-[79] flex-col pl-[12px] overflow-hidden font-[700]'>
-                    <span className='text-[18px]'>{props.data.name}</span>
-                    <span className='text-[15px] text-[#00000050]'>{props.data.description}</span>
+                    <span className='text-[18px]'>{props.currentCart[top]?.name}</span>
+                    <span className='text-[15px] text-[#00000050]'>{props.currentCart[top]?.description}</span>
                 </div>
             </div>
 
-            {props.data.addOn?.length > 0 && <div className='w-full h-fit font-[700] pb-[6px] pt-[12px]'>Add-Ons</div>}
-            {props.data.addOn?.length > 0 && <div className="w-full h-[0.25px]" style={{ background: "#ded6cd" }}></div>}
-            {!props.data.addOn?.length > 0 && <div className='w-full h-[10px]'></div>}
+            {props.currentCart[top]?.addOn?.length > 0 && <div className='w-full h-fit font-[700] pb-[6px] pt-[12px]'>Add-Ons</div>}
+            {props.currentCart[top]?.addOn?.length > 0 && <div className="w-full h-[0.25px]" style={{ background: "#ded6cd" }}></div>}
+            {!props.currentCart[top]?.addOn?.length > 0 && <div className='w-full h-[10px]'></div>}
 
-            {props.data.addOn?.map((index) => {
+            {props.currentCart[top]?.addOn?.map((index) => {
                 return <div className='w-full h-fit flex flex-col justify-center'>
                     <div className='w-full h-full flex justify-between items-center py-[6px]'>
                         <div className='text-[16px] flex items-center'>
@@ -100,4 +105,12 @@ function AddToCart(props) {
     )
 }
 
-export default AddToCart
+const mapStateToProps = (state) => ({
+    currentCart: state.cartReducer.currentCart
+});
+
+const mapDispatchToProps = {
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddToCart)

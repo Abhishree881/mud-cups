@@ -4,6 +4,8 @@ import VegIcon from "../assets/image/veg.png";
 import { FaStar } from "react-icons/fa6";
 import { MdCurrencyRupee } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { connect } from "react-redux";
+import { addToCart } from "../Actions/CartActions";
 
 function ItemCardLarge(props) {
     const HandleClick = () => {
@@ -76,8 +78,15 @@ function ItemCardLarge(props) {
             >
                 <div className="absolute bottom-[-10px] cursor-pointer border bg-[#f7e8d1] border-[#a2630e] w-[100px] rounded-[4px] h-[30px] flex items-center justify-center">
                     <span className="text-[14px] font-[600]" onClick={() => {
-                        props.setIsVisible(!props.isVisible);
-                        props.setAddCartData(props.data)
+                        if (!props.isVisible) {
+                            props.setIsVisible(!props.isVisible);
+                            props.setAddCartData(props.data);
+                            props.addToCart(props.data)
+                        }
+                        else {
+                            props.setAddCartData(props.data);
+                            props.addToCart(props.data)
+                        }
                     }}>Add Item</span>
                 </div>
             </div>
@@ -86,4 +95,12 @@ function ItemCardLarge(props) {
     );
 }
 
-export default ItemCardLarge;
+const mapStateToProps = (state) => ({
+
+});
+
+const mapDispatchToProps = {
+    addToCart
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemCardLarge);
