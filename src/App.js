@@ -13,7 +13,6 @@ import Category from "./pages/Category";
 import Counter from "./pages/Counter";
 import NotFoundPage from "./pages/NotFound";
 import Items from "./pages/Items";
-import Cart from "./pages/Cart"
 
 function App() {
   const isValidCounterId = (value) => {
@@ -32,8 +31,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/login" component={<Login />} /> */}
         <Route exact path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/category" element={<Category />} />
         <Route path="/admin/items/:id" element={<Items />} />
