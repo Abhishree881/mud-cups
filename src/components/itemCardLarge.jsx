@@ -80,12 +80,10 @@ function ItemCardLarge(props) {
                     <span className="text-[14px] font-[600]" onClick={() => {
                         if (!props.isVisible) {
                             props.setIsVisible(!props.isVisible);
-                            props.setAddCartData(props.data);
-                            props.addToCart(props.data)
+                            props.addToCart({ ...props.data, count: 1, added: [] })
                         }
                         else {
-                            props.setAddCartData(props.data);
-                            props.addToCart(props.data)
+                            props.addToCart({ ...props.data, count: 1, added: [] })
                         }
                     }}>Add Item</span>
                 </div>

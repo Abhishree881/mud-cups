@@ -21,7 +21,6 @@ function OrderPage() {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(1);
   const [isInFrame, setInFrame] = useState(false)
   const [expanded, setExpanded] = useState([]);
-  const [addCartData, setAddCartData] = useState([])
 
   const HandleCategoryClick = (index) => {
     setActiveCategoryIndex(index.index)
@@ -172,7 +171,6 @@ function OrderPage() {
                       len={index.items.length}
                       isVisible={isInFrame}
                       setIsVisible={setInFrame}
-                      setAddCartData={setAddCartData}
                     />
                   );
                 })}
@@ -210,7 +208,7 @@ function OrderPage() {
           </div>
         </Link>
         <div className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${isInFrame ? 'right-[0px]' : 'right-[100%]'} `}>
-          <AddToCart isVisible={isInFrame} setIsVisible={setInFrame} data={addCartData} />
+          <AddToCart isVisible={isInFrame} setIsVisible={setInFrame} />
         </div>
       </div>
 

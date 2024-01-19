@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FaCheck } from "react-icons/fa";
+import { connect } from 'react-redux';
 
 function CheckBox(props) {
 
@@ -24,4 +25,10 @@ function CheckBox(props) {
     )
 }
 
-export default CheckBox
+const mapStateToProps = (state) => ({
+    currentCart: state.cartReducer.currentCart
+});
+
+const mapDispatchToProps = {
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CheckBox)

@@ -4,9 +4,11 @@ import { RiSubtractFill } from "react-icons/ri";
 import { MdCurrencyRupee } from "react-icons/md";
 import CheckBox from './checkbox';
 import { connect } from 'react-redux';
+import { removeFromCart } from '../Actions/CartActions';
 
 
 function AddToCart(props) {
+    // console.log(props.currentCart)
     const top = props.currentCart.length - 1
     const [startX, setStartX] = useState(null);
     const popupRef = useRef(null);
@@ -56,8 +58,10 @@ function AddToCart(props) {
         }
         else {
             if (count == 1) {
+                props.removeFromCart(top)
                 props.setIsVisible(!props.isVisible);
             }
+            // props.currentCart[top].count++;
             setCount(count - 1)
         }
     }
@@ -108,6 +112,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+    removeFromCart,
 };
 
 
