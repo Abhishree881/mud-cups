@@ -13,6 +13,8 @@ import Category from "./pages/Category";
 import Counter from "./pages/Counter";
 import NotFoundPage from "./pages/NotFound";
 import Items from "./pages/Items";
+import Login from "./pages/Login"
+import Cart from "./pages/Cart"
 
 function App() {
   const isValidCounterId = (value) => {

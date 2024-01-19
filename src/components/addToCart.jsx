@@ -8,8 +8,6 @@ import { connect } from 'react-redux';
 
 function AddToCart(props) {
     const top = props.currentCart.length - 1
-    console.log(props.currentCart)
-
     const [startX, setStartX] = useState(null);
     const popupRef = useRef(null);
     const [price, setPrice] = useState(0)
