@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { FaCheck } from "react-icons/fa";
 import { connect } from 'react-redux';
+import { updateCart } from '../Actions/CartActions';
 
 function CheckBox(props) {
-
-    const [checked, setIsChecked] = useState(false)
-    useEffect(() => {
-        setIsChecked(false)
-    }, [props.isVisible])
+    const top = props.currentCart.length - 1
+    const checked = props.currentCart[top].added.find(obj => obj === props.index)
+    console.log(`check : ${checked} for ${props.index}`)
     const HandleClick = () => {
-        if (!checked) {
-            props.setPrice(props.price + props.addPrice)
-            setIsChecked(!checked)
+        if (checked === undefined) {
+            const newItem = { ...props.currentCart[top], added: [...props.currentCart[top].added, props.index] }
+            props.updateCart(newItem, top)
         }
         else {
-            props.setPrice(props.price - props.addPrice)
-            setIsChecked(!checked)
+            const updatedAdded = props.currentCart[top].added.filter(idx => idx != props.index);
+            const newItem = { ...props.currentCart[top], added: updatedAdded, };
+            props.updateCart(newItem, top);
         }
     }
     return (
@@ -30,5 +30,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+    updateCart
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CheckBox)

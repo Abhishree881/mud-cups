@@ -13,6 +13,18 @@ const cartReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         currentCart: state.currentCart.filter((item, index) => index !== indexToRemove)
       });
+    case "UPDATE_ITEM":
+      const { newItem, index } = action;
+      const newCart = state.currentCart.map((item, idx) =>
+        idx !== index ? item : newItem
+      );
+      return { ...state, currentCart: newCart };
+    case "MOVE_TO_TOP":
+      const nItem = state.currentCart[action.index]
+      const nCart = state.currentCart.filter((item, index) => index !== action.index)
+      return Object.assign({}, state, {
+        currentCart: [...nCart, nItem]
+      })
     default:
       return state;
   }

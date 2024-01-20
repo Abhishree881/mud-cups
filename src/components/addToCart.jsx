@@ -4,32 +4,19 @@ import { RiSubtractFill } from "react-icons/ri";
 import { MdCurrencyRupee } from "react-icons/md";
 import CheckBox from './checkbox';
 import { connect } from 'react-redux';
-import { removeFromCart } from '../Actions/CartActions';
+import { removeFromCart, updateCart } from '../Actions/CartActions';
 
 
 function AddToCart(props) {
-    // console.log(props.currentCart)
+    console.log("cart", props.currentCart)
     const top = props.currentCart.length - 1
     const [startX, setStartX] = useState(null);
     const popupRef = useRef(null);
-    const [price, setPrice] = useState(0)
     const [finalPrice, setFinalPrice] = useState(0)
     const [offset, setOffset] = useState(0);
-    const [count, setCount] = useState(1)
-
     const handleTouchStart = (e) => {
         setStartX(e.touches[0].clientX);
     };
-
-    useEffect(() => {
-        setPrice(props.currentCart[top]?.price)
-        setCount(1)
-        setFinalPrice(price)
-    }, [props])
-
-    useEffect(() => {
-        setFinalPrice(price * count)
-    }, [count, price])
 
     const handleTouchMove = (e) => {
         if (startX === null) {
@@ -54,15 +41,16 @@ function AddToCart(props) {
     };
     const HandleClick = (isAdd) => {
         if (isAdd) {
-            setCount(count + 1)
+            const newItem = { ...props.currentCart[top], count: props.currentCart[top].count + 1 };
+            props.updateCart(newItem, top);
         }
         else {
-            if (count == 1) {
+            if (props.currentCart[top].count == 1) {
                 props.removeFromCart(top)
                 props.setIsVisible(!props.isVisible);
             }
-            // props.currentCart[top].count++;
-            setCount(count - 1)
+            const newItem = { ...props.currentCart[top], count: props.currentCart[top].count - 1 };
+            props.updateCart(newItem, top);
         }
     }
 
@@ -90,7 +78,7 @@ function AddToCart(props) {
                             <span className='pr-[6px] font-[700] text-[#00000085]'>{index.name}</span>
                             <div className='bg-[#a2630e] pl-[2px] pr-[4px] py-[1px] rounded-[4px] flex items-center font-[600] text-white text-[12px]'><MdCurrencyRupee fontSize={'12px'} color='white' />{index.cost}</div>
                         </div>
-                        <CheckBox price={price} setPrice={setPrice} addPrice={index.cost} isVisible={props.isVisible} />
+                        <CheckBox index={index.index} name={props.currentCart[top].name} />
                     </div>
                     <div className="w-full h-[1px]" style={{ background: "#ded6cd" }}></div>
                 </div>
@@ -98,7 +86,7 @@ function AddToCart(props) {
             <div className='w-full h-[60px] flex gap-[12px] items-center'>
                 <div className='flex-[30] w-full h-[40px] border border-[#a2630e] bg-[#f7e8d1] rounded-[3px] flex'>
                     <span className='w-[30%] h-full flex items-center justify-center' onClick={() => HandleClick(true)}><IoMdAdd /></span>
-                    <span className='text-[16px] font-[700] w-[40%] h-full flex items-center justify-center'>{count}</span>
+                    <span className='text-[16px] font-[700] w-[40%] h-full flex items-center justify-center'>{props.currentCart[top]?.count}</span>
                     <span className='w-[30%] h-full flex items-center justify-center' onClick={() => HandleClick(false)}><RiSubtractFill /></span>
                 </div>
                 <div className='flex-[70] w-full h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center'>Add Item{<MdCurrencyRupee />} {finalPrice?.toFixed(2)}</div>
@@ -113,6 +101,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     removeFromCart,
+    updateCart
 };
 
 
