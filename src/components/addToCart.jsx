@@ -4,11 +4,10 @@ import { RiSubtractFill } from "react-icons/ri";
 import { MdCurrencyRupee } from "react-icons/md";
 import CheckBox from './checkbox';
 import { connect } from 'react-redux';
-import { removeFromCart, updateCart, setActiveItem } from '../Actions/CartActions';
+import { addToCart, setActiveItem } from '../Actions/CartActions';
 
 
 function AddToCart(props) {
-    console.log("item", props.activeItem)
     const top = props.currentCart.length - 1
     const currentPrice = props.activeItem?.price * props.activeItem?.count
     const [startX, setStartX] = useState(null);
@@ -56,7 +55,9 @@ function AddToCart(props) {
             }
         }
     }
-
+    useEffect(() => {
+        console.log(props.currentCart)
+    }, [props.currentCart])
     return (
         <div className='w-full h-full flex flex-col justify-between border bg-[#fffaf7] pt-[16px] px-[12px] rounded-tl-[16px] rounded-tr-[16px]' ref={popupRef} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} style={{ transform: `translateX(${offset}px)` }}>
             <div className='h-[70px] w-full flex'>
@@ -92,7 +93,7 @@ function AddToCart(props) {
                     <span className='text-[16px] font-[700] w-[40%] h-full flex items-center justify-center'>{props.activeItem?.count}</span>
                     <span className='w-[30%] h-full flex items-center justify-center' onClick={() => HandleClick(false)}><RiSubtractFill /></span>
                 </div>
-                <div className='flex-[70] w-full h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center'>Add Item{<MdCurrencyRupee />} {currentPrice?.toFixed(2)}</div>
+                <div className='flex-[70] w-full h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center' onClick={() => { props.addToCart(props.activeItem); props.setIsVisible(false) }}>Add Item{<MdCurrencyRupee />} {currentPrice?.toFixed(2)}</div>
             </div>
         </div>
     )
@@ -104,9 +105,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    removeFromCart,
-    updateCart,
-    setActiveItem
+    setActiveItem,
+    addToCart
 };
 
 

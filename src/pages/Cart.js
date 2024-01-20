@@ -1,8 +1,9 @@
 import React from 'react'
 import Logo from '../assets/image/logo.jpeg'
 import { FaShoppingCart } from "react-icons/fa";
+import { connect } from 'react-redux';
 
-function Cart() {
+function Cart(props) {
     return (
         <div className="w-[100vw] h-fit overflow-y-scroll flex justify-center relative">
             <div className="w-full max-w-[450px] h-full flex flex-col relative">
@@ -21,6 +22,9 @@ function Cart() {
                         <FaShoppingCart /> {`(5)`}
                     </div>
                 </div>
+                <p className='pl-2'>
+                    Items in cart : {props.currentCart?.length}
+                </p>
                 <div className='w-full h-[50px] fixed border bottom-0 flex items-center justify-center'>
                     <div className='flex-[70] max-w-[120px] h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center'>Pay & Order</div>
                 </div>
@@ -28,5 +32,11 @@ function Cart() {
         </div>
     )
 }
+const mapStateToProps = (state) => ({
+    currentCart: state.cartReducer.currentCart,
+});
 
-export default Cart
+const mapDispatchToProps = {
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
