@@ -10,6 +10,7 @@ import { removeFromCart, updateCart } from '../Actions/CartActions';
 function AddToCart(props) {
     console.log("cart", props.currentCart)
     const top = props.currentCart.length - 1
+    const currentPrice = props.currentCart[top]?.price * props.currentCart[top]?.count
     const [startX, setStartX] = useState(null);
     const popupRef = useRef(null);
     const [finalPrice, setFinalPrice] = useState(0)
@@ -89,7 +90,7 @@ function AddToCart(props) {
                     <span className='text-[16px] font-[700] w-[40%] h-full flex items-center justify-center'>{props.currentCart[top]?.count}</span>
                     <span className='w-[30%] h-full flex items-center justify-center' onClick={() => HandleClick(false)}><RiSubtractFill /></span>
                 </div>
-                <div className='flex-[70] w-full h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center'>Add Item{<MdCurrencyRupee />} {finalPrice?.toFixed(2)}</div>
+                <div className='flex-[70] w-full h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center'>Add Item{<MdCurrencyRupee />} {currentPrice?.toFixed(2)}</div>
             </div>
         </div>
     )

@@ -6,10 +6,10 @@ import { updateCart } from '../Actions/CartActions';
 function CheckBox(props) {
     const top = props.currentCart.length - 1
     const checked = props.currentCart[top].added.find(obj => obj === props.index)
-    console.log(`check : ${checked} for ${props.index}`)
     const HandleClick = () => {
         if (checked === undefined) {
-            const newItem = { ...props.currentCart[top], added: [...props.currentCart[top].added, props.index] }
+            const newPrice = props.currentCart[top].price + props.currentCart[top].addOn[props.index - 1].cost
+            const newItem = { ...props.currentCart[top], added: [...props.currentCart[top].added, props.index], price: newPrice }
             props.updateCart(newItem, top)
         }
         else {
