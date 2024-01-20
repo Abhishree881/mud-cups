@@ -18,3 +18,8 @@ export const moveToTop = (index) => {
     dispatch({ type: 'MOVE_TO_TOP', index })
   }
 }
+export const setActiveItem = (data) => {
+  return function (dispatch) {
+    dispatch({ type: 'SET_ACTIVE_ITEM', newActiveItem: data })
+  }
+}

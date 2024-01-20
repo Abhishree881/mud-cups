@@ -5,7 +5,7 @@ import { FaStar } from "react-icons/fa6";
 import { MdCurrencyRupee } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { connect } from "react-redux";
-import { addToCart, moveToTop } from "../Actions/CartActions";
+import { setActiveItem } from "../Actions/CartActions";
 
 function ItemCardLarge(props) {
     const HandleClick = () => {
@@ -80,18 +80,11 @@ function ItemCardLarge(props) {
                     <span className="text-[14px] font-[600]" onClick={() => {
                         if (!props.isVisible) {
                             props.setIsVisible(!props.isVisible);
-                            const itr = props.currentCart.findIndex(obj => obj.name === props.data.name)
-                            if (itr === -1)
-                                props.addToCart({ ...props.data, count: 1, added: [] })
-                            else
-                                props.moveToTop(itr)
+                            props.setActiveItem({ ...props.data, count: 1, added: [] })
                         }
                         else {
                             const itr = props.currentCart.findIndex(obj => obj.name === props.data.name)
-                            if (itr === -1)
-                                props.addToCart({ ...props.data, count: 1, added: [] })
-                            else
-                                props.moveToTop(itr)
+                            props.setActiveItem({ ...props.data, count: 1, added: [] })
                         }
                     }}>Add Item</span>
                 </div>
@@ -102,12 +95,12 @@ function ItemCardLarge(props) {
 }
 
 const mapStateToProps = (state) => ({
-    currentCart: state.cartReducer.currentCart
+    currentCart: state.cartReducer.currentCart,
+    activeItem: state.cartReducer.activeItem
 });
 
 const mapDispatchToProps = {
-    addToCart,
-    moveToTop
+    setActiveItem
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemCardLarge);

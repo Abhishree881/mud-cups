@@ -1,5 +1,6 @@
 const initialState = {
-  currentCart: []
+  currentCart: [],
+  activeItem: {}
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -24,6 +25,10 @@ const cartReducer = (state = initialState, action) => {
       const nCart = state.currentCart.filter((item, index) => index !== action.index)
       return Object.assign({}, state, {
         currentCart: [...nCart, nItem]
+      })
+    case "SET_ACTIVE_ITEM":
+      return Object.assign({}, state, {
+        activeItem: action.newActiveItem
       })
     default:
       return state;

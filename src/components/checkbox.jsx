@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { FaCheck } from "react-icons/fa";
 import { connect } from 'react-redux';
-import { updateCart } from '../Actions/CartActions';
+import { updateCart, setActiveItem } from '../Actions/CartActions';
 
 function CheckBox(props) {
-    const top = props.currentCart.length - 1
-    const checked = props.currentCart[top].added.find(obj => obj === props.index)
+
+    const checked = props.activeItem.added.find(obj => obj === props.index)
     const HandleClick = () => {
         if (checked === undefined) {
-            const newPrice = props.currentCart[top].price + props.currentCart[top].addOn[props.index - 1].cost
-            const newItem = { ...props.currentCart[top], added: [...props.currentCart[top].added, props.index], price: newPrice }
-            props.updateCart(newItem, top)
+            const newPrice = props.activeItem.price + props.activeItem.addOn[props.index - 1].cost
+            const newItem = { ...props.activeItem, added: [...props.activeItem.added, props.index], price: newPrice }
+            props.setActiveItem(newItem)
         }
         else {
-            const updatedAdded = props.currentCart[top].added.filter(idx => idx != props.index);
-            const newItem = { ...props.currentCart[top], added: updatedAdded, };
-            props.updateCart(newItem, top);
+            const updatedAdded = props.activeItem.added.filter(idx => idx != props.index);
+            const newPrice = props.activeItem.price - props.activeItem.addOn[props.index - 1].cost
+            const newItem = { ...props.activeItem, added: updatedAdded, price: newPrice };
+            props.setActiveItem(newItem)
         }
     }
     return (
@@ -26,10 +27,12 @@ function CheckBox(props) {
 }
 
 const mapStateToProps = (state) => ({
-    currentCart: state.cartReducer.currentCart
+    currentCart: state.cartReducer.currentCart,
+    activeItem: state.cartReducer.activeItem
 });
 
 const mapDispatchToProps = {
-    updateCart
+    updateCart,
+    setActiveItem
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CheckBox)
