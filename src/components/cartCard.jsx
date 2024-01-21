@@ -27,7 +27,7 @@ function CartCard(props) {
         }
     }
     return (
-        <div className={`w-full ${isVisible ? 'h-[160px]' : 'h-[110px]'} rounded-[6px] transition-all duration-500 flex justify-between`}>
+        <div className={`w-full ${isVisible ? 'h-fit' : 'h-[110px]'} rounded-[6px] transition-all duration-500 flex justify-between`}>
             <div className='w-auto h-full flex flex-col justify-between'>
                 <div className='flex flex-col'>
                     <div className='flex h-fit w-fit gap-[6px] items-center'>
@@ -44,9 +44,9 @@ function CartCard(props) {
                     </div>
                     <div className='font-[800] text-[18px] leading-[24px]'>{props.currentCart[props.i].name}</div>
                     <div className='font-[800] text-[14px] leading-[20px] flex items-center'><MdCurrencyRupee fontSize={'14px'} />{props.currentCart[props.i].price * props.currentCart[props.i].count}</div>
-                    <div className={`flex flex-col overflow-scroll transition-all ${isVisible ? 'h-[50px] delay-100' : 'h-[0px] delay-0'}`}>
+                    <div className={`flex flex-col py-[6px] overflow-scroll ${isVisible ? 'h-fit' : 'h-[0px]'}`}>
                         {arr.map((index) => {
-                            return <div className='text-[14px] font-[600] leading-[22px] flex items-center'>
+                            return <div className='text-[14px] font-[600] leading-[22px] flex items-center overflow-hidden'>
                                 <div className='pr-[6px]'>{index.name}</div>
                                 <>{`(`}<MdCurrencyRupee fontSize={'15px'} /></>
                                 {`${index.cost})`}
