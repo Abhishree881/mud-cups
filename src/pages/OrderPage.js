@@ -13,8 +13,9 @@ import { FaShoppingCart } from "react-icons/fa";
 import ItemCardSmall from "../components/itemCardSmall";
 import ItemCardLarge from "../components/itemCardLarge";
 import AddToCart from "../components/addToCart";
+import { connect } from "react-redux";
 
-function OrderPage() {
+function OrderPage(props) {
   let { id } = useParams();
   const [isVisible, setIsVisible] = useState(true);
   const [isActive, setIsActive] = useState(true);
@@ -204,7 +205,7 @@ function OrderPage() {
         <Link to={`/${id}/cart`}>
           <div className="flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px] px-[6px]">
             <FaShoppingCart color="white" />
-            <div className="text-white font-[500]">Cart</div>
+            <div className="text-white font-[500] pl-1">Cart {`(${props.currentCart.length})`} </div>
           </div>
         </Link>
         <div className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${isInFrame ? 'right-[0px]' : 'right-[100%]'} `}>
@@ -215,5 +216,7 @@ function OrderPage() {
     </div>
   );
 }
-
-export default OrderPage;
+const mapStateToProps = (state) => ({
+  currentCart: state.cartReducer.currentCart,
+});
+export default connect(mapStateToProps)(OrderPage);
