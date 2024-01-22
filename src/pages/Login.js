@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [phone, setPhone] = useState("");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); // Local state for login process
   const [otp, setOtp] = useState("");
+  const navigate = useNavigate();
 
   const sendOtp = async () => {
     try {
@@ -24,6 +26,9 @@ const Login = () => {
     try {
       const data = await user.confirm(otp);
       console.log(data);
+      const intendedRoute = localStorage.getItem("intendedRoute");
+      localStorage.removeItem("intendedRoute");
+      navigate(intendedRoute || "/"); // Redirect to saved route or home
     } catch (err) {
       console.log(err);
     }
