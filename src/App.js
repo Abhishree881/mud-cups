@@ -42,6 +42,13 @@ function App() {
     return children;
   };
 
+  const PrivateLoginRoute = ({ children }) => {
+    if (currentUser) {
+      return <Navigate to="/" />;
+    }
+    return children;
+  };
+
   return (
     <BrowserRouter>
       <Routes>
@@ -54,7 +61,14 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <PrivateLoginRoute>
+              <Login />
+            </PrivateLoginRoute>
+          }
+        />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/category" element={<Category />} />
         <Route path="/admin/items/:id" element={<Items />} />
