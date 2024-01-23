@@ -25,3 +25,6 @@
 .horizontal-line{
     background: linear-gradient(to right,white,#a2630b,white );
 }
+.w-adj{
+    width: calc(33.33% - 12px);
+}

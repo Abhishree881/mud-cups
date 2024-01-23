@@ -2,6 +2,7 @@ const SampleData = [
     {
         index: 1,
         name: 'Main Course',
+        imgUrl: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png',
         items: [
             {
                 index: 1,
@@ -97,6 +98,7 @@ const SampleData = [
     {
         index: 2,
         name: 'Starters',
+        imgUrl: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png',
         items: [
             {
                 index: 1,
@@ -194,6 +196,7 @@ const SampleData = [
     {
         index: 3,
         name: 'Drinks',
+        imgUrl: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png',
         items: [
             {
                 index: 1,
@@ -255,6 +258,7 @@ const SampleData = [
     {
         index: 4,
         name: 'Desserts',
+        imgUrl: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png',
         items: [
             {
                 index: 1,
@@ -283,6 +287,7 @@ const SampleData = [
     {
         index: 5,
         name: 'Salads',
+        imgUrl: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png',
         items: [
             {
                 index: 1,

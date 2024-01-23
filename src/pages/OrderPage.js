@@ -118,17 +118,15 @@ function OrderPage(props) {
         <div className="flex w-full h-[28px] my-[6px] justify-center">
           <div className="border w-full max-w-[224px] h-full rounded-[10px] flex text-[12px] overflow-hidden">
             <div
-              className={`w-full h-full flex items-center justify-center border gap-1 ${
-                isActive && "activeChannelLeft"
-              }`}
+              className={`w-full h-full flex items-center justify-center border gap-1 ${isActive && "activeChannelLeft"
+                }`}
               onClick={() => setIsActive(!isActive)}
             >
               Recommended
             </div>
             <div
-              className={`w-full h-full flex items-center justify-center border gap-1 ${
-                !isActive && "activeChannelRight"
-              }`}
+              className={`w-full h-full flex items-center justify-center border gap-1 ${!isActive && "activeChannelRight"
+                }`}
               onClick={() => setIsActive(!isActive)}
             >
               <div className="pt-[1px]">
@@ -150,7 +148,7 @@ function OrderPage(props) {
             })}
           {!isActive &&
             (fData.length > 0 ? (
-              fData.map((index) => {})
+              fData.map((index) => { })
             ) : (
               <div className="w-full h-full flex items-center justify-center italic">
                 No favourites added yet
@@ -169,10 +167,13 @@ function OrderPage(props) {
           className="w-full flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]"
           ref={containerRef}
         >
+          <Link to={`/${id}/allCategories`}>
+            <div className="w-fit h-fit bg-[#f7e8d1]  border border-[#a2630e] px-[6px] py-[2px] text-[12px] font-bold rounded-[6px]">View All Categories</div>
+          </Link>
           {SampleData.map((index) => {
             return (
               <div className="w-full h-fit flex flex-col gap-[16px]">
-                <div className="w-full h-[20px] font-[700] italic text-[#55555585]">
+                <div className="w-full h-[20px] font-[700] text-[#55555585]">
                   {index.name}
                 </div>
                 {index.items.map((item) => {
@@ -204,10 +205,9 @@ function OrderPage(props) {
                 }}
               >
                 <span
-                  className={`w-fit whitespace-nowrap px-[8px] cursor-pointer text-center ${
-                    activeCategoryIndex === index.index &&
+                  className={`w-fit whitespace-nowrap px-[8px] cursor-pointer text-center ${activeCategoryIndex === index.index &&
                     "bg-[#fcecd5] text-[#a2630b] font-[600] pb-[2px] rounded-[6px]"
-                  }`}
+                    }`}
                 >
                   {index.name}
                 </span>
@@ -225,9 +225,8 @@ function OrderPage(props) {
           </div>
         </Link>
         <div
-          className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${
-            isInFrame ? "right-[0px]" : "right-[100%]"
-          } `}
+          className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${isInFrame ? "right-[0px]" : "right-[100%]"
+            } `}
         >
           <AddToCart isVisible={isInFrame} setIsVisible={setInFrame} />
         </div>
