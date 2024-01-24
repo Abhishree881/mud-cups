@@ -15,6 +15,7 @@ import NotFoundPage from "./pages/NotFound";
 import Items from "./pages/Items";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
+import AllCategories from "./pages/AllCategories";
 import { AuthContext } from "./AuthContext";
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/:id/allCategories" element={<AllCategories />} />
         <Route path="/404" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
