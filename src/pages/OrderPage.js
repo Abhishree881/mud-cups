@@ -3,7 +3,6 @@ import "../App.css";
 import { Link, useParams } from "react-router-dom";
 import Logo from "../assets/image/logo.jpeg";
 import Hi from "../assets/gifs/hi.gif";
-import { TbLogout } from "react-icons/tb";
 import { IoSearch } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
@@ -27,7 +26,7 @@ function OrderPage(props) {
   const { currentUser } = useContext(AuthContext);
 
   const HandleCategoryClick = (index) => {
-    setActiveCategoryIndex(index.index);
+    // setActiveCategoryIndex(index.index);
     const categoryRef = containerRef.current.children[index.index - 1];
     categoryRef.scrollIntoView({ behavior: "smooth" });
   };
@@ -164,9 +163,6 @@ function OrderPage(props) {
           className="w-full flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]"
           ref={containerRef}
         >
-          <Link to={`/${id}/allCategories`}>
-            <div className="w-fit h-fit bg-[#f7e8d1]  border border-[#a2630e] px-[6px] py-[2px] text-[12px] font-bold rounded-[6px]">View All Categories</div>
-          </Link>
           {SampleData.map((index) => {
             return (
               <div className="w-full h-fit flex flex-col gap-[16px]">
