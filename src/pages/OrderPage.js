@@ -47,7 +47,7 @@ function OrderPage(props) {
       });
       arr[0] = 0;
       let temp = SampleData.length;
-      for (let i = 0; i < arr.length; i++) {
+      for (let i = 0; i < arr.length || 0; i++) {
         if (arr[i] <= scrollPosition + 12) {
           temp = i + 1;
         }
