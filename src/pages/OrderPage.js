@@ -92,11 +92,8 @@ function OrderPage(props) {
             )}
           </div>
           <div className="flex gap-1">
-            <div className="w-[36px] h-[36px] rounded-[10px] px-9 bg-[#fcecd5] flex items-center justify-center">
+            <div className="w-fit h-[36px] rounded-[10px] px-9 bg-[#fcecd5] flex items-center justify-center">
               {id}
-            </div>
-            <div className="w-[36px] h-[36px] rounded-[50%] bg-[#fcecd5] flex items-center justify-center pl-1">
-              <TbLogout fontSize={"20px"} />
             </div>
           </div>
         </div>

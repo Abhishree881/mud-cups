@@ -32,6 +32,14 @@ const Login = () => {
         });
         return;
       }
+      if (name.length === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Name is mandatory",
+          text: "Please enter your name",
+        });
+        return;
+      }
       setShowInput(false);
       const formattedPhone = "+91 " + phone;
       const recaptcha = new RecaptchaVerifier(auth, "recaptcha", {});
@@ -72,7 +80,7 @@ const Login = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: err.message || "An error occurred while verifying OTP.",
+        text: "The OTP you have entered is invalid",
       });
       console.log(err);
     }
@@ -107,7 +115,7 @@ const Login = () => {
             </button>
           </div>
         )}
-        <div id="recaptcha" className="recaptcha"></div>
+        {!showSubmit && <div id="recaptcha" className="recaptcha"></div>}
         {showSubmit && (
           <div className="user-input">
             <input

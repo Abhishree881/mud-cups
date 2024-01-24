@@ -19,7 +19,7 @@ import { AuthContext } from "./AuthContext";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
-
+  console.log(currentUser);
   const isValidCounterId = (value) => {
     return value === "1" || value === "2";
   };
