@@ -1,11 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import Home from "./pages/Home";
 import AdminPage from "./pages/Admin";
 import OrderPage from "./pages/OrderPage";
@@ -16,14 +10,24 @@ import Items from "./pages/Items";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import { AuthContext } from "./AuthContext";
+import { connect } from "react-redux";
+import { setCart } from "./Actions/CartActions";
+import { fetchCartDb } from "./Actions/CartDabase";
 
-function App() {
+function App(props) {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
   const isValidCounterId = (value) => {
     return value === "1" || value === "2";
   };
-
+  useEffect(() => {
+    const updateCart = async () => {
+      if (currentUser.uid) {
+        const userDoc = await fetchCartDb(currentUser)
+        props.setCart(userDoc)
+      }
+    }
+    updateCart();
+  }, [currentUser])
   const CounterRoute = () => {
     const { id } = useParams();
     if (isValidCounterId(id)) {
@@ -94,5 +98,11 @@ function App() {
     </BrowserRouter>
   );
 }
+const mapStateToProps = (state) => ({
+});
 
-export default App;
+const mapDispatchToProps = {
+  setCart
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

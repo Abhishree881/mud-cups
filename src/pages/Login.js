@@ -72,6 +72,7 @@ const Login = () => {
       await setDoc(doc(usersCollectionRef, res.user.uid), {
         uid: res.user.uid,
         displayName,
+        currentCart: {}
       });
       const intendedRoute = localStorage.getItem("intendedRoute");
       localStorage.removeItem("intendedRoute");

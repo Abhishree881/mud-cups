@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import NonVegIcon from "../assets/image/nonveg.png";
 import VegIcon from "../assets/image/veg.png";
 import { IoMdAdd } from "react-icons/io";
@@ -6,22 +6,24 @@ import { RiSubtractFill } from "react-icons/ri";
 import { MdCurrencyRupee } from "react-icons/md";
 import { connect } from 'react-redux';
 import { updateCart, removeFromCart } from '../Actions/CartActions';
+import { AuthContext } from '../AuthContext';
 
 function CartCard(props) {
+    const { currentUser } = useContext(AuthContext)
     const [isVisible, setIsVisible] = useState(false)
     const arr = props.currentCart[props.i].addOn.filter(item => props.currentCart[props.i].added.includes(item.index))
     const HandleClick = (isAdd) => {
         if (isAdd) {
             const newItem = { ...props.currentCart[props.i], count: props.currentCart[props.i].count + 1 }
-            props.updateCart(newItem, props.i)
+            props.updateCart({ currentUser, newItem, index: props.i })
         }
         else {
             if (props.currentCart[props.i].count === 1) {
-                props.removeFromCart(props.i)
+                props.removeFromCart({ currentUser, index: props.i })
             }
             else {
                 const newItem = { ...props.currentCart[props.i], count: props.currentCart[props.i].count - 1 }
-                props.updateCart(newItem, props.i)
+                props.updateCart({ currentUser, newItem, index: props.i })
             }
 
         }
