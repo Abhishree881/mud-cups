@@ -9,7 +9,7 @@ import { AuthContext } from "../AuthContext";
 
 function AddToCart(props) {
     const { currentUser } = useContext(AuthContext);
-    const top = props.currentCart.length - 1
+    const top = props.currentCart?.length - 1
     const currentPrice = props.activeItem?.price * props.activeItem?.count
     const [startX, setStartX] = useState(null);
     const popupRef = useRef(null);

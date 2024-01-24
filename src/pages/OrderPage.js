@@ -47,7 +47,7 @@ function OrderPage(props) {
       });
       arr[0] = 0;
       let temp = SampleData.length;
-      for (let i = 0; i < arr.length || 0; i++) {
+      for (let i = 0; i < arr?.length || 0; i++) {
         if (arr[i] <= scrollPosition + 12) {
           temp = i + 1;
         }
@@ -213,7 +213,7 @@ function OrderPage(props) {
           <div className="flex-[1] w-full h-[40px] bg-[#a2630b] rounded-tl-[12px] rounded-bl-[12px] flex items-center justify-center gap-[4px] px-[6px]">
             <FaShoppingCart color="white" />
             <div className="text-white font-[500] pl-1">
-              Cart {`(${props.currentCart.length})`}{" "}
+              Cart {`(${props.currentCart?.length})`}{" "}
             </div>
           </div>
         </Link>

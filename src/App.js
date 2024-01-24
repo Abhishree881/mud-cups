@@ -21,7 +21,7 @@ function App(props) {
   };
   useEffect(() => {
     const updateCart = async () => {
-      if (currentUser.uid) {
+      if (currentUser?.uid) {
         const userDoc = await fetchCartDb(currentUser)
         props.setCart(userDoc)
       }
