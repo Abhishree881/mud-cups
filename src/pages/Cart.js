@@ -18,7 +18,7 @@ function Cart(props) {
                                 backgroundSize: "100% 100%",
                             }}
                         ></div>
-                        <div className="font-[600] text-[18px]">Anmol Srivastava</div>
+                        <div className="font-[600] text-[18px]">Your Cart</div>
                     </div>
                     <div className="w-fit h-[30px] rounded-[6px] bg-[#fcecd5] px-[8px] flex items-center justify-center text-[14px] font-[700] gap-[4px]">
                         <FaShoppingCart /> {`(${props.currentCart.length})`}

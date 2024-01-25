@@ -20,17 +20,14 @@ export const fetchCartDb = async (currentUser) => {
     try {
         const userCollectionRef = collection(db, "users");
         const userDocRef = doc(userCollectionRef, currentUser.uid);
-        const userDoc = await getDoc(userDocRef)
-        let existingData = {};
-
-        // Check if the user document exists
-        if (userDoc.exists()) {
-            existingData = userDoc.data();
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.data().currentCart?.length > 0) {
+            return userDoc.data().currentCart;
         }
-        console.log(existingData)
-        return existingData.currentCart
+        return [];
     }
     catch (e) {
-        console.log(e)
+        console.log(e);
+        return [];
     }
 }

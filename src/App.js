@@ -23,7 +23,7 @@ function App(props) {
     const updateCart = async () => {
       if (currentUser?.uid) {
         const userDoc = await fetchCartDb(currentUser)
-        // console.log(userDoc)
+        // console.log('Doc', userDoc)
         props.setCart(userDoc)
       }
     }
