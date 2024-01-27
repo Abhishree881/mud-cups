@@ -9,6 +9,7 @@ import NotFoundPage from "./pages/NotFound";
 import Items from "./pages/Items";
 import Login from "./pages/Login";
 import Cart from "./pages/Cart";
+import Search from "./pages/Search";
 import { AuthContext } from "./AuthContext";
 import { connect } from "react-redux";
 import { setCart } from "./Actions/CartActions";
@@ -23,8 +24,7 @@ function App(props) {
     const updateCart = async () => {
       if (currentUser?.uid) {
         const userDoc = await fetchCartDb(currentUser)
-        // console.log('Doc', userDoc)
-        props.setCart(userDoc)
+        props.setCart(userDoc.filter(obj => Object.keys(obj).length !== 0))
       }
     }
     updateCart();
@@ -78,6 +78,7 @@ function App(props) {
         <Route path="/admin/category" element={<Category />} />
         <Route path="/admin/items/:id" element={<Items />} />
         <Route path="/counter/:id" element={<CounterRoute />} />
+        <Route path="/:id/search" element={<Search />} />
         <Route
           path="/:id"
           element={

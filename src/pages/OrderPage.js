@@ -97,12 +97,15 @@ function OrderPage(props) {
           </div>
         </div>
         {/* Search bar starts here */}
-        <div className="flex h-[36px] items-center border border-[#a2630b] mx-[12px] my-[6px] rounded-[10px]">
-          <div className="px-[6px] search-icon relative h-[80%] flex items-center">
-            <IoSearch fontSize={"18px"} color={"#4b3619"} />
+        <Link to={`/${id}/search`}>
+          <div className="flex h-[36px] items-center border border-[#a2630b] mx-[12px] my-[6px] rounded-[10px]">
+            <div className="px-[6px] search-icon relative h-[80%] flex items-center">
+              <IoSearch fontSize={"18px"} color={"#4b3619"} />
+            </div>
+            <div className="italic text-[14px] pl-[6px]">Search</div>
           </div>
-          <div className="italic text-[14px] pl-[6px]">Search</div>
-        </div>
+        </Link>
+
         {/* for you heading */}
         <div className="h-fit w-full my-[6px] flex items-center justify-center relative">
           <div className="h-[1px] w-full absolute top-[50%] horizontal-line"></div>
