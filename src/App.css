@@ -33,4 +33,5 @@
 }
 .custom-border:focus{
     border: 1px solid #6c4207;
+    text-decoration: none;
 }
