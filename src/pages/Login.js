@@ -129,14 +129,15 @@ const Login = () => {
       <Toaster toastOptions={{ duration: 4000 }} />
       <div id="recaptcha" className="recaptcha"></div>
       <div className="blurred-box">
-        <img className="logo" src={logo} alt="logo" />
+        <img className="login-logo" src={logo} alt="logo" />
         {showInput && (
           <div className="user-input">
             <input
               type="text"
-              placeholder="Enter your name"
+              placeholder="Enter your name*"
               onChange={(name) => setName(name.target.value)}
               onKeyDown={handleNameKeyDown}
+              required
             />
             <div className="phone-container">
               {/* <PhoneInput
@@ -149,9 +150,10 @@ const Login = () => {
             <input
               type="text"
               id="phoneInput"
-              placeholder="Enter your number"
+              placeholder="Enter your number*"
               onChange={(phone) => setPhone(phone.target.value)}
               onKeyDown={handlePhoneKeyDown}
+              required
             />
             <button className="send-otp" onClick={sendOtp}>
               {loading ? (
