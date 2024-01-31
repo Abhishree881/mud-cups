@@ -14,6 +14,8 @@ import { AuthContext } from "./AuthContext";
 import { connect } from "react-redux";
 import { setCart } from "./Actions/CartActions";
 import { fetchCartDb } from "./Actions/CartDabase";
+import AddCategory from "./pages/AddCategory";
+import { loadMenu } from "./Actions/MenuActions";
 
 function App(props) {
   const { currentUser } = useContext(AuthContext);
@@ -29,6 +31,40 @@ function App(props) {
     }
     updateCart();
   }, [currentUser])
+
+  useEffect(() => {
+    const tempMenu = [
+      {
+        index: 1,
+        name: "North Indian",
+        len: 12,
+        imgUrl:
+          "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png",
+      },
+      {
+        index: 2,
+        name: "Punjabi",
+        len: 1,
+        imgUrl:
+          "https://silkroadrecipes.com/wp-content/uploads/2021/12/Paneer-Butter-Masala-square.jpg",
+      },
+      {
+        index: 3,
+        name: "American",
+        len: 25,
+        imgUrl:
+          "https://img.freepik.com/premium-photo/hamburger-with-toothpick-it-small-toothpick-top_442337-492.jpg",
+      },
+      {
+        index: 4,
+        name: "South Indian",
+        len: 30,
+        imgUrl:
+          "https://img-mm.manoramaonline.com/content/dam/mm/mo/pachakam/readers-recipe/images/2023/10/27/Square--ragi-dosa.jpg",
+      },
+    ]
+    props.loadMenu(tempMenu)
+  }, [])
   const CounterRoute = () => {
     const { id } = useParams();
     if (isValidCounterId(id)) {
@@ -95,6 +131,7 @@ function App(props) {
             </PrivateRoute>
           }
         />
+        <Route path="/admin/edit" element={<AddCategory />} />
         <Route path="/404" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
@@ -104,6 +141,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  loadMenu,
   setCart
 };
 
