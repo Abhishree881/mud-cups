@@ -1,5 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useParams,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import AdminPage from "./pages/Admin";
 import OrderPage from "./pages/OrderPage";
@@ -16,21 +22,26 @@ import { setCart } from "./Actions/CartActions";
 import { fetchCartDb } from "./Actions/CartDabase";
 import AddCategory from "./pages/AddCategory";
 import { loadMenu } from "./Actions/MenuActions";
+import toast, { Toaster } from "react-hot-toast";
 
 function App(props) {
   const { currentUser } = useContext(AuthContext);
+  const [currentTable, setCurrentTable] = useState();
   const isValidCounterId = (value) => {
     return value === "1" || value === "2";
   };
   useEffect(() => {
     const updateCart = async () => {
       if (currentUser?.uid) {
-        const userDoc = await fetchCartDb(currentUser)
-        props.setCart(userDoc.filter(obj => Object.keys(obj).length !== 0))
+        if (currentTable) {
+          toast.success(`Welcome ${currentUser?.displayName}`, { icon: "👋" });
+        }
+        const userDoc = await fetchCartDb(currentUser);
+        props.setCart(userDoc.filter((obj) => Object.keys(obj).length !== 0));
       }
-    }
+    };
     updateCart();
-  }, [currentUser])
+  }, [currentUser]);
 
   useEffect(() => {
     const tempMenu = [
@@ -62,9 +73,9 @@ function App(props) {
         imgUrl:
           "https://img-mm.manoramaonline.com/content/dam/mm/mo/pachakam/readers-recipe/images/2023/10/27/Square--ragi-dosa.jpg",
       },
-    ]
-    props.loadMenu(tempMenu)
-  }, [])
+    ];
+    props.loadMenu(tempMenu);
+  }, []);
   const CounterRoute = () => {
     const { id } = useParams();
     if (isValidCounterId(id)) {
@@ -77,6 +88,7 @@ function App(props) {
   const PrivateRoute = ({ children }) => {
     if (!currentUser) {
       const path = window.location.pathname;
+      setCurrentTable(path);
       localStorage.setItem("intendedRoute", path);
       return <Navigate to="/login" />;
     }
@@ -85,13 +97,14 @@ function App(props) {
 
   const PrivateLoginRoute = ({ children }) => {
     if (currentUser) {
-      return <Navigate to="/" />;
+      return <Navigate to={currentTable ? currentTable : "/"} />;
     }
     return children;
   };
 
   return (
     <BrowserRouter>
+      <Toaster toastOptions={{ duration: 4000 }} />
       <Routes>
         <Route
           exact
@@ -137,12 +150,11 @@ function App(props) {
     </BrowserRouter>
   );
 }
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   loadMenu,
-  setCart
+  setCart,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
