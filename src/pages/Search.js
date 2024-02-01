@@ -28,12 +28,12 @@ function Search(props) {
     return (
         <div className='w-[100vw] h-[100vh] flex justify-center'>
             <div className='w-full h-full max-w-[450px] border flex flex-col gap-[8px]'>
-                <div className="w-full h-[50px] border flex items-center">
+                <div className="w-full h-[50px] border flex items-center justify-between pl-[12px]">
                     <input
                         ref={inputRef}
                         type="text"
                         placeholder="Search..."
-                        className='h-[36px] text-[14px] custom-border '
+                        className='h-[36px] text-[14px] custom-border w-full pl-[6px] rounded-[6px]'
                         onChange={handleInputChange}
                     />
                     <Link to={`/${id}`}>
