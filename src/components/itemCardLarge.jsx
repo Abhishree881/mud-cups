@@ -6,6 +6,9 @@ import { MdCurrencyRupee } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { connect } from "react-redux";
 import { setActiveItem } from "../Actions/CartActions";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
+import { setItem, setFavourite } from "../Actions/MenuActions";
 
 function ItemCardLarge(props) {
     const HandleClick = () => {
@@ -22,6 +25,9 @@ function ItemCardLarge(props) {
             setExpand(false);
         }
     };
+    const HandleFavClick = () => {
+
+    }
     const [expand, setExpand] = useState(false)
     return (
         <div
@@ -76,6 +82,13 @@ function ItemCardLarge(props) {
                     backgroundPosition: "center",
                 }}
             >
+                <div className="w-[16px] h-[16px] flex items-center justify-center absolute top-[10px] right-[8px]" onClick={() => {
+                    const newMenuItem = { ...props.menu[props.categoryIndex - 1].items[props.data.index - 1], isFavourite: !props.menu[props.categoryIndex - 1].items[props.data.index - 1].isFavourite }
+                    props.setItem(newMenuItem, props.categoryIndex - 1, props.data.index - 1)
+                    props.setFavourite(props.categoryIndex - 1, props.data.index - 1)
+                }}>
+                    {props.menu[props.categoryIndex - 1]?.items[props.data.index - 1].isFavourite ? <FaHeart color="red" /> : <FaRegHeart color="white" />}
+                </div>
                 <div className="absolute bottom-[-10px] cursor-pointer border bg-[#f7e8d1] border-[#a2630e] w-[100px] rounded-[4px] h-[30px] flex items-center justify-center">
                     <span className="text-[14px] font-[600]" onClick={() => {
                         if (!props.isVisible) {
@@ -96,11 +109,14 @@ function ItemCardLarge(props) {
 
 const mapStateToProps = (state) => ({
     currentCart: state.cartReducer.currentCart,
-    activeItem: state.cartReducer.activeItem
+    activeItem: state.cartReducer.activeItem,
+    menu: state.menuReducer.menu
 });
 
 const mapDispatchToProps = {
-    setActiveItem
+    setActiveItem,
+    setItem,
+    setFavourite
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemCardLarge);

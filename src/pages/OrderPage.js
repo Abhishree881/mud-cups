@@ -60,8 +60,6 @@ function OrderPage(props) {
     };
   }, []);
 
-  const fData = [];
-
   const containerRef = useRef(null);
 
   return (
@@ -143,11 +141,13 @@ function OrderPage(props) {
         <div className="overflow-scroll h-[170px] my-[10px] px-[12px] flex gap-[12px]">
           {isActive &&
             rData.map((index) => {
-              return <ItemCardSmall data={index} key={index.index} />;
+              return <ItemCardSmall data={index} />;
             })}
           {!isActive &&
-            (fData.length > 0 ? (
-              fData.map((index) => { })
+            (props.favourites.length > 0 ? (
+              props.favourites.map((index) => {
+                return <ItemCardSmall data={index} />
+              })
             ) : (
               <div className="w-full h-full flex items-center justify-center italic">
                 No favourites added yet
@@ -166,7 +166,7 @@ function OrderPage(props) {
           className="w-full flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]"
           ref={containerRef}
         >
-          {SampleData.map((index) => {
+          {props.menu.map((index) => {
             return (
               <div className="w-full h-fit flex flex-col gap-[16px]">
                 <div className="w-full h-[20px] font-[700] text-[#55555585]">
@@ -179,6 +179,7 @@ function OrderPage(props) {
                       expanded={expanded}
                       setExpanded={setExpanded}
                       len={index.items.length}
+                      categoryIndex={index.index}
                       isVisible={isInFrame}
                       setIsVisible={setInFrame}
                     />
@@ -192,7 +193,7 @@ function OrderPage(props) {
       {/* bottom navbar */}
       <div className="fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px] bg-white">
         <div className="flex-[4] w-full h-full flex overflow-scroll pl-[6px] gap-[12px]">
-          {SampleData.map((index) => {
+          {props.menu.map((index) => {
             return (
               <div
                 className="w-fit flex items-center text-[14px] justify-center h-full"
@@ -232,5 +233,7 @@ function OrderPage(props) {
 }
 const mapStateToProps = (state) => ({
   currentCart: state.cartReducer.currentCart,
+  menu: state.menuReducer.menu,
+  favourites: state.menuReducer.favourites
 });
 export default connect(mapStateToProps)(OrderPage);

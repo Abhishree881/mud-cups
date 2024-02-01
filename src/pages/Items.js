@@ -5,9 +5,11 @@ import "../assets/styles/item.css";
 import rData from "../components/recommendedData";
 import ItemCard from "../components/itemCard";
 import logo from "../assets/image/logo.jpeg";
+import { connect } from "react-redux";
 
-function Items() {
+function Items(props) {
   const { id } = useParams();
+  const i = props.menu.findIndex(item => item.name === id)
   return (
     <div className="relative">
       <div className=" w-[100vw] h-[29vh] pt-[36px] bg-[#fcdfb7] flex fixed top-0">
@@ -55,10 +57,7 @@ function Items() {
           </span>
         </div>
         <div className="pt-1">
-          {rData.map((index) => {
-            return <ItemCard data={index} key={index.index} />;
-          })}
-          {rData.map((index) => {
+          {props.menu[i].items.map((index) => {
             return <ItemCard data={index} key={index.index} />;
           })}
           <hr className="mt-3 mb-1" />
@@ -70,5 +69,10 @@ function Items() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  menu: state.menuReducer.menu
+});
 
-export default Items;
+const mapDispatchToProps = {
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Items);

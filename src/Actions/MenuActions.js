@@ -8,3 +8,13 @@ export const loadMenu = (data) => {
         dispatch({ type: 'LOAD_MENU', data })
     }
 }
+export const setItem = (newMenuItem, categoryIndex, itemIndex) => {
+    return function (dispatch) {
+        dispatch({ type: 'SET_ITEM', newMenuItem, categoryIndex, itemIndex })
+    }
+}
+export const setFavourite = (categoryIndex, itemIndex) => {
+    return function (dispatch) {
+        dispatch({ type: 'SET_FAV', categoryIndex, itemIndex })
+    }
+}
