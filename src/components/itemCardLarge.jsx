@@ -25,9 +25,6 @@ function ItemCardLarge(props) {
             setExpand(false);
         }
     };
-    const HandleFavClick = () => {
-
-    }
     const [expand, setExpand] = useState(false)
     return (
         <div
@@ -35,13 +32,16 @@ function ItemCardLarge(props) {
                 } relative transition-all duration-[500ms] flex justify-between`}
         >
             <div className="w-auto h-full flex flex-col">
-                <div
-                    className="w-[18px] h-[18px] relative"
-                    style={{
-                        backgroundImage: `url(${props.data.isVeg ? VegIcon : NonVegIcon})`,
-                        backgroundSize: "100% 100%",
-                    }}
-                ></div>
+                <div className="flex gap-[6px] items-center">
+                    <div
+                        className="w-[18px] h-[18px] relative"
+                        style={{
+                            backgroundImage: `url(${props.data.isVeg ? VegIcon : NonVegIcon})`,
+                            backgroundSize: "100% 100%",
+                        }}
+                    ></div>
+                    {props.data.isRecommended && <div className="text-[10px] font-bold bg-[#a2630e] text-white flex items-center justify-center px-[4px] h-[16px] leading-[12px] rounded-[6px]">Must Try</div>}
+                </div>
                 <div className="font-[800] text-[18px] leading-[24px]">
                     {props.data.name}
                 </div>
@@ -87,7 +87,7 @@ function ItemCardLarge(props) {
                     props.setItem(newMenuItem, props.categoryIndex - 1, props.data.index - 1)
                     props.setFavourite(props.categoryIndex - 1, props.data.index - 1)
                 }}>
-                    {props.menu[props.categoryIndex - 1]?.items[props.data.index - 1].isFavourite ? <FaHeart color="red" /> : <FaRegHeart color="white" />}
+                    {props.menu[props.categoryIndex - 1]?.items[props.data.index - 1]?.isFavourite ? <FaHeart color="red" /> : <FaRegHeart color="white" />}
                 </div>
                 <div className="absolute bottom-[-10px] cursor-pointer border bg-[#f7e8d1] border-[#a2630e] w-[100px] rounded-[4px] h-[30px] flex items-center justify-center">
                     <span className="text-[14px] font-[600]" onClick={() => {
@@ -96,7 +96,6 @@ function ItemCardLarge(props) {
                             props.setActiveItem({ ...props.data, count: 1, added: [] })
                         }
                         else {
-                            const itr = props.currentCart.findIndex(obj => obj.name === props.data.name)
                             props.setActiveItem({ ...props.data, count: 1, added: [] })
                         }
                     }}>Add Item</span>

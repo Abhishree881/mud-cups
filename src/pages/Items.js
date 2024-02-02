@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import "../assets/styles/item.css";
-import rData from "../components/recommendedData";
 import ItemCard from "../components/itemCard";
 import logo from "../assets/image/logo.jpeg";
 import { connect } from "react-redux";

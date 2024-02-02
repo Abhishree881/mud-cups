@@ -35,7 +35,6 @@ const menuReducer = (state = initialState, action) => {
             return { ...state, menu: updatedMenu }
 
         case "SET_FAV":
-            console.log(state.menu[action.categoryIndex].items[action.itemIndex].isFavourite)
             if (state.menu[action.categoryIndex].items[action.itemIndex].isFavourite) {
                 return Object.assign({}, state, {
                     favourites: [...state.favourites, state.menu[action.categoryIndex].items[action.itemIndex]]

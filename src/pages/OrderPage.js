@@ -7,7 +7,6 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import SampleData from "../components/sampleData";
-import rData from "../components/recommendedData";
 import { FaShoppingCart } from "react-icons/fa";
 import ItemCardSmall from "../components/itemCardSmall";
 import ItemCardLarge from "../components/itemCardLarge";
