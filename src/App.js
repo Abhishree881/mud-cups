@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 import { setCart } from "./Actions/CartActions";
 import { fetchCartDb } from "./Actions/CartDabase";
 import AddCategory from "./pages/AddCategory";
-import { loadMenu } from "./Actions/MenuActions";
+import { loadMenu, setRecommended } from "./Actions/MenuActions";
 import toast, { Toaster } from "react-hot-toast";
 import SampleData from "./components/sampleData";
 
@@ -46,6 +46,14 @@ function App(props) {
 
   useEffect(() => {
     props.loadMenu(SampleData);
+    const recData = []
+    SampleData.map((category) => {
+      category.items.map((item) => {
+        if (item.isRecommended)
+          recData.push(item)
+      })
+    })
+    props.setRecommended(recData)
   }, []);
   const CounterRoute = () => {
     const { id } = useParams();
@@ -126,6 +134,7 @@ const mapStateToProps = (state) => ({});
 const mapDispatchToProps = {
   loadMenu,
   setCart,
+  setRecommended,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

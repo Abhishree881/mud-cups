@@ -13,7 +13,11 @@ const menuReducer = (state = initialState, action) => {
         case "LOAD_MENU":
             return Object.assign({}, state, {
                 menu: action.data
-            })
+            });
+        case "SET_RECOMMENDED":
+            return Object.assign({}, state, {
+                recommended: action.recommendedData
+            });
         case "SET_ITEM":
             const { newMenuItem, categoryIndex, itemIndex } = action;
             const updatedMenu = state.menu.map((category, index) => {
@@ -31,6 +35,7 @@ const menuReducer = (state = initialState, action) => {
             return { ...state, menu: updatedMenu }
 
         case "SET_FAV":
+            console.log(state.menu[action.categoryIndex].items[action.itemIndex].isFavourite)
             if (state.menu[action.categoryIndex].items[action.itemIndex].isFavourite) {
                 return Object.assign({}, state, {
                     favourites: [...state.favourites, state.menu[action.categoryIndex].items[action.itemIndex]]
@@ -43,7 +48,8 @@ const menuReducer = (state = initialState, action) => {
                 return Object.assign({}, state, {
                     favourites: updatedFavourites
                 })
-            }
+            };
+
         default:
             return state
     }

@@ -11,8 +11,9 @@ const SampleData = [
                 imgUrl: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png',
                 isVeg: true,
                 price: 160.00,
-                rating: 4.2,
                 isFavourite: false,
+                isRecommended: true,
+                rating: 4.2,
                 totalRatings: 74,
                 addOn: [
                     {
@@ -30,6 +31,7 @@ const SampleData = [
                 isVeg: true,
                 price: 160.00,
                 isFavourite: false,
+                isRecommended: true,
                 rating: 4.5,
                 totalRatings: 64,
                 addOn: [
@@ -49,6 +51,7 @@ const SampleData = [
                 isVeg: false,
                 price: 180.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.4,
                 totalRatings: 48,
                 addOn: [
@@ -68,6 +71,7 @@ const SampleData = [
                 isVeg: true,
                 price: 140.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 3.6,
                 totalRatings: 24,
                 addOn: [
@@ -93,6 +97,7 @@ const SampleData = [
                 isVeg: true,
                 price: 100.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.8,
                 totalRatings: 127,
                 addOn: [],
@@ -109,9 +114,10 @@ const SampleData = [
                 name: 'Chilli Chicken',
                 description: 'A spicy starter involving masaledaar chicken as appetizer',
                 imgUrl: 'https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/assets/search/usecase/paneer_tikka_biryani_zdish.png',
-                isVeg: false,
+                isVeg: true,
                 price: 200.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: [
@@ -131,6 +137,7 @@ const SampleData = [
                 isVeg: true,
                 price: 180.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: [
@@ -150,6 +157,7 @@ const SampleData = [
                 isVeg: true,
                 price: 200.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: [
@@ -169,6 +177,7 @@ const SampleData = [
                 isVeg: false,
                 price: 250.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: [
@@ -188,6 +197,7 @@ const SampleData = [
                 isVeg: true,
                 price: 200.00,
                 isFavourite: false,
+                isRecommended: true,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: [
@@ -215,6 +225,7 @@ const SampleData = [
                 isVeg: true,
                 price: 100.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: []
@@ -227,6 +238,7 @@ const SampleData = [
                 isVeg: true,
                 price: 100.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: []
@@ -239,6 +251,7 @@ const SampleData = [
                 isVeg: true,
                 price: 100.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: []
@@ -251,6 +264,7 @@ const SampleData = [
                 isVeg: true,
                 price: 100.00,
                 isFavourite: false,
+                isRecommended: true,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: []
@@ -263,6 +277,7 @@ const SampleData = [
                 isVeg: true,
                 price: 100.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: []
@@ -282,6 +297,7 @@ const SampleData = [
                 isVeg: true,
                 price: 100.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: []
@@ -294,6 +310,7 @@ const SampleData = [
                 isVeg: true,
                 price: 100.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: []
@@ -313,6 +330,7 @@ const SampleData = [
                 isVeg: true,
                 price: 100.00,
                 isFavourite: false,
+                isRecommended: false,
                 rating: 4.5,
                 totalRatings: 6,
                 addOn: []

@@ -18,3 +18,8 @@ export const setFavourite = (categoryIndex, itemIndex) => {
         dispatch({ type: 'SET_FAV', categoryIndex, itemIndex })
     }
 }
+export const setRecommended = (data) => {
+    return function (dispatch) {
+        dispatch({ type: 'SET_RECOMMENDED', recommendedData: data })
+    }
+}

@@ -61,7 +61,6 @@ function OrderPage(props) {
   }, []);
 
   const containerRef = useRef(null);
-
   return (
     <div className="w-[100vw] h-fit overflow-y-scroll flex justify-center relative">
       <div className="w-full max-w-[450px] h-full flex flex-col relative">
@@ -140,7 +139,7 @@ function OrderPage(props) {
         {/* recommended/favourites section */}
         <div className="overflow-scroll h-[170px] my-[10px] px-[12px] flex gap-[12px]">
           {isActive &&
-            rData.map((index) => {
+            props.recommended.map((index) => {
               return <ItemCardSmall data={index} />;
             })}
           {!isActive &&
@@ -234,6 +233,7 @@ function OrderPage(props) {
 const mapStateToProps = (state) => ({
   currentCart: state.cartReducer.currentCart,
   menu: state.menuReducer.menu,
-  favourites: state.menuReducer.favourites
+  favourites: state.menuReducer.favourites,
+  recommended: state.menuReducer.recommended
 });
 export default connect(mapStateToProps)(OrderPage);
