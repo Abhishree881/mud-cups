@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
+import { connect } from "react-redux";
 
 function CategoryCard(props) {
   return (
@@ -16,7 +17,7 @@ function CategoryCard(props) {
         <div className="flex-[10] font-semibold flex flex-col pl-[16px]">
           <div className="text-l text-black font-bold">{props.data.name}</div>
           <div className="text-[#573a21] font-[400] text-sm bg-transparent">
-            {props.data.len} item{props.data.len !== 1 && "s"} in this list
+            {props.data.items ? `${props.data.items.length} item${props.data.items.length !== 1 ? "s" : ""} in this list` : `No item added yet`}
           </div>
         </div>
         <div className="flex-[1] flex justify-center">
@@ -26,5 +27,10 @@ function CategoryCard(props) {
     </Link>
   );
 }
+const mapStateToProps = (state) => ({
+  menu: state.menuReducer.menu
+});
 
-export default CategoryCard;
+const mapDispatchToProps = {
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryCard);

@@ -7,7 +7,6 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import SampleData from "../components/sampleData";
-import rData from "../components/recommendedData";
 import { FaShoppingCart } from "react-icons/fa";
 import ItemCardSmall from "../components/itemCardSmall";
 import ItemCardLarge from "../components/itemCardLarge";
@@ -60,10 +59,7 @@ function OrderPage(props) {
     };
   }, []);
 
-  const fData = [];
-
   const containerRef = useRef(null);
-
   return (
     <div className="w-[100vw] h-fit overflow-y-scroll flex justify-center relative">
       <div className="w-full max-w-[450px] h-full flex flex-col relative">
@@ -142,12 +138,14 @@ function OrderPage(props) {
         {/* recommended/favourites section */}
         <div className="overflow-scroll h-[170px] my-[10px] px-[12px] flex gap-[12px]">
           {isActive &&
-            rData.map((index) => {
-              return <ItemCardSmall data={index} key={index.index} />;
+            props.recommended.map((index) => {
+              return <ItemCardSmall data={index} />;
             })}
           {!isActive &&
-            (fData.length > 0 ? (
-              fData.map((index) => { })
+            (props.favourites.length > 0 ? (
+              props.favourites.map((index) => {
+                return <ItemCardSmall data={index} />
+              })
             ) : (
               <div className="w-full h-full flex items-center justify-center italic">
                 No favourites added yet
@@ -166,7 +164,7 @@ function OrderPage(props) {
           className="w-full flex flex-col px-[12px] gap-[16px] pb-[60px] pt-[6px]"
           ref={containerRef}
         >
-          {SampleData.map((index) => {
+          {props.menu.map((index) => {
             return (
               <div className="w-full h-fit flex flex-col gap-[16px]">
                 <div className="w-full h-[20px] font-[700] text-[#55555585]">
@@ -179,6 +177,7 @@ function OrderPage(props) {
                       expanded={expanded}
                       setExpanded={setExpanded}
                       len={index.items.length}
+                      categoryIndex={index.index}
                       isVisible={isInFrame}
                       setIsVisible={setInFrame}
                     />
@@ -192,7 +191,7 @@ function OrderPage(props) {
       {/* bottom navbar */}
       <div className="fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px] bg-white">
         <div className="flex-[4] w-full h-full flex overflow-scroll pl-[6px] gap-[12px]">
-          {SampleData.map((index) => {
+          {props.menu.map((index) => {
             return (
               <div
                 className="w-fit flex items-center text-[14px] justify-center h-full"
@@ -232,5 +231,8 @@ function OrderPage(props) {
 }
 const mapStateToProps = (state) => ({
   currentCart: state.cartReducer.currentCart,
+  menu: state.menuReducer.menu,
+  favourites: state.menuReducer.favourites,
+  recommended: state.menuReducer.recommended
 });
 export default connect(mapStateToProps)(OrderPage);
