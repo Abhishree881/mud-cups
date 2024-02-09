@@ -124,7 +124,7 @@ function App(props) {
           }
         />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin/category" element={<Category />} />
+        <Route path="/admin/:id/category" element={<Category />} />
         <Route path="/admin/items/:id" element={<Items />} />
         <Route path="/counter/:id" element={<CounterRoute />} />
         <Route path="/:id/search" element={<Search />} />
