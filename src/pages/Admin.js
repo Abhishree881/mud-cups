@@ -16,8 +16,8 @@ function AdminPage() {
   const [data, setData] = useState([]);
   const [scroll, setScroll] = useState(false);
   const [addDialog, setAddDialog] = useState(false);
-  const [franchiseName, setFranchiseName] = useState();
-  const [franchiseDesc, setFranchiseDesc] = useState();
+  const [franchiseName, setFranchiseName] = useState("");
+  const [franchiseDesc, setFranchiseDesc] = useState("");
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -43,6 +43,19 @@ function AdminPage() {
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
+    if (franchiseName.length === 0) {
+      alert("Name is mandatory");
+      return;
+    }
+    if (franchiseDesc.length === 0) {
+      alert("Description is mandatory");
+      return;
+    }
+    if (image === null) {
+      alert("Image is mandatory");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -152,35 +165,40 @@ function AdminPage() {
 
       <div className="admin-franchises" id="admin">
         <div className="admin-cards">
-          {data.length !== 0
-            ? data.map((index) => {
-                return (
-                  <div
-                    className="card"
-                    onClick={() => navigateToEditMenu(index.franchiseName)}
-                  >
-                    <div
-                      className="card-img"
-                      style={{ backgroundImage: `url(${index.imageUrl})` }}
-                    ></div>
-                    <div className="card-content">
-                      <div className="card-title">{index.franchiseName}</div>
-                      <div className="card-description">
-                        <i>{index.franchiseDesc}</i>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            : null}
-          <div className="dashed-card card" onClick={() => setAddDialog(true)}>
-            <div className="card-img">Franchise Image</div>
-            <div className="card-content">
-              <div className="card-title">Franchise Name</div>
-              <div className="card-description">
-                <i>Franchise Description</i>
+          <div className="admin-card-flex">
+            <div
+              className="dashed-card card"
+              onClick={() => setAddDialog(true)}
+            >
+              <div className="card-img">Franchise Image</div>
+              <div className="card-content">
+                <div className="card-title">Franchise Name</div>
+                <div className="card-description">
+                  <i>Franchise Description</i>
+                </div>
               </div>
             </div>
+            {data.length !== 0
+              ? data.map((index) => {
+                  return (
+                    <div
+                      className="card"
+                      onClick={() => navigateToEditMenu(index.franchiseName)}
+                    >
+                      <div
+                        className="card-img"
+                        style={{ backgroundImage: `url(${index.imageUrl})` }}
+                      ></div>
+                      <div className="card-content">
+                        <div className="card-title">{index.franchiseName}</div>
+                        <div className="card-description">
+                          <i>{index.franchiseDesc}</i>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              : null}
           </div>
         </div>
       </div>
@@ -195,6 +213,7 @@ function AdminPage() {
               />
               <input
                 type="file"
+                accept="image/*"
                 id="image"
                 onChange={handleImageChange}
                 style={{ display: "none" }}
