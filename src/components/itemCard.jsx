@@ -12,14 +12,27 @@ function ItemCard({ data }) {
             id="myCheckbox"
             name="myCheckbox"
             value="checked"
+            checked={data.isAvailable}
           />
         </span>
+        <div
+          style={{
+            backgroundImage: `url(${data.imageUrl})`,
+            width: "45px",
+            aspectRatio: "1/1",
+            backgroundColor: "white",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            borderRadius: "10px",
+            marginLeft: "10px",
+          }}
+        ></div>
         <div className="itemcard-item">
-          <span className="itemcard-name">{data.name}</span>
-          <span className="itemcard-desc">{data.category}</span>
+          <span className="itemcard-name">{data.itemName}</span>
+          <span className="itemcard-desc">{data.itemDesc}</span>
         </div>
       </div>
-      <span className="itemcard-price">&#x20B9; {data.price}</span>
+      <span className="itemcard-price">&#x20B9;{data.itemPrice}</span>
     </div>
   );
 }
