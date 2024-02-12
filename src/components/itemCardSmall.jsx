@@ -18,9 +18,9 @@ function ItemCardSmall(props) {
   return (
     <div className="min-w-[130px] h-full flex flex-col gap-[6px] relative">
       <div className="absolute w-fit top-[6px] left-[-5px] text-white bg-[#a2630b] text-[12px] leading-[14px] rounded-[6px] font-[400] px-[6px] py-[3px]">
-        {props.data.itemName.length > 18
-          ? props.data.itemName.substring(0, 14) + "..."
-          : props.data.itemName}
+        {props.data.categoryName.length > 18
+          ? props.data.categoryName.substring(0, 14) + "..."
+          : props.data.categoryName}
       </div>
       <div
         className="absolute top-[9px] right-[5px]"

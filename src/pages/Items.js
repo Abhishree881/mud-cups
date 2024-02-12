@@ -94,6 +94,8 @@ function Items(props) {
           const categoryCollectionRef = collection(db, franchise);
           const categoryDocRef = doc(categoryCollectionRef, id);
           const updatedData = {
+            categoryName: id,
+            franchiseName: franchise,
             itemIndex,
             itemName,
             itemDesc,

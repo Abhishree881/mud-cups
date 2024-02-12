@@ -3,12 +3,71 @@ import Logo from "../assets/image/logo.jpeg";
 import CartCard from "../components/cartCard";
 import { FaShoppingCart } from "react-icons/fa";
 import { connect } from "react-redux";
+import { db } from "../firebase";
+import { doc, setDoc, collection, getDocs, getDoc } from "firebase/firestore";
+import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
 
 function Cart(props) {
+  const { id } = useParams();
   const totalCost = props.currentCart.reduce(
     (total, item) => total + parseFloat(item.itemPrice) * item.count,
     0
   );
+
+  //   const handleFetch = async () => {
+
+  //   };
+
+  const handleClick = async (e) => {
+    props.currentCart.forEach(async (index) => {
+      console.log(index);
+      try {
+        const categoryCollectionRef = collection(
+          db,
+          `${index.franchiseName} Orders`
+        );
+        const categoryDocRef = doc(categoryCollectionRef, "orders");
+        const updatedData = {
+          categoryName: index.categoryName,
+          franchiseName: index.franchiseName,
+          itemName: index.itemName,
+          itemDesc: index.itemDesc,
+          imageUrl: index.imageUrl,
+          isVeg: index.isVeg,
+          itemPrice: index.itemPrice,
+          rating: index.rating,
+          totalRatings: index.totalRatings,
+          isAvailable: index.isAvailable,
+          addOn: index.addOn,
+          tableNumber: id,
+        };
+        var data = [];
+        const docRef = doc(db, `${index.franchiseName} Orders`, "orders");
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          data = docSnap.data().items;
+        } else {
+          console.log("No such document!");
+        }
+        data.push(updatedData);
+
+        const updatedList = {
+          items: data,
+        };
+        console.log(data, updatedList);
+        await setDoc(categoryDocRef, updatedList, { merge: true });
+      } catch (error) {
+        console.error("Error adding restaurant: ", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error,
+        });
+      }
+    });
+  };
+
   return (
     <div className="w-[100vw] h-fit overflow-y-scroll flex justify-center relative">
       <div className="w-full max-w-[450px] h-full flex flex-col relative">
@@ -39,7 +98,10 @@ function Cart(props) {
         </div>
 
         <div className="w-full h-[50px] max-w-[450px] fixed border bottom-0 flex items-center justify-center bg-white">
-          <div className="flex-[70] max-w-[200px] h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center">
+          <div
+            onClick={handleClick}
+            className="flex-[70] max-w-[200px] h-[40px] bg-[#a2630e] rounded-[3px] text-white font-[700] flex items-center justify-center"
+          >
             Pay & Order {totalCost.toFixed(2)}
           </div>
         </div>

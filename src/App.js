@@ -65,7 +65,7 @@ function App(props) {
     collectionRef.forEach((doc) => {
       array.push(doc.data());
     });
-    console.log(array);
+    // console.log(array);
     props.loadMenu(array);
     const recData = [];
     array.map((category) => {
