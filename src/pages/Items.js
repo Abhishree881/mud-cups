@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import "../assets/styles/item.css";
 import ItemCard from "../components/itemCard";
 import logo from "../assets/image/logo.jpeg";
 import { connect } from "react-redux";
+import DialogBox from "../components/dialogBox";
+import TextField from "@mui/material/TextField";
+import addImage from "../assets/image/addImage.png";
+import { db, storage } from "../firebase";
+import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import Swal from "sweetalert2";
+import { CgSpinner } from "react-icons/cg";
 
 function Items(props) {
-  const { id } = useParams();
-  const i = props.menu.findIndex(item => item.name === id)
+  const [firstLoad, setFirstLoad] = useState(true);
+  const [franchiseImage, setFranchiseImage] = useState(null);
+  const { franchise, id } = useParams();
+  useEffect(() => {
+    setFirstLoad(false);
+    if (firstLoad) {
+      // handleFetch();
+      handleImageFetch();
+    }
+  }, [firstLoad]);
+  const i = props.menu.findIndex((item) => item.name === id);
+
+  const handleImageFetch = async () => {
+    const collectionRef = await getDocs(collection(db, "franchices"));
+    collectionRef.forEach((doc) => {
+      if (doc.data().franchiseName === franchise) {
+        setFranchiseImage(doc.data().imageUrl);
+      }
+    });
+  };
+
   return (
     <div className="relative">
       <div className=" w-[100vw] h-[29vh] pt-[36px] bg-[#fcdfb7] flex fixed top-0">
@@ -41,12 +68,18 @@ function Items(props) {
             className="pt-2 px-4 font-bold flex items-center gap-[5px] sticky top-0 bg-[#f3eee6] z-50"
             style={{ borderRadius: "45px 0 0 0" }}
           >
-            <img
-              className="aspect-w-1 aspect-h-1 w-[45px] border rounded-full"
-              src={logo}
-              alt="logo"
+            <div
+              className="img"
+              style={{
+                backgroundImage: `url(${franchiseImage})`,
+                aspectRatio: "1/1",
+                width: "45px",
+                borderRadius: "50%",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
             />
-            <span>Mud Cups</span>
+            <span>{franchise}</span>
           </div>
         </Link>
         <div className="h-fit w-full my-[10px] flex items-center justify-center sticky top-[50px] bg-[#f3eee6] z-50">
@@ -56,9 +89,9 @@ function Items(props) {
           </span>
         </div>
         <div className="pt-1">
-          {props.menu[i].items.map((index) => {
+          {/* {props.menu[i].items.map((index) => {
             return <ItemCard data={index} key={index.index} />;
-          })}
+          })} */}
           <hr className="mt-3 mb-1" />
           <span className="flex items-center text-center flex-col w-[100%] pb-2">
             You have reached end of the list
@@ -69,9 +102,8 @@ function Items(props) {
   );
 }
 const mapStateToProps = (state) => ({
-  menu: state.menuReducer.menu
+  menu: state.menuReducer.menu,
 });
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 export default connect(mapStateToProps, mapDispatchToProps)(Items);

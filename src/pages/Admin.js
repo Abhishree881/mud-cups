@@ -107,7 +107,7 @@ function AdminPage() {
     let array = [];
     const collectionRef = await getDocs(collection(db, "franchices"));
     collectionRef.forEach((doc) => {
-      console.log(doc.data());
+      // console.log(doc.data());
       array.push(doc.data());
     });
     setData(array);

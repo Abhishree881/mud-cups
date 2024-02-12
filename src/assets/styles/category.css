@@ -18,10 +18,12 @@
     gap: 10px;
 }
 
-.category-header img {
+.category-header .img {
     aspect-ratio: 1/1;
     width: 45px;
     border-radius: 50%;
+    background-size: cover;
+    background-position: center;
 }
 
 .category-sub-header {

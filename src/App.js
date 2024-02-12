@@ -46,14 +46,13 @@ function App(props) {
 
   useEffect(() => {
     props.loadMenu(SampleData);
-    const recData = []
+    const recData = [];
     SampleData.map((category) => {
       category.items.map((item) => {
-        if (item.isRecommended)
-          recData.push(item)
-      })
-    })
-    props.setRecommended(recData)
+        if (item.isRecommended) recData.push(item);
+      });
+    });
+    props.setRecommended(recData);
   }, []);
   const CounterRoute = () => {
     const { id } = useParams();
@@ -104,7 +103,10 @@ function App(props) {
         />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/:id/category" element={<Category />} />
-        <Route path="/admin/items/:id" element={<Items />} />
+        <Route
+          path="/admin/:franchise/category/:id/items"
+          element={<Items />}
+        />
         <Route path="/counter/:id" element={<CounterRoute />} />
         <Route path="/:id/search" element={<Search />} />
         <Route
@@ -124,7 +126,7 @@ function App(props) {
           }
         />
         <Route path="/admin/edit" element={<AddCategory />} />
-        <Route path="/404" element={<NotFoundPage />} />
+        <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
