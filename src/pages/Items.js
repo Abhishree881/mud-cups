@@ -98,7 +98,7 @@ function Items(props) {
             itemName,
             itemDesc,
             imageUrl: downloadURL,
-            isveg: foodType === "Veg" ? true : false,
+            isVeg: foodType === "Veg" ? true : false,
             isFavourite: false,
             isRecommended: isRecommended === "Yes" ? true : false,
             itemPrice,

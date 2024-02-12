@@ -13,9 +13,13 @@ import ItemCardLarge from "../components/itemCardLarge";
 import AddToCart from "../components/addToCart";
 import { connect } from "react-redux";
 import { AuthContext } from "../AuthContext";
+import { db } from "../firebase";
+import { doc, collection, getDocs } from "firebase/firestore";
 
 function OrderPage(props) {
   let { id } = useParams();
+  const [firstLoad, setFirstLoad] = useState(true);
+  const [data, setData] = useState();
   const [isVisible, setIsVisible] = useState(true);
   const [isActive, setIsActive] = useState(true);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(1);
@@ -29,6 +33,23 @@ function OrderPage(props) {
     const categoryRef = containerRef.current.children[index.index - 1];
     categoryRef.scrollIntoView({ behavior: "smooth" });
   };
+
+  const handleFetch = async () => {
+    let array = [];
+    const collectionRef = await getDocs(collection(db, "Mud Cups"));
+    collectionRef.forEach((doc) => {
+      array.push(doc.data());
+    });
+    setData(array);
+  };
+
+  useEffect(() => {
+    setFirstLoad(false);
+    if (firstLoad) {
+      handleFetch();
+    }
+  }, [firstLoad]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
@@ -36,14 +57,15 @@ function OrderPage(props) {
 
     return () => clearTimeout(timer);
   }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       const arr = [];
-      SampleData.forEach((itr) => {
-        arr[itr.index - 1] =
-          containerRef.current.children[itr.index - 1].offsetTop;
-      });
+      // SampleData.forEach((itr) => {
+      //   arr[itr.index - 1] =
+      //     containerRef.current.children[itr.index - 1].offsetTop;
+      // });
       arr[0] = 0;
       let temp = SampleData.length;
       for (let i = 0; i < arr?.length || 0; i++) {
@@ -60,6 +82,7 @@ function OrderPage(props) {
   }, []);
 
   const containerRef = useRef(null);
+
   return (
     <div className="w-[100vw] h-fit overflow-y-scroll flex justify-center relative">
       <div className="w-full max-w-[450px] h-full flex flex-col relative">
@@ -113,15 +136,17 @@ function OrderPage(props) {
         <div className="flex w-full h-[28px] my-[6px] justify-center">
           <div className="border w-full max-w-[224px] h-full rounded-[10px] flex text-[12px] overflow-hidden">
             <div
-              className={`w-full h-full flex items-center justify-center border gap-1 ${isActive && "activeChannelLeft"
-                }`}
+              className={`w-full h-full flex items-center justify-center border gap-1 ${
+                isActive && "activeChannelLeft"
+              }`}
               onClick={() => setIsActive(!isActive)}
             >
               Recommended
             </div>
             <div
-              className={`w-full h-full flex items-center justify-center border gap-1 ${!isActive && "activeChannelRight"
-                }`}
+              className={`w-full h-full flex items-center justify-center border gap-1 ${
+                !isActive && "activeChannelRight"
+              }`}
               onClick={() => setIsActive(!isActive)}
             >
               <div className="pt-[1px]">
@@ -144,7 +169,7 @@ function OrderPage(props) {
           {!isActive &&
             (props.favourites.length > 0 ? (
               props.favourites.map((index) => {
-                return <ItemCardSmall data={index} />
+                return <ItemCardSmall data={index} />;
               })
             ) : (
               <div className="w-full h-full flex items-center justify-center italic">
@@ -168,9 +193,9 @@ function OrderPage(props) {
             return (
               <div className="w-full h-fit flex flex-col gap-[16px]">
                 <div className="w-full h-[20px] font-[700] text-[#55555585]">
-                  {index.name}
+                  {index.categoryName}
                 </div>
-                {index.items.map((item) => {
+                {index?.items?.map((item) => {
                   return (
                     <ItemCardLarge
                       data={item}
@@ -200,9 +225,10 @@ function OrderPage(props) {
                 }}
               >
                 <span
-                  className={`w-fit whitespace-nowrap px-[8px] cursor-pointer text-center ${activeCategoryIndex === index.index &&
+                  className={`w-fit whitespace-nowrap px-[8px] cursor-pointer text-center ${
+                    activeCategoryIndex === index.index &&
                     "bg-[#fcecd5] text-[#a2630b] font-[600] pb-[2px] rounded-[6px]"
-                    }`}
+                  }`}
                 >
                   {index.name}
                 </span>
@@ -220,8 +246,9 @@ function OrderPage(props) {
           </div>
         </Link>
         <div
-          className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${isInFrame ? "right-[0px]" : "right-[100%]"
-            } `}
+          className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${
+            isInFrame ? "right-[0px]" : "right-[100%]"
+          } `}
         >
           <AddToCart isVisible={isInFrame} setIsVisible={setInFrame} />
         </div>
@@ -233,6 +260,6 @@ const mapStateToProps = (state) => ({
   currentCart: state.cartReducer.currentCart,
   menu: state.menuReducer.menu,
   favourites: state.menuReducer.favourites,
-  recommended: state.menuReducer.recommended
+  recommended: state.menuReducer.recommended,
 });
 export default connect(mapStateToProps)(OrderPage);
