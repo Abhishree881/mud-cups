@@ -13,13 +13,9 @@ import ItemCardLarge from "../components/itemCardLarge";
 import AddToCart from "../components/addToCart";
 import { connect } from "react-redux";
 import { AuthContext } from "../AuthContext";
-import { db } from "../firebase";
-import { doc, collection, getDocs } from "firebase/firestore";
 
 function OrderPage(props) {
   let { id } = useParams();
-  const [firstLoad, setFirstLoad] = useState(true);
-  const [data, setData] = useState();
   const [isVisible, setIsVisible] = useState(true);
   const [isActive, setIsActive] = useState(true);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(1);
@@ -33,22 +29,6 @@ function OrderPage(props) {
     const categoryRef = containerRef.current.children[index.index - 1];
     categoryRef.scrollIntoView({ behavior: "smooth" });
   };
-
-  const handleFetch = async () => {
-    let array = [];
-    const collectionRef = await getDocs(collection(db, "Mud Cups"));
-    collectionRef.forEach((doc) => {
-      array.push(doc.data());
-    });
-    setData(array);
-  };
-
-  useEffect(() => {
-    setFirstLoad(false);
-    if (firstLoad) {
-      handleFetch();
-    }
-  }, [firstLoad]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

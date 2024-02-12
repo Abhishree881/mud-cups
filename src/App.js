@@ -24,8 +24,12 @@ import AddCategory from "./pages/AddCategory";
 import { loadMenu, setRecommended } from "./Actions/MenuActions";
 import toast, { Toaster } from "react-hot-toast";
 import SampleData from "./components/sampleData";
+import CounterRoute from "./pages/CounterRoute";
+import { db } from "./firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 function App(props) {
+  const [firstLoad, setFirstLoad] = useState(true);
   const { currentUser } = useContext(AuthContext);
   const [currentTable, setCurrentTable] = useState();
   const isValidCounterId = (value) => {
@@ -44,24 +48,40 @@ function App(props) {
     updateCart();
   }, [currentUser]);
 
-  useEffect(() => {
-    props.loadMenu(SampleData);
+  // useEffect(() => {
+  //   props.loadMenu(SampleData);
+  //   const recData = [];
+  //   SampleData.map((category) => {
+  //     category.items.map((item) => {
+  //       if (item.isRecommended) recData.push(item);
+  //     });
+  //   });
+  //   props.setRecommended(recData);
+  // }, []);
+
+  const handleFetch = async () => {
+    let array = [];
+    const collectionRef = await getDocs(collection(db, "Mud Cups"));
+    collectionRef.forEach((doc) => {
+      array.push(doc.data());
+    });
+    console.log(array);
+    props.loadMenu(array);
     const recData = [];
-    SampleData.map((category) => {
+    array.map((category) => {
       category.items.map((item) => {
         if (item.isRecommended) recData.push(item);
       });
     });
     props.setRecommended(recData);
-  }, []);
-  const CounterRoute = () => {
-    const { id } = useParams();
-    if (isValidCounterId(id)) {
-      return <Counter />;
-    } else {
-      return <Navigate to="/404" />;
-    }
   };
+
+  useEffect(() => {
+    setFirstLoad(false);
+    if (firstLoad) {
+      handleFetch();
+    }
+  }, [firstLoad]);
 
   const PrivateRoute = ({ children }) => {
     if (!currentUser) {
@@ -107,7 +127,8 @@ function App(props) {
           path="/admin/:franchise/category/:id/items"
           element={<Items />}
         />
-        <Route path="/counter/:id" element={<CounterRoute />} />
+        <Route path="/counter" element={<CounterRoute />} />
+        <Route path="/counter/:id" element={<Counter />} />
         <Route path="/:id/search" element={<Search />} />
         <Route
           path="/:id"
