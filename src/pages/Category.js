@@ -78,16 +78,15 @@ function Category(props) {
         `category-images/${categoryName}_${Date.now()}`
       );
 
-      const items = [];
-
       await uploadBytesResumable(imageRef, image).then(() => {
         getDownloadURL(imageRef).then(async (downloadURL) => {
           await setDoc(doc(db, id, categoryName), {
+            franchiseName: id,
             categoryIndex,
             categoryName,
             categoryDesc,
             imageUrl: downloadURL,
-            items,
+            items: [],
           });
           Swal.fire({
             icon: "success",

@@ -89,7 +89,6 @@ function Items(props) {
     try {
       const imageRef = ref(storage, `item-images/${itemName}_${Date.now()}`);
 
-      const addOn = [];
       await uploadBytesResumable(imageRef, image).then(() => {
         getDownloadURL(imageRef).then(async (downloadURL) => {
           const categoryCollectionRef = collection(db, franchise);
@@ -106,7 +105,7 @@ function Items(props) {
             rating: 0.0,
             totalRatings: 0,
             isAvailable: true,
-            addOn,
+            addOn: [],
           };
           const updatedList = {
             items: [...data, updatedData],
