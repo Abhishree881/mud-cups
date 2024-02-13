@@ -29,8 +29,8 @@ function ItemCardLarge(props) {
   return (
     <div
       className={`w-full ${
-        expand ? "h-[200px]" : "h-[140px]"
-      } relative transition-all duration-[500ms] flex justify-between`}
+        expand ? "h-[200px]" : "h-[160px]"
+      } relative transition-all duration-[500ms] flex justify-between pt-[10px]`}
     >
       <div className="w-auto h-full flex flex-col">
         <div className="flex gap-[6px] items-center">
