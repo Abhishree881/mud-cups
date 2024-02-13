@@ -9,7 +9,7 @@ function ItemCardSmall(props) {
     itemIndex = -1;
   props.menu.forEach((category, cindex) => {
     category.items.forEach((item, iindex) => {
-      if (item.name === props.data.name) {
+      if (item.itemName === props.data.itemName) {
         categoryIndex = cindex;
         itemIndex = iindex;
       }

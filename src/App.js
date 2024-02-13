@@ -65,6 +65,7 @@ function App(props) {
     collectionRef.forEach((doc) => {
       array.push(doc.data());
     });
+    array.sort((a, b) => a.categoryIndex - b.categoryIndex);
     // console.log(array);
     props.loadMenu(array);
     const recData = [];

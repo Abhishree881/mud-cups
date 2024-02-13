@@ -6,7 +6,6 @@ import Hi from "../assets/gifs/hi.gif";
 import { IoSearch } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
-import SampleData from "../components/sampleData";
 import { FaShoppingCart } from "react-icons/fa";
 import ItemCardSmall from "../components/itemCardSmall";
 import ItemCardLarge from "../components/itemCardLarge";
@@ -26,7 +25,7 @@ function OrderPage(props) {
 
   const HandleCategoryClick = (index) => {
     // setActiveCategoryIndex(index.index);
-    const categoryRef = containerRef.current.children[index.index - 1];
+    const categoryRef = containerRef.current.children[index.categoryIndex - 1];
     categoryRef.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -42,12 +41,12 @@ function OrderPage(props) {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       const arr = [];
-      // SampleData.forEach((itr) => {
-      //   arr[itr.index - 1] =
-      //     containerRef.current.children[itr.index - 1].offsetTop;
-      // });
+      props.menu.forEach((itr) => {
+        arr[itr.categoryIndex - 1] =
+          containerRef.current.children[itr.categoryIndex - 1].offsetTop;
+      });
       arr[0] = 0;
-      let temp = SampleData.length;
+      let temp = props.menu.length;
       for (let i = 0; i < arr?.length || 0; i++) {
         if (arr[i] <= scrollPosition + 12) {
           temp = i + 1;
@@ -59,7 +58,7 @@ function OrderPage(props) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [props.menu]);
 
   const containerRef = useRef(null);
 
@@ -182,7 +181,7 @@ function OrderPage(props) {
                       expanded={expanded}
                       setExpanded={setExpanded}
                       len={index.items.length}
-                      categoryIndex={index.index}
+                      categoryIndex={index.categoryIndex}
                       isVisible={isInFrame}
                       setIsVisible={setInFrame}
                     />
@@ -206,11 +205,11 @@ function OrderPage(props) {
               >
                 <span
                   className={`w-fit whitespace-nowrap px-[8px] cursor-pointer text-center ${
-                    activeCategoryIndex === index.index &&
+                    activeCategoryIndex === index.categoryIndex &&
                     "bg-[#fcecd5] text-[#a2630b] font-[600] pb-[2px] rounded-[6px]"
                   }`}
                 >
-                  {index.name}
+                  {index.categoryName}
                 </span>
               </div>
             );

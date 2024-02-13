@@ -98,21 +98,25 @@ function ItemCardLarge(props) {
           onClick={() => {
             const newMenuItem = {
               ...props.menu[props.categoryIndex - 1].items[
-                props.data.index - 1
+                props.data.itemIndex - 1
               ],
               isFavourite:
-                !props.menu[props.categoryIndex - 1].items[props.data.index - 1]
-                  .isFavourite,
+                !props.menu[props.categoryIndex - 1].items[
+                  props.data.itemIndex - 1
+                ].isFavourite,
             };
             props.setItem(
               newMenuItem,
               props.categoryIndex - 1,
-              props.data.index - 1
+              props.data.itemIndex - 1
             );
-            props.setFavourite(props.categoryIndex - 1, props.data.index - 1);
+            props.setFavourite(
+              props.categoryIndex - 1,
+              props.data.itemIndex - 1
+            );
           }}
         >
-          {props.menu[props.categoryIndex - 1]?.items[props.data.index - 1]
+          {props.menu[props.categoryIndex - 1]?.items[props.data.itemIndex - 1]
             ?.isFavourite ? (
             <FaHeart color="red" />
           ) : (
