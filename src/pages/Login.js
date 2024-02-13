@@ -15,6 +15,8 @@ import { collection, doc, setDoc } from "firebase/firestore";
 import OTPInput from "otp-input-react";
 import { CgSpinner } from "react-icons/cg";
 import toast, { Toaster } from "react-hot-toast";
+import { setUserName } from "../Actions/CartActions";
+import { connect } from "react-redux";
 
 const Login = () => {
   const [phone, setPhone] = useState("");
@@ -194,4 +196,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {
+  setUserName,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

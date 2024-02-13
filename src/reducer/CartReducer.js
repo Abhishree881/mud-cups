@@ -1,18 +1,21 @@
 const initialState = {
   currentCart: [],
-  activeItem: {}
+  activeItem: {},
+  userName: "",
 };
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       return Object.assign({}, state, {
-        currentCart: [...state.currentCart, action.newCartItem]
+        currentCart: [...state.currentCart, action.newCartItem],
       });
     case "REMOVE_FROM_CART":
       const indexToRemove = action.index;
       return Object.assign({}, state, {
-        currentCart: state.currentCart.filter((item, index) => index !== indexToRemove)
+        currentCart: state.currentCart.filter(
+          (item, index) => index !== indexToRemove
+        ),
       });
     case "UPDATE_ITEM":
       const { newItem, index } = action;
@@ -22,11 +25,15 @@ const cartReducer = (state = initialState, action) => {
       return { ...state, currentCart: newCart };
     case "SET_ACTIVE_ITEM":
       return Object.assign({}, state, {
-        activeItem: action.newActiveItem
+        activeItem: action.newActiveItem,
       });
     case "SET_CART":
       return Object.assign({}, state, {
-        currentCart: action.currentCart
+        currentCart: action.currentCart,
+      });
+    case "setUserName":
+      return Object.assign({}, state, {
+        userName: action.userName,
       });
     default:
       return state;

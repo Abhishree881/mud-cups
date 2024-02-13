@@ -27,6 +27,8 @@ import SampleData from "./components/sampleData";
 import CounterRoute from "./pages/CounterRoute";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
+import UserHome from "./pages/UserHome";
+import "./assets/styles/loader.scss";
 
 function App(props) {
   const [firstLoad, setFirstLoad] = useState(true);
@@ -39,7 +41,7 @@ function App(props) {
     const updateCart = async () => {
       if (currentUser?.uid) {
         if (currentTable) {
-          toast.success(`Welcome ${currentUser?.displayName}`, { icon: "👋" });
+          toast.success(`Welcome ${props.userName}`, { icon: "👋" });
         }
         const userDoc = await fetchCartDb(currentUser);
         props.setCart(userDoc.filter((obj) => Object.keys(obj).length !== 0));
@@ -59,30 +61,30 @@ function App(props) {
   //   props.setRecommended(recData);
   // }, []);
 
-  const handleFetch = async () => {
-    let array = [];
-    const collectionRef = await getDocs(collection(db, "Mud Cups"));
-    collectionRef.forEach((doc) => {
-      array.push(doc.data());
-    });
-    array.sort((a, b) => a.categoryIndex - b.categoryIndex);
-    // console.log(array);
-    props.loadMenu(array);
-    const recData = [];
-    array.map((category) => {
-      category.items.map((item) => {
-        if (item.isRecommended) recData.push(item);
-      });
-    });
-    props.setRecommended(recData);
-  };
+  // const handleFetch = async () => {
+  //   let array = [];
+  //   const collectionRef = await getDocs(collection(db, "Mud Cups"));
+  //   collectionRef.forEach((doc) => {
+  //     array.push(doc.data());
+  //   });
+  //   array.sort((a, b) => a.categoryIndex - b.categoryIndex);
+  //   // console.log(array);
+  //   props.loadMenu(array);
+  //   const recData = [];
+  //   array.map((category) => {
+  //     category.items.map((item) => {
+  //       if (item.isRecommended) recData.push(item);
+  //     });
+  //   });
+  //   props.setRecommended(recData);
+  // };
 
-  useEffect(() => {
-    setFirstLoad(false);
-    if (firstLoad) {
-      handleFetch();
-    }
-  }, [firstLoad]);
+  // useEffect(() => {
+  //   setFirstLoad(false);
+  //   if (firstLoad) {
+  //     handleFetch();
+  //   }
+  // }, [firstLoad]);
 
   const PrivateRoute = ({ children }) => {
     if (!currentUser) {
@@ -135,6 +137,14 @@ function App(props) {
           path="/:id"
           element={
             <PrivateRoute>
+              <UserHome />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/:id/:franchise"
+          element={
+            <PrivateRoute>
               <OrderPage />
             </PrivateRoute>
           }
@@ -153,7 +163,9 @@ function App(props) {
     </BrowserRouter>
   );
 }
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  userName: state.cartReducer.userName,
+});
 
 const mapDispatchToProps = {
   loadMenu,

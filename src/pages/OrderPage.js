@@ -12,14 +12,19 @@ import ItemCardLarge from "../components/itemCardLarge";
 import AddToCart from "../components/addToCart";
 import { connect } from "react-redux";
 import { AuthContext } from "../AuthContext";
+import { db } from "../firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { loadMenu, setRecommended } from "../Actions/MenuActions";
 
 function OrderPage(props) {
-  let { id } = useParams();
+  let { id, franchise } = useParams();
+  const [firstLoad, setFirstLoad] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
   const [isActive, setIsActive] = useState(true);
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(1);
   const [isInFrame, setInFrame] = useState(false);
   const [expanded, setExpanded] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const { currentUser } = useContext(AuthContext);
 
@@ -36,6 +41,32 @@ function OrderPage(props) {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleFetch = async () => {
+    let array = [];
+    const collectionRef = await getDocs(collection(db, franchise));
+    collectionRef.forEach((doc) => {
+      array.push(doc.data());
+    });
+    array.sort((a, b) => a.categoryIndex - b.categoryIndex);
+    // console.log(array);
+    props.loadMenu(array);
+    const recData = [];
+    array.map((category) => {
+      category.items.map((item) => {
+        if (item.isRecommended) recData.push(item);
+      });
+    });
+    props.setRecommended(recData);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    setFirstLoad(false);
+    if (firstLoad) {
+      handleFetch();
+    }
+  }, [firstLoad]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,7 +93,9 @@ function OrderPage(props) {
 
   const containerRef = useRef(null);
 
-  return (
+  return loading ? (
+    <div className="loader"></div>
+  ) : (
     <div className="w-[100vw] h-fit overflow-y-scroll flex justify-center relative">
       <div className="w-full max-w-[450px] h-full flex flex-col relative">
         {/* Top navbar starts here */}
@@ -241,4 +274,9 @@ const mapStateToProps = (state) => ({
   favourites: state.menuReducer.favourites,
   recommended: state.menuReducer.recommended,
 });
-export default connect(mapStateToProps)(OrderPage);
+
+const mapDispatchToProps = {
+  loadMenu,
+  setRecommended,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(OrderPage);
