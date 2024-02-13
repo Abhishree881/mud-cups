@@ -25,6 +25,7 @@ function OrderPage(props) {
   const [isInFrame, setInFrame] = useState(false);
   const [expanded, setExpanded] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [franchiseImage, setFranchiseImage] = useState();
 
   const { currentUser } = useContext(AuthContext);
 
@@ -61,10 +62,20 @@ function OrderPage(props) {
     setLoading(false);
   };
 
+  const handleImageFetch = async () => {
+    const collectionRef = await getDocs(collection(db, "franchices"));
+    collectionRef.forEach((doc) => {
+      if (doc.data().franchiseName === franchise) {
+        setFranchiseImage(doc.data().imageUrl);
+      }
+    });
+  };
+
   useEffect(() => {
     setFirstLoad(false);
     if (firstLoad) {
       handleFetch();
+      handleImageFetch();
     }
   }, [firstLoad]);
 
@@ -101,13 +112,15 @@ function OrderPage(props) {
         {/* Top navbar starts here */}
         <div className="flex h-[50px] items-center border justify-between px-[12px]">
           <div className="flex items-center gap-2">
-            <div
-              className="w-[40px] h-[40px] rounded-[50%]"
-              style={{
-                backgroundImage: `url(${Logo})`,
-                backgroundSize: "100% 100%",
-              }}
-            ></div>
+            <Link to={`/${id}`}>
+              <div
+                className="w-[40px] h-[40px] rounded-[50%]"
+                style={{
+                  backgroundImage: `url(${franchiseImage})`,
+                  backgroundSize: "100% 100%",
+                }}
+              ></div>
+            </Link>
             <div className="font-[600] text-[18px]">
               {currentUser.displayName}
             </div>
@@ -145,13 +158,13 @@ function OrderPage(props) {
           </span>
         </div>
         {/* option to choose recommended or favourites */}
-        <div className="flex w-full h-[28px] my-[6px] justify-center">
+        <div className="flex w-full h-[30px] my-[6px] justify-center">
           <div className="border w-full max-w-[224px] h-full rounded-[10px] flex text-[12px] overflow-hidden">
             <div
               className={`w-full h-full flex items-center justify-center border gap-1 ${
                 isActive && "activeChannelLeft"
               }`}
-              onClick={() => setIsActive(!isActive)}
+              onClick={() => setIsActive(true)}
             >
               Recommended
             </div>
@@ -159,7 +172,7 @@ function OrderPage(props) {
               className={`w-full h-full flex items-center justify-center border gap-1 ${
                 !isActive && "activeChannelRight"
               }`}
-              onClick={() => setIsActive(!isActive)}
+              onClick={() => setIsActive(false)}
             >
               <div className="pt-[1px]">
                 {isActive ? (

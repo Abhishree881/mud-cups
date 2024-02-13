@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Logo from "../assets/image/logo.jpeg";
 import Hi from "../assets/gifs/hi.gif";
 import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
@@ -47,13 +46,6 @@ const UserHome = () => {
       <div className="w-full max-w-[450px] h-full flex flex-col relative">
         <div className="flex h-[50px] items-center border justify-between px-[12px]">
           <div className="flex items-center gap-2">
-            <div
-              className="w-[40px] h-[40px] rounded-[50%]"
-              style={{
-                backgroundImage: `url(${Logo})`,
-                backgroundSize: "100% 100%",
-              }}
-            ></div>
             <div className="font-[600] text-[18px]">
               {currentUser.displayName}
             </div>
