@@ -49,23 +49,23 @@ function ItemCardLarge(props) {
             </div>
           )}
         </div>
-        <div className="font-[800] text-[18px] leading-[24px]">
+        <div className="font-[800] text-[18px] leading-[24px] pt-1">
           {props.data.itemName}
         </div>
-        <div className="flex items-center w-fit gap-[4px] bg-[#38751f] px-[6px] py-[4px] rounded-[6px]">
+        <div className="text-[14px] font-[700] flex items-center py-[6px]">
+          {/* <span className="pt-[1px]">
+            <MdCurrencyRupee fontSize={"15px"} /> 
+          </span> */}
+          <span className="leading-[16px]">&#x20B9;{props.data.itemPrice}</span>
+        </div>
+        <div className="flex items-center justify-center w-fit gap-[4px] bg-[#38751f] px-[6px] py-[4px] rounded-[6px]">
+          <FaStar fontSize={"10px"} color="white" />
           <div className="font-[700] text-[12px] text-white leading-[12px] mt-[0.5px] tracking-wider">
             {props.data.rating}
           </div>
-          <FaStar fontSize={"12px"} color="white" />
-        </div>
-        <div className="text-[14px] font-[700] flex items-center py-[12px]">
-          <span className="pt-[1px]">
-            <MdCurrencyRupee fontSize={"15px"} />
-          </span>
-          <span className="leading-[16px]">{props.data.itemPrice}</span>
         </div>
         <div
-          className="w-fit h-[16px] py-[8px] pl-[8px] pr-[4px] border rounded-[12px] font-[700] text-[12px] flex items-center justify-center gap-[2px]"
+          className="w-fit h-[16px] mt-2 py-[12px] pl-[8px] pr-[4px] border rounded-[12px] font-[700] text-[12px] flex items-center justify-center gap-[2px]"
           onClick={HandleClick}
         >
           {expand ? "Less Details" : "More Details"}
@@ -123,7 +123,10 @@ function ItemCardLarge(props) {
             <FaRegHeart color="white" />
           )}
         </div>
-        <div className="absolute bottom-[-10px] cursor-pointer border bg-[#f7e8d1] border-[#a2630e] w-[100px] rounded-[4px] h-[30px] flex items-center justify-center">
+        <div
+          style={{ boxShadow: "-5px -5px 5px rgb(0,0,0,0.3)" }}
+          className="absolute bottom-[-12px] cursor-pointer text-[#a2630e] border bg-[#f7e8d1] w-[100px] rounded-[10px] h-[35px] flex items-center justify-center"
+        >
           <span
             className="text-[14px] font-[600]"
             onClick={() => {
