@@ -26,7 +26,13 @@ function Counter() {
                 {"Order number: "}
                 {index + 1}
               </span>
-              <span> {item.itemName}</span>
+              <span>
+                {" "}
+                {item.count}
+                {" * "}
+                {item.itemName}
+              </span>
+              <span> {item.tableNumber}</span>
             </div>
           );
         })}

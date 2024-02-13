@@ -20,52 +20,44 @@ function Cart(props) {
   //   };
 
   const handleClick = async (e) => {
-    props.currentCart.forEach(async (index) => {
-      console.log(index);
-      try {
-        const categoryCollectionRef = collection(
-          db,
-          `${index.franchiseName} Orders`
-        );
-        const categoryDocRef = doc(categoryCollectionRef, "orders");
-        const updatedData = {
-          categoryName: index.categoryName,
-          franchiseName: index.franchiseName,
-          itemName: index.itemName,
-          itemDesc: index.itemDesc,
-          imageUrl: index.imageUrl,
-          isVeg: index.isVeg,
-          itemPrice: index.itemPrice,
-          rating: index.rating,
-          totalRatings: index.totalRatings,
-          isAvailable: index.isAvailable,
-          addOn: index.addOn,
-          tableNumber: id,
-        };
-        var data = [];
-        const docRef = doc(db, `${index.franchiseName} Orders`, "orders");
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          data = docSnap.data().items;
-        } else {
-          console.log("No such document!");
-        }
-        data.push(updatedData);
-
-        const updatedList = {
-          items: data,
-        };
-        console.log(data, updatedList);
-        await setDoc(categoryDocRef, updatedList, { merge: true });
-      } catch (error) {
-        console.error("Error adding restaurant: ", error);
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: error,
-        });
+    for (const index of props.currentCart) {
+      var data = [];
+      const docRef = doc(db, `${index.franchiseName} Orders`, "orders");
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        data = docSnap.data().items;
+      } else {
+        console.log("No such document!");
       }
-    });
+
+      const categoryCollectionRef = collection(
+        db,
+        `${index.franchiseName} Orders`
+      );
+      const categoryDocRef = doc(categoryCollectionRef, "orders");
+      const updatedData = {
+        categoryName: index.categoryName,
+        franchiseName: index.franchiseName,
+        itemName: index.itemName,
+        itemDesc: index.itemDesc,
+        imageUrl: index.imageUrl,
+        isVeg: index.isVeg,
+        itemPrice: index.itemPrice,
+        rating: index.rating,
+        totalRatings: index.totalRatings,
+        isAvailable: index.isAvailable,
+        addOn: index.addOn,
+        tableNumber: id,
+        count: index.count,
+      };
+
+      data.push(updatedData);
+
+      const updatedList = {
+        items: data,
+      };
+      await setDoc(categoryDocRef, updatedList);
+    }
   };
 
   return (
