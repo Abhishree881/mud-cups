@@ -8,8 +8,8 @@ function Counter() {
   const [data, setData] = useState();
   useEffect(() => {
     const unsub = onSnapshot(doc(db, `${id} Orders`, "orders"), (doc) => {
-      console.log("Current data: ", doc.data().items);
-      setData(doc.data().items);
+      console.log("Current data: ", doc.data()?.items);
+      setData(doc.data()?.items);
     });
     return () => {
       unsub();

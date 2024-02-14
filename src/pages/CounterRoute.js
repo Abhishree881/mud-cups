@@ -6,24 +6,16 @@ import { db } from "../firebase";
 
 const CounterRoute = () => {
   const navigate = useNavigate();
-  const [firstLoad, setFirstLoad] = useState(true);
-  const [data, setData] = useState([]);
-
-  const handleFetch = async () => {
-    let array = [];
-    const collectionRef = await getDocs(collection(db, "franchices"));
-    collectionRef.forEach((doc) => {
-      array.push(doc.data());
-    });
-    setData(array);
-  };
-
-  useEffect(() => {
-    setFirstLoad(false);
-    if (firstLoad) {
-      handleFetch();
-    }
-  }, [firstLoad]);
+  const data = [
+    {
+      id: 1,
+      counter: "Counter 1",
+    },
+    {
+      id: 2,
+      counter: "Counter 2",
+    },
+  ];
 
   const navigateToOrders = (id) => {
     navigate(`./${id}`);
@@ -38,18 +30,12 @@ const CounterRoute = () => {
               ? data.map((index) => {
                   return (
                     <div
+                      key={index.id}
                       className="card"
-                      onClick={() => navigateToOrders(index.franchiseName)}
+                      onClick={() => navigateToOrders(index.counter)}
                     >
-                      <div
-                        className="card-img"
-                        style={{ backgroundImage: `url(${index.imageUrl})` }}
-                      ></div>
                       <div className="card-content">
-                        <div className="card-title">{index.franchiseName}</div>
-                        <div className="card-description">
-                          <i>{index.franchiseDesc}</i>
-                        </div>
+                        <div className="card-title">{index.counter}</div>
                       </div>
                     </div>
                   );

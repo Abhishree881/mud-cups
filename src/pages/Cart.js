@@ -22,7 +22,7 @@ function Cart(props) {
   const handleClick = async (e) => {
     for (const index of props.currentCart) {
       var data = [];
-      const docRef = doc(db, `${index.franchiseName} Orders`, "orders");
+      const docRef = doc(db, `${index.counter} Orders`, "orders");
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         data = docSnap.data().items;
@@ -30,10 +30,7 @@ function Cart(props) {
         console.log("No such document!");
       }
 
-      const categoryCollectionRef = collection(
-        db,
-        `${index.franchiseName} Orders`
-      );
+      const categoryCollectionRef = collection(db, `${index.counter} Orders`);
       const categoryDocRef = doc(categoryCollectionRef, "orders");
       const updatedData = {
         categoryName: index.categoryName,

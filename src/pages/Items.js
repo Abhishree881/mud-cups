@@ -9,7 +9,14 @@ import DialogBox from "../components/dialogBox";
 import TextField from "@mui/material/TextField";
 import addImage from "../assets/image/addImage.png";
 import { db, storage } from "../firebase";
-import { doc, setDoc, collection, getDocs, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  collection,
+  getDocs,
+  getDoc,
+  count,
+} from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Swal from "sweetalert2";
 import { CgSpinner } from "react-icons/cg";
@@ -32,6 +39,7 @@ function Items(props) {
   const [imageUrl, setImageUrl] = useState("");
   const [foodType, setFoodType] = useState(null);
   const [isRecommended, setIsRecommended] = useState(null);
+  const [counter, setCounter] = useState(null);
   const fileInputRef = useRef(null);
   const { franchise, id } = useParams();
 
@@ -84,6 +92,10 @@ function Items(props) {
       alert("Food Type is mandatory");
       return;
     }
+    if (counter === null) {
+      alert("Counter is mandatory");
+      return;
+    }
     setLoading(true);
 
     try {
@@ -107,6 +119,7 @@ function Items(props) {
             rating: 0.0,
             totalRatings: 0,
             isAvailable: true,
+            counter,
             addOn: [],
           };
           const updatedList = {
@@ -132,6 +145,7 @@ function Items(props) {
         setItemDesc(null);
         setItemPrice(null);
         setFoodType(null);
+        setCounter(null);
         setIsRecommended(null);
       });
     } catch (error) {
@@ -179,7 +193,7 @@ function Items(props) {
   const handlePriceKeyDown = (event) => {
     if (event.key === "Enter") {
       // handleSubmit();
-      document.getElementById("isRecommended").focus();
+      document.getElementById("counter").focus();
     }
   };
 
@@ -189,6 +203,10 @@ function Items(props) {
 
   const handleRecommendedChange = (event) => {
     setIsRecommended(event.target.value);
+  };
+
+  const handleCounterChange = (event) => {
+    setCounter(event.target.value);
   };
 
   return (
@@ -314,6 +332,20 @@ function Items(props) {
               value={itemPrice}
               onChange={(e) => setItemPrice(e.target.value)}
             />
+            <FormControl fullWidth>
+              <InputLabel id="counterLabel">Select a Counter</InputLabel>
+              <Select
+                fullWidth
+                labelId="counterLabel"
+                id="counter"
+                value={counter}
+                label="Select a counter"
+                onChange={handleCounterChange}
+              >
+                <MenuItem value={"Counter 1"}>Counter 1</MenuItem>
+                <MenuItem value={"Counter 2"}>Counter 2</MenuItem>
+              </Select>
+            </FormControl>
             <FormControl fullWidth>
               <InputLabel id="foodTypeLabel">
                 Add to Recommended List?
