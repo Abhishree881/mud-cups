@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../assets/styles/admin.css";
 import DialogBox from "../components/dialogBox";
 import TextField from "@mui/material/TextField";
@@ -159,6 +159,13 @@ function AdminPage() {
             </h5>
             <p>You can start your journey by clicking the button {"-)"}</p>
             <button onClick={() => handleClick("admin")}>Click me ;)</button>
+            <Link to="/counter">
+              <button
+                style={{ top: "10px", right: "10px", height: "fit-content" }}
+              >
+                Counters
+              </button>
+            </Link>
           </div>
         </div>
       )}

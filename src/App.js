@@ -1,11 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import AdminPage from "./pages/Admin";
 import OrderPage from "./pages/OrderPage";
@@ -20,23 +14,17 @@ import { AuthContext } from "./AuthContext";
 import { connect } from "react-redux";
 import { setCart } from "./Actions/CartActions";
 import { fetchCartDb } from "./Actions/CartDabase";
-import AddCategory from "./pages/AddCategory";
 import { loadMenu, setRecommended } from "./Actions/MenuActions";
 import toast, { Toaster } from "react-hot-toast";
-import SampleData from "./components/sampleData";
 import CounterRoute from "./pages/CounterRoute";
-import { db } from "./firebase";
-import { collection, getDocs } from "firebase/firestore";
 import UserHome from "./pages/UserHome";
 import "./assets/styles/loader.scss";
+import AdminLogin from "./pages/AdminLogin";
 
 function App(props) {
-  const [firstLoad, setFirstLoad] = useState(true);
   const { currentUser } = useContext(AuthContext);
   const [currentTable, setCurrentTable] = useState();
-  const isValidCounterId = (value) => {
-    return value === "1" || value === "2";
-  };
+
   useEffect(() => {
     const updateCart = async () => {
       if (currentUser?.uid) {
@@ -49,42 +37,6 @@ function App(props) {
     };
     updateCart();
   }, [currentUser]);
-
-  // useEffect(() => {
-  //   props.loadMenu(SampleData);
-  //   const recData = [];
-  //   SampleData.map((category) => {
-  //     category.items.map((item) => {
-  //       if (item.isRecommended) recData.push(item);
-  //     });
-  //   });
-  //   props.setRecommended(recData);
-  // }, []);
-
-  // const handleFetch = async () => {
-  //   let array = [];
-  //   const collectionRef = await getDocs(collection(db, "Mud Cups"));
-  //   collectionRef.forEach((doc) => {
-  //     array.push(doc.data());
-  //   });
-  //   array.sort((a, b) => a.categoryIndex - b.categoryIndex);
-  //   // console.log(array);
-  //   props.loadMenu(array);
-  //   const recData = [];
-  //   array.map((category) => {
-  //     category.items.map((item) => {
-  //       if (item.isRecommended) recData.push(item);
-  //     });
-  //   });
-  //   props.setRecommended(recData);
-  // };
-
-  // useEffect(() => {
-  //   setFirstLoad(false);
-  //   if (firstLoad) {
-  //     handleFetch();
-  //   }
-  // }, [firstLoad]);
 
   const PrivateRoute = ({ children }) => {
     if (!currentUser) {
@@ -102,6 +54,18 @@ function App(props) {
     }
     return children;
   };
+
+  const AdminLoginRoute = ({ children }) => {
+    if (!currentUser?.auth?.currentUser?.email) {
+      const path = window.location.pathname;
+      setCurrentTable(path);
+      localStorage.setItem("intendedRoute", path);
+      return <Navigate to="/adminlogin" />;
+    }
+    return children;
+  };
+
+  console.log(currentUser);
 
   return (
     <BrowserRouter>
@@ -124,14 +88,47 @@ function App(props) {
             </PrivateLoginRoute>
           }
         />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin/:id/category" element={<Category />} />
+        <Route path="/adminlogin" element={<AdminLogin />} />
+        <Route
+          path="/admin"
+          element={
+            <AdminLoginRoute>
+              <AdminPage />
+            </AdminLoginRoute>
+          }
+        />
+        <Route
+          path="/admin/:id/category"
+          element={
+            <AdminLoginRoute>
+              <Category />
+            </AdminLoginRoute>
+          }
+        />
         <Route
           path="/admin/:franchise/category/:id/items"
-          element={<Items />}
+          element={
+            <AdminLoginRoute>
+              <Items />
+            </AdminLoginRoute>
+          }
         />
-        <Route path="/counter" element={<CounterRoute />} />
-        <Route path="/counter/:id" element={<Counter />} />
+        <Route
+          path="/counter"
+          element={
+            <AdminLoginRoute>
+              <CounterRoute />
+            </AdminLoginRoute>
+          }
+        />
+        <Route
+          path="/counter/:id"
+          element={
+            <AdminLoginRoute>
+              <Counter />
+            </AdminLoginRoute>
+          }
+        />
         <Route path="/:id/search" element={<Search />} />
         <Route
           path="/:id"
@@ -157,7 +154,6 @@ function App(props) {
             </PrivateRoute>
           }
         />
-        <Route path="/admin/edit" element={<AddCategory />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
