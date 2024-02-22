@@ -3,7 +3,7 @@ import "../assets/styles/admin.css";
 import TextField from "@mui/material/TextField";
 import Swal from "sweetalert2";
 import { auth } from "../firebase";
-import { signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { CgSpinner } from "react-icons/cg";
 
@@ -34,9 +34,6 @@ const AdminLogin = () => {
     await signInWithEmailAndPassword(auth, adminEmail, adminPassword).then(
       (user) => {
         console.log(user);
-        updateProfile(user.user, {
-          displayName: "Admin",
-        });
       }
     );
     const intendedRoute = localStorage.getItem("intendedRoute");
