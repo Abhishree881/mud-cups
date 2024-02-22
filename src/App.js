@@ -23,6 +23,7 @@ import AdminLogin from "./pages/AdminLogin";
 
 function App(props) {
   const { currentUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const [currentTable, setCurrentTable] = useState();
 
   useEffect(() => {
@@ -35,7 +36,13 @@ function App(props) {
         props.setCart(userDoc.filter((obj) => Object.keys(obj).length !== 0));
       }
     };
+    const isEmpty = (obj) => {
+      return JSON.stringify(obj) === "{}";
+    };
     updateCart();
+    if (!isEmpty(currentUser)) {
+      setLoading(false);
+    }
   }, [currentUser]);
 
   const PrivateRoute = ({ children }) => {
@@ -58,14 +65,15 @@ function App(props) {
   const AdminLoginRoute = ({ children }) => {
     if (!currentUser?.auth?.currentUser?.email) {
       const path = window.location.pathname;
-      setCurrentTable(path);
       localStorage.setItem("intendedRoute", path);
       return <Navigate to="/adminlogin" />;
     }
     return children;
   };
 
-  console.log(currentUser);
+  if (loading) {
+    return <div className="loader" />; // Display loading indicator until currentUser is fetched
+  }
 
   return (
     <BrowserRouter>

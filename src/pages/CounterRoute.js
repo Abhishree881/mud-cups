@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles/admin.css";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
 
 const CounterRoute = () => {
   const navigate = useNavigate();

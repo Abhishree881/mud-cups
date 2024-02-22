@@ -148,104 +148,106 @@ function Category(props) {
   };
 
   return (
-    <div className="category relative w-[100vw] min-h-[100vh] ">
-      <Link to="/admin">
-        <div className="category-header py-1 px-2">
-          <div
-            className="img"
-            style={{ backgroundImage: `url(${franchiseImage})` }}
-          />
-          <span>{id}</span>
-        </div>
-      </Link>
-      <div className="h-fit w-full my-[10px] flex items-center justify-center relative">
-        <div className="h-[1px] w-full absolute top-[50%] horizontal-line"></div>
-        <span className="text-[#a2630b] text-[12px] font-[700] bg-[#f3eee6] z-[1] px-2 tracking-wider">
-          All Categories
-        </span>
-      </div>
-      <div className="flex flex-col gap-[10px] px-5 py-2 h-auto mb-6 z-10">
-        {data.length !== 0 ? (
-          data?.map((index) => {
-            return (
-              <CategoryCard
-                data={index}
-                key={index.categoryIndex}
-                franchise={id}
-              />
-            );
-          })
-        ) : (
-          <div
-            style={{
-              width: "100%",
-              height: "75vh",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "28px",
-            }}
-          >
-            No categories to show
+    <div className="admin-dashboard">
+      <div className="category relative h-full">
+        <Link to="/admin">
+          <div className="category-header py-1 px-2">
+            <div
+              className="img"
+              style={{ backgroundImage: `url(${franchiseImage})` }}
+            />
+            <span>{id}</span>
           </div>
-        )}
-      </div>
-      <div className="fixed z-[100] bottom-[20px] right-[20px]">
-        <div
-          onClick={() => setAddDialog(true)}
-          className="add-category-button w-[48px] h-[48px] bg-blue-700 rounded-[15px] flex items-center justify-center"
-        >
-          <FaPlus fontSize={"25px"} color="white" />
+        </Link>
+        <div className="h-fit w-full my-[10px] flex items-center justify-center relative">
+          <div className="h-[1px] w-full absolute top-[50%] horizontal-line"></div>
+          <span className="text-[#a2630b] text-[12px] font-[700] bg-[#f3eee6] z-[1] px-2 tracking-wider">
+            All Categories
+          </span>
         </div>
-      </div>
-      {addDialog && (
-        <DialogBox isOpen={addDialog} setClose={setAddDialog}>
-          <div className="input-container">
-            <div>
-              <img
-                className="input-image"
-                src={imageUrl || addImage}
-                onClick={handleImageClick}
+        <div className="flex flex-col gap-[10px] px-5 py-2 h-auto mb-6 z-10">
+          {data.length !== 0 ? (
+            data?.map((index) => {
+              return (
+                <CategoryCard
+                  data={index}
+                  key={index.categoryIndex}
+                  franchise={id}
+                />
+              );
+            })
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                height: "75vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "28px",
+              }}
+            >
+              No categories to show
+            </div>
+          )}
+        </div>
+        <div className="fixed z-[100] bottom-[20px] right-[20px]">
+          <div
+            onClick={() => setAddDialog(true)}
+            className="add-category-button w-[48px] h-[48px] bg-blue-700 rounded-[15px] flex items-center justify-center"
+          >
+            <FaPlus fontSize={"25px"} color="white" />
+          </div>
+        </div>
+        {addDialog && (
+          <DialogBox isOpen={addDialog} setClose={setAddDialog}>
+            <div className="input-container">
+              <div>
+                <img
+                  className="input-image"
+                  src={imageUrl || addImage}
+                  onClick={handleImageClick}
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="image"
+                  onChange={handleImageChange}
+                  style={{ display: "none" }}
+                  ref={fileInputRef}
+                />
+              </div>
+              <TextField
+                fullWidth
+                id="CategoryName"
+                label="Category Name"
+                variant="outlined"
+                onKeyDown={handleNameKeyDown}
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
               />
-              <input
-                type="file"
-                accept="image/*"
-                id="image"
-                onChange={handleImageChange}
-                style={{ display: "none" }}
-                ref={fileInputRef}
+              <TextField
+                fullWidth
+                id="CategoryDesc"
+                label="Category Description"
+                variant="outlined"
+                onKeyDown={handleDescKeyDown}
+                value={categoryDesc}
+                onChange={(e) => setCategoryDesc(e.target.value)}
               />
             </div>
-            <TextField
-              fullWidth
-              id="CategoryName"
-              label="Category Name"
-              variant="outlined"
-              onKeyDown={handleNameKeyDown}
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              id="CategoryDesc"
-              label="Category Description"
-              variant="outlined"
-              onKeyDown={handleDescKeyDown}
-              value={categoryDesc}
-              onChange={(e) => setCategoryDesc(e.target.value)}
-            />
-          </div>
-          <div className="submit-button">
-            <button disabled={loading} onClick={handleSubmit}>
-              {loading ? (
-                <CgSpinner size={20} className="mt- 1 animate-spin" />
-              ) : (
-                "Submit"
-              )}
-            </button>
-          </div>
-        </DialogBox>
-      )}
+            <div className="submit-button">
+              <button disabled={loading} onClick={handleSubmit}>
+                {loading ? (
+                  <CgSpinner size={20} className="mt- 1 animate-spin" />
+                ) : (
+                  "Submit"
+                )}
+              </button>
+            </div>
+          </DialogBox>
+        )}
+      </div>
     </div>
   );
 }

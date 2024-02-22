@@ -210,16 +210,25 @@ function Items(props) {
   };
 
   return (
-    <div className="relative">
-      <div className=" w-[100vw] h-[29vh] pt-[36px] bg-[#fcdfb7] flex fixed top-0">
+    <div
+      className="relative"
+      style={{
+        backgroundImage:
+          "url('https://images.alphacoders.com/749/thumb-1920-749235.jpg')",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        height: "100vh",
+      }}
+    >
+      <div className=" w-[100vw] h-[29vh] pt-[36px] flex fixed top-0 bg-transparent">
         <div className=" flex flex-col flex-[6]">
           <div
-            className="text-[#06161a] font-semibold text-[32px] pl-[20px]"
+            className="text-white font-semibold text-[32px] pl-[20px]"
             style={{ lineHeight: "32px" }}
           >
             {id}
           </div>
-          <div className="text-gray-700 font-[400] text-[16px] pl-[20px]">
+          <div className="text-gray-200 font-[400] text-[16px] pl-[20px]">
             {data.length}
             {" items"}
           </div>
@@ -228,14 +237,17 @@ function Items(props) {
           <div
             onClick={() => setAddDialog(true)}
             className="add-item-button w-[90px] h-[43px] rounded-[12px] text-blue-600 font-semibold text-[12px] bg-white flex gap-1 items-center justify-center"
-            style={{ lineHeight: "32px" }}
+            style={{
+              lineHeight: "32px",
+              boxShadow: "-5px -5px 5px rgb(0,0,0,0.3)",
+            }}
           >
             <FaPlus color="rgb(37,99,235)" /> Add New
           </div>
         </div>
       </div>
       <div
-        className="absolute bg-[#f3eee6] w-full min-h-[80vh] top-[120px]"
+        className="absolute bg-[#f3eee6] w-full min-h-[85vh] top-[120px]"
         style={{ borderRadius: "45px 0 0 0" }}
       >
         <Link to="/admin">

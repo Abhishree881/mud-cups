@@ -70,6 +70,7 @@ function AdminPage() {
             franchiseName,
             franchiseDesc,
             imageUrl: downloadURL,
+            index: Date.now(),
           });
           Swal.fire({
             icon: "success",
