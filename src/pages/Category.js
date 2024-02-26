@@ -17,7 +17,6 @@ import { CgSpinner } from "react-icons/cg";
 
 function Category(props) {
   const [firstLoad, setFirstLoad] = useState(true);
-  const [categoryIndex, setCategoryIndex] = useState(1);
   const [franchiseImage, setFranchiseImage] = useState(null);
   const [addDialog, setAddDialog] = useState(false);
   const [data, setData] = useState([]);
@@ -82,7 +81,7 @@ function Category(props) {
         getDownloadURL(imageRef).then(async (downloadURL) => {
           await setDoc(doc(db, id, categoryName), {
             franchiseName: id,
-            categoryIndex,
+            categoryIndex: Date.now(),
             categoryName,
             categoryDesc,
             imageUrl: downloadURL,
@@ -122,7 +121,6 @@ function Category(props) {
     collectionRef.forEach((doc) => {
       array.push(doc.data());
     });
-    setCategoryIndex(array.length + 1);
     setData(array);
   };
 

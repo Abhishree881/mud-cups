@@ -27,7 +27,6 @@ import FormControl from "@mui/material/FormControl";
 
 function Items(props) {
   const [firstLoad, setFirstLoad] = useState(true);
-  const [itemIndex, setItemIndex] = useState(1);
   const [franchiseImage, setFranchiseImage] = useState(null);
   const [addDialog, setAddDialog] = useState(false);
   const [data, setData] = useState([]);
@@ -108,7 +107,7 @@ function Items(props) {
           const updatedData = {
             categoryName: id,
             franchiseName: franchise,
-            itemIndex,
+            itemIndex: Date.now(),
             itemName,
             itemDesc,
             imageUrl: downloadURL,
@@ -172,7 +171,6 @@ function Items(props) {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setData(docSnap.data().items);
-      setItemIndex(docSnap.data().items.length + 1);
     } else {
       console.log("No such document!");
     }

@@ -13,6 +13,7 @@ import { CgSpinner } from "react-icons/cg";
 function AdminPage() {
   const navigate = useNavigate();
   const [firstLoad, setFirstLoad] = useState(true);
+  const [edit, setEdit] = useState(false);
   const [data, setData] = useState([]);
   const [scroll, setScroll] = useState(false);
   const [addDialog, setAddDialog] = useState(false);
@@ -26,6 +27,7 @@ function AdminPage() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (e.target.files[0]) {
+      setEdit(false);
       setImage(e.target.files[0]);
     }
     if (file) {
@@ -63,33 +65,46 @@ function AdminPage() {
         storage,
         `franchise-images/${franchiseName}_${Date.now()}`
       );
-
-      await uploadBytesResumable(imageRef, image).then(() => {
-        getDownloadURL(imageRef).then(async (downloadURL) => {
-          await setDoc(doc(db, "franchices", franchiseName), {
-            franchiseName,
-            franchiseDesc,
-            imageUrl: downloadURL,
-            index: Date.now(),
-          });
-          Swal.fire({
-            icon: "success",
-            title: "Franchise Added Succesfully",
-            text: "Franchise added with name: " + franchiseName,
-          });
-          // setData([
-          //   ...data,
-          //   { franchiseName, franchiseDesc, imageUrl: downloadURL },
-          // ]);
-          handleFetch();
+      if (edit) {
+        await setDoc(doc(db, "franchices", franchiseName), {
+          franchiseName,
+          franchiseDesc,
+          imageUrl: imageUrl,
+          index: Date.now(),
         });
-        setAddDialog(false);
-        setLoading(false);
-        setImage(null);
-        setImageUrl("");
-        setFranchiseName(null);
-        setFranchiseDesc(null);
-      });
+        Swal.fire({
+          icon: "success",
+          title: "Franchise Edited Succesfully",
+          text: "",
+        });
+      } else {
+        await uploadBytesResumable(imageRef, image).then(() => {
+          getDownloadURL(imageRef).then(async (downloadURL) => {
+            await setDoc(doc(db, "franchices", franchiseName), {
+              franchiseName,
+              franchiseDesc,
+              imageUrl: downloadURL,
+              index: Date.now(),
+            });
+            Swal.fire({
+              icon: "success",
+              title: "Franchise Added Succesfully",
+              text: "Franchise added with name: " + franchiseName,
+            });
+            // setData([
+            //   ...data,
+            //   { franchiseName, franchiseDesc, imageUrl: downloadURL },
+            // ]);
+            handleFetch();
+          });
+        });
+      }
+      setAddDialog(false);
+      setLoading(false);
+      setImage(null);
+      setImageUrl("");
+      setFranchiseName(null);
+      setFranchiseDesc(null);
     } catch (error) {
       console.error("Error adding restaurant: ", error);
       Swal.fire({
@@ -147,6 +162,16 @@ function AdminPage() {
     }
   };
 
+  const handleEditClick = async (event, index) => {
+    event.stopPropagation();
+    setFranchiseName(index.franchiseName);
+    setFranchiseDesc(index.franchiseDesc);
+    setImageUrl(index.imageUrl);
+    setImage(index.imageUrl);
+    setEdit(true);
+    setAddDialog(true);
+  };
+
   return (
     <div className="admin-page">
       {!scroll && (
@@ -191,6 +216,7 @@ function AdminPage() {
                   return (
                     <div
                       className="card"
+                      key={index.index}
                       onClick={() => navigateToEditMenu(index.franchiseName)}
                     >
                       <div
@@ -201,6 +227,9 @@ function AdminPage() {
                         <div className="card-title">{index.franchiseName}</div>
                         <div className="card-description">
                           <i>{index.franchiseDesc}</i>
+                        </div>
+                        <div onClick={(e) => handleEditClick(e, index)}>
+                          Edit
                         </div>
                       </div>
                     </div>
