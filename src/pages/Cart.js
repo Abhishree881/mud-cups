@@ -5,7 +5,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { connect } from "react-redux";
 import { db } from "../firebase";
 import { doc, setDoc, collection, getDocs, getDoc } from "firebase/firestore";
-import Swal from "sweetalert2";
+import { setCart } from "../Actions/CartActions";
 import { useParams } from "react-router-dom";
 
 function Cart(props) {
@@ -14,10 +14,6 @@ function Cart(props) {
     (total, item) => total + parseFloat(item.itemPrice) * item.count,
     0
   );
-
-  //   const handleFetch = async () => {
-
-  //   };
 
   const handleClick = async (e) => {
     for (const index of props.currentCart) {
@@ -55,6 +51,7 @@ function Cart(props) {
       };
       await setDoc(categoryDocRef, updatedList);
     }
+    props.setCart([])
   };
 
   return (
@@ -102,6 +99,8 @@ const mapStateToProps = (state) => ({
   currentCart: state.cartReducer.currentCart,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  setCart
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

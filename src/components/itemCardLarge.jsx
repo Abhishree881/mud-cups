@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import NonVegIcon from "../assets/image/nonveg.png";
 import VegIcon from "../assets/image/veg.png";
 import { FaStar } from "react-icons/fa6";
-import { MdCurrencyRupee } from "react-icons/md";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { connect } from "react-redux";
 import { setActiveItem } from "../Actions/CartActions";
@@ -28,18 +27,16 @@ function ItemCardLarge(props) {
   const [expand, setExpand] = useState(false);
   return (
     <div
-      className={`w-full ${
-        expand ? "h-[200px]" : "h-[160px]"
-      } relative transition-all duration-[500ms] flex justify-between pt-[10px]`}
+      className={`w-full ${expand ? "h-[200px]" : "h-[160px]"
+        } relative transition-all duration-[500ms] flex justify-between pt-[10px]`}
     >
       <div className="w-auto h-full flex flex-col">
         <div className="flex gap-[6px] items-center">
           <div
             className="w-[18px] h-[18px] relative"
             style={{
-              backgroundImage: `url(${
-                props.data.isVeg ? VegIcon : NonVegIcon
-              })`,
+              backgroundImage: `url(${props.data.isVeg ? VegIcon : NonVegIcon
+                })`,
               backgroundSize: "100% 100%",
             }}
           ></div>
@@ -70,17 +67,15 @@ function ItemCardLarge(props) {
         >
           {expand ? "Less Details" : "More Details"}
           <div
-            className={`flex items-center transition-all duration-[500ms] justify-center ${
-              expand && "rotate-180"
-            }`}
+            className={`flex items-center transition-all duration-[500ms] justify-center ${expand && "rotate-180"
+              }`}
           >
             <MdKeyboardArrowDown fontSize={"14px"} />
           </div>
         </div>
         <div
-          className={`max-w-[200px] overflow-hidden text-[12px] font-[700] italic text-gray-400 pt-[6px] ${
-            expand ? "h-[60px] delay-500" : "h-[0] delay-0"
-          }`}
+          className={`max-w-[200px] overflow-hidden text-[12px] font-[700] italic text-gray-400 pt-[6px] ${expand ? "h-[60px] delay-500" : "h-[0] delay-0"
+            }`}
         >
           {props.data.itemDesc}
         </div>
@@ -95,29 +90,8 @@ function ItemCardLarge(props) {
       >
         <div
           className="w-[16px] h-[16px] flex items-center justify-center absolute top-[10px] right-[8px]"
-          onClick={() => {
-            const newMenuItem = {
-              ...props.menu[props.categoryIndex - 1].items[
-                props.data.itemIndex - 1
-              ],
-              isFavourite:
-                !props.menu[props.categoryIndex - 1].items[
-                  props.data.itemIndex - 1
-                ].isFavourite,
-            };
-            props.setItem(
-              newMenuItem,
-              props.categoryIndex - 1,
-              props.data.itemIndex - 1
-            );
-            props.setFavourite(
-              props.categoryIndex - 1,
-              props.data.itemIndex - 1
-            );
-          }}
-        >
-          {props.menu[props.categoryIndex - 1]?.items[props.data.itemIndex - 1]
-            ?.isFavourite ? (
+          onClick={() => { props.setFavourite(props.data.itemIndex) }}>
+          {props.data.isFavourite ? (
             <FaHeart color="red" />
           ) : (
             <FaRegHeart color="white" />

@@ -25,13 +25,7 @@ function ItemCardSmall(props) {
       <div
         className="absolute top-[9px] right-[5px]"
         onClick={() => {
-          const newItem = {
-            ...props.menu[categoryIndex].items[itemIndex],
-            isFavourite:
-              !props.menu[categoryIndex].items[itemIndex].isFavourite,
-          };
-          props.setItem(newItem, categoryIndex, itemIndex);
-          props.setFavourite(categoryIndex, itemIndex);
+          props.setFavourite(props.data.itemIndex);
         }}
       >
         {props.menu[categoryIndex].items[itemIndex].isFavourite ? (

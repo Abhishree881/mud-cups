@@ -8,14 +8,14 @@ export const loadMenu = (data) => {
     dispatch({ type: "LOAD_MENU", data });
   };
 };
-export const setItem = (newMenuItem, categoryIndex, itemIndex) => {
+export const setItem = (newMenuItem, itemIndex) => {
   return function (dispatch) {
-    dispatch({ type: "SET_ITEM", newMenuItem, categoryIndex, itemIndex });
+    dispatch({ type: "SET_ITEM", newMenuItem, itemIndex });
   };
 };
-export const setFavourite = (categoryIndex, itemIndex) => {
+export const setFavourite = (itemIndex) => {
   return function (dispatch) {
-    dispatch({ type: "SET_FAV", categoryIndex, itemIndex });
+    dispatch({ type: "SET_FAV", itemIndex });
   };
 };
 export const setRecommended = (data) => {
