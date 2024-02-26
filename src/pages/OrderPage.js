@@ -21,7 +21,7 @@ function OrderPage(props) {
   const [firstLoad, setFirstLoad] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
   const [isActive, setIsActive] = useState(true);
-  const [activeCategoryIndex, setActiveCategoryIndex] = useState(1);
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const [isInFrame, setInFrame] = useState(false);
   const [expanded, setExpanded] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,8 +30,7 @@ function OrderPage(props) {
   const { currentUser } = useContext(AuthContext);
 
   const HandleCategoryClick = (index) => {
-    // setActiveCategoryIndex(index.index);
-    const categoryRef = containerRef.current.children[index.categoryIndex - 1];
+    const categoryRef = containerRef.current.children[index];
     categoryRef.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -50,7 +49,6 @@ function OrderPage(props) {
       array.push(doc.data());
     });
     array.sort((a, b) => a.categoryIndex - b.categoryIndex);
-    // console.log(array);
     props.loadMenu(array);
     const recData = [];
     array.map((category) => {
@@ -83,18 +81,19 @@ function OrderPage(props) {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       const arr = [];
-      props.menu.forEach((itr) => {
-        arr[itr.categoryIndex - 1] =
-          containerRef.current.children[itr.categoryIndex - 1].offsetTop;
+      props.menu.forEach((itr, index) => {
+        arr[index] =
+          containerRef.current.children[index].offsetTop;
       });
       arr[0] = 0;
-      let temp = props.menu.length;
-      for (let i = 0; i < arr?.length || 0; i++) {
-        if (arr[i] <= scrollPosition + 12) {
-          temp = i + 1;
-        }
+      let temp = 0;
+      for (let i = 0; i < arr.length; i++) {
+        if (scrollPosition + 50 > arr[i])
+          temp = i;
+        else
+          break;
       }
-      setActiveCategoryIndex(temp);
+      setActiveCategoryIndex(temp)
     };
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -161,17 +160,15 @@ function OrderPage(props) {
         <div className="flex w-full h-[30px] my-[6px] justify-center">
           <div className="border w-full max-w-[224px] h-full rounded-[10px] flex text-[12px] overflow-hidden">
             <div
-              className={`w-full h-full flex items-center justify-center border gap-1 ${
-                isActive && "activeChannelLeft"
-              }`}
+              className={`w-full h-full flex items-center justify-center border gap-1 ${isActive && "activeChannelLeft"
+                }`}
               onClick={() => setIsActive(true)}
             >
               Recommended
             </div>
             <div
-              className={`w-full h-full flex items-center justify-center border gap-1 ${
-                !isActive && "activeChannelRight"
-              }`}
+              className={`w-full h-full flex items-center justify-center border gap-1 ${!isActive && "activeChannelRight"
+                }`}
               onClick={() => setIsActive(false)}
             >
               <div className="pt-[1px]">
@@ -241,19 +238,18 @@ function OrderPage(props) {
       {/* bottom navbar */}
       <div className="fixed z-[100] h-[50px] border w-full bottom-[0] flex items-center max-w-[450px] bg-white">
         <div className="flex-[4] w-full h-full flex overflow-scroll pl-[6px] gap-[12px]">
-          {props.menu.map((index) => {
+          {props.menu.map((index, idx) => {
             return (
               <div
                 className="w-fit flex items-center text-[14px] justify-center h-full"
                 onClick={() => {
-                  HandleCategoryClick(index);
+                  HandleCategoryClick(idx);
                 }}
               >
                 <span
-                  className={`w-fit whitespace-nowrap px-[8px] cursor-pointer text-center ${
-                    activeCategoryIndex === index.categoryIndex &&
+                  className={`w-fit whitespace-nowrap px-[8px] cursor-pointer text-center ${activeCategoryIndex === idx &&
                     "bg-[#fcecd5] text-[#a2630b] font-[600] pb-[2px] rounded-[6px]"
-                  }`}
+                    }`}
                 >
                   {index.categoryName}
                 </span>
@@ -271,9 +267,8 @@ function OrderPage(props) {
           </div>
         </Link>
         <div
-          className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${
-            isInFrame ? "right-[0px]" : "right-[100%]"
-          } `}
+          className={`absolute bottom-[0px] transition-all duration-500 bg-transparent z-[200] h-fit w-full ${isInFrame ? "right-[0px]" : "right-[100%]"
+            } `}
         >
           <AddToCart isVisible={isInFrame} setIsVisible={setInFrame} />
         </div>
