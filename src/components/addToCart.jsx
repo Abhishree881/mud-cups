@@ -9,12 +9,9 @@ import { AuthContext } from "../AuthContext";
 
 function AddToCart(props) {
   const { currentUser } = useContext(AuthContext);
-  const top = props.currentCart?.length - 1;
-  const currentPrice =
-    parseFloat(props.activeItem?.itemPrice) * props.activeItem?.count;
+  const currentPrice = parseFloat(props.activeItem?.itemPrice) * props.activeItem?.count;
   const [startX, setStartX] = useState(null);
   const popupRef = useRef(null);
-  const [finalPrice, setFinalPrice] = useState(0);
   const [offset, setOffset] = useState(0);
   const handleTouchStart = (e) => {
     setStartX(e.touches[0].clientX);

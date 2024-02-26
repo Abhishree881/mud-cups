@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import NonVegIcon from "../assets/image/nonveg.png";
 import VegIcon from "../assets/image/veg.png";
 import { FaStar } from "react-icons/fa6";
@@ -8,8 +8,10 @@ import { setActiveItem } from "../Actions/CartActions";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { setItem, setFavourite } from "../Actions/MenuActions";
+import { AuthContext } from "../AuthContext";
 
 function ItemCardLarge(props) {
+  const { currentUser } = useContext(AuthContext);
   const HandleClick = () => {
     const i = props.expanded.indexOf(props.data.index);
     if (i === -1) {
@@ -90,7 +92,7 @@ function ItemCardLarge(props) {
       >
         <div
           className="w-[16px] h-[16px] flex items-center justify-center absolute top-[10px] right-[8px]"
-          onClick={() => { props.setFavourite(props.data.itemIndex) }}>
+          onClick={() => { props.setFavourite(currentUser, props.data.itemIndex) }}>
           {props.data.isFavourite ? (
             <FaHeart color="red" />
           ) : (

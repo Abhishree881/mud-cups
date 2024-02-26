@@ -4,18 +4,21 @@ import { FaHeart } from "react-icons/fa6";
 import { connect } from "react-redux";
 import { setFavourite, setItem } from "../Actions/MenuActions";
 import { setActiveItem } from "../Actions/CartActions";
+import { AuthContext } from "../AuthContext";
+import { useContext } from "react";
 
 function ItemCardSmall(props) {
   let categoryIndex = -1,
     itemIndex = -1;
   props.menu.forEach((category, cindex) => {
     category.items.forEach((item, iindex) => {
-      if (item.itemName === props.data.itemName) {
+      if (item?.itemIndex === props.data?.itemIndex) {
         categoryIndex = cindex;
         itemIndex = iindex;
       }
     });
   });
+  const { currentUser } = useContext(AuthContext);
   return (
     <div className="min-w-[130px] h-full flex flex-col gap-[6px] relative">
       <div className="absolute w-fit top-[6px] left-[-5px] text-white bg-[#a2630b] text-[12px] leading-[14px] rounded-[6px] font-[400] px-[6px] py-[3px]">
@@ -26,7 +29,7 @@ function ItemCardSmall(props) {
       <div
         className="absolute top-[9px] right-[5px]"
         onClick={() => {
-          props.setFavourite(props.data.itemIndex);
+          props.setFavourite(currentUser, props.data.itemIndex);
         }}
       >
         {props.menu[categoryIndex].items[itemIndex].isFavourite ? (

@@ -14,6 +14,8 @@ import { AuthContext } from "./AuthContext";
 import { connect } from "react-redux";
 import { setCart } from "./Actions/CartActions";
 import { fetchCartDb } from "./Actions/CartDabase";
+import { fetchFavourites } from "./Actions/MenuDatabase";
+import { loadFav } from "./Actions/MenuActions";
 import { loadMenu, setRecommended } from "./Actions/MenuActions";
 import toast, { Toaster } from "react-hot-toast";
 import CounterRoute from "./pages/CounterRoute";
@@ -34,6 +36,9 @@ function App(props) {
         }
         const userDoc = await fetchCartDb(currentUser);
         props.setCart(userDoc.filter((obj) => Object.keys(obj).length !== 0));
+        const fav = await fetchFavourites(currentUser)
+        // console.log(fav)
+        props.loadFav(fav)
       }
     };
     const isEmpty = (obj) => {
@@ -175,6 +180,7 @@ const mapDispatchToProps = {
   loadMenu,
   setCart,
   setRecommended,
+  loadFav
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

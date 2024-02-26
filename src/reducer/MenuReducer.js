@@ -14,6 +14,10 @@ const menuReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         menu: action.data,
       });
+    case "LOAD_FAV":
+      return Object.assign({}, state, {
+        favourites: action.data
+      })
     case "SET_RECOMMENDED":
       return Object.assign({}, state, {
         recommended: action.recommendedData,
