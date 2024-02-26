@@ -186,12 +186,12 @@ function OrderPage(props) {
         <div className="overflow-scroll h-[170px] my-[10px] px-[12px] flex gap-[12px]">
           {isActive &&
             props.recommended.map((index) => {
-              return <ItemCardSmall data={index} />;
+              return <ItemCardSmall data={index} isVisible={isInFrame} setIsVisible={setInFrame} />;
             })}
           {!isActive &&
             (props.favourites.length > 0 ? (
               props.favourites.map((index) => {
-                return <ItemCardSmall data={index} />;
+                return <ItemCardSmall data={index} isVisible={isInFrame} setIsVisible={setInFrame} />;
               })
             ) : (
               <div className="w-full h-full flex items-center justify-center italic">

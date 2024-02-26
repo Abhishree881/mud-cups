@@ -3,6 +3,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { connect } from "react-redux";
 import { setFavourite, setItem } from "../Actions/MenuActions";
+import { setActiveItem } from "../Actions/CartActions";
 
 function ItemCardSmall(props) {
   let categoryIndex = -1,
@@ -41,6 +42,10 @@ function ItemCardSmall(props) {
           backgroundSize: "100% 100%",
           backgroundPosition: "center",
         }}
+        onClick={() => {
+          props.setIsVisible(!props.isVisible)
+          props.setActiveItem({ ...props.data, count: 1, added: [] })
+        }}
       ></div>
       <div className="flex-[20] flex flex-col gap-[6px]">
         <div className="text-[15px] leading-[14px] font-[600] text-wrap max-w-[130px]">
@@ -58,5 +63,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   setFavourite,
   setItem,
+  setActiveItem
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ItemCardSmall);
