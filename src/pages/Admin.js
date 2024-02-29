@@ -5,12 +5,14 @@ import DialogBox from "../components/dialogBox";
 import TextField from "@mui/material/TextField";
 import addImage from "../assets/image/addImage.png";
 import { db, storage } from "../firebase";
-import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+import { doc, setDoc, collection, deleteDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Swal from "sweetalert2";
 import { CgSpinner } from "react-icons/cg";
+import { connect } from "react-redux";
+import { fetchFranchises } from "../Actions/AdminActions";
 
-function AdminPage() {
+function AdminPage(props) {
   const navigate = useNavigate();
   const [firstLoad, setFirstLoad] = useState(true);
   const [edit, setEdit] = useState(false);
@@ -19,6 +21,8 @@ function AdminPage() {
   const [addDialog, setAddDialog] = useState(false);
   const [franchiseName, setFranchiseName] = useState("");
   const [franchiseDesc, setFranchiseDesc] = useState("");
+  const [franchiseIndex, setFranchiseIndex] = useState("");
+  const [newImage, setNewImage] = useState(false);
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,7 +31,7 @@ function AdminPage() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (e.target.files[0]) {
-      setEdit(false);
+      setNewImage(true);
       setImage(e.target.files[0]);
     }
     if (file) {
@@ -66,35 +70,54 @@ function AdminPage() {
         `franchise-images/${franchiseName}_${Date.now()}`
       );
       if (edit) {
-        await setDoc(doc(db, "franchices", franchiseName), {
-          franchiseName,
-          franchiseDesc,
-          imageUrl: imageUrl,
-          index: Date.now(),
-        });
+        const userCollectionRef = collection(db, "franchise");
+        const userDocRef = doc(userCollectionRef, franchiseIndex);
+        if (newImage) {
+          await uploadBytesResumable(imageRef, image).then(() => {
+            getDownloadURL(imageRef).then(async (downloadURL) => {
+              const updatedData = {
+                franchiseName,
+                franchiseDesc,
+                imageUrl: downloadURL,
+                index: franchiseIndex,
+              };
+              await setDoc(userDocRef, updatedData, {
+                merge: true,
+              });
+              handleFetch();
+            });
+          });
+        } else {
+          const updatedData = {
+            franchiseName,
+            franchiseDesc,
+            imageUrl,
+            index: franchiseIndex,
+          };
+          await setDoc(userDocRef, updatedData, { merge: true });
+          handleFetch();
+        }
         Swal.fire({
           icon: "success",
           title: "Franchise Edited Succesfully",
           text: "",
         });
       } else {
+        const index = `Franchise${Date.now()}`;
         await uploadBytesResumable(imageRef, image).then(() => {
           getDownloadURL(imageRef).then(async (downloadURL) => {
-            await setDoc(doc(db, "franchices", franchiseName), {
+            await setDoc(doc(db, "franchise", index), {
               franchiseName,
               franchiseDesc,
               imageUrl: downloadURL,
-              index: Date.now(),
+              index,
+              categories: [],
             });
             Swal.fire({
               icon: "success",
               title: "Franchise Added Succesfully",
               text: "Franchise added with name: " + franchiseName,
             });
-            // setData([
-            //   ...data,
-            //   { franchiseName, franchiseDesc, imageUrl: downloadURL },
-            // ]);
             handleFetch();
           });
         });
@@ -105,11 +128,12 @@ function AdminPage() {
       setImageUrl("");
       setFranchiseName(null);
       setFranchiseDesc(null);
+      setNewImage(false);
     } catch (error) {
       console.error("Error adding restaurant: ", error);
       Swal.fire({
         icon: "error",
-        title: "Error adding restaurant",
+        title: "Error adding franchise",
         text: error,
       });
     }
@@ -120,13 +144,8 @@ function AdminPage() {
   };
 
   const handleFetch = async () => {
-    let array = [];
-    const collectionRef = await getDocs(collection(db, "franchices"));
-    collectionRef.forEach((doc) => {
-      // console.log(doc.data());
-      array.push(doc.data());
-    });
-    setData(array);
+    let data = await props.fetchFranchises();
+    setData(data);
   };
 
   useEffect(() => {
@@ -162,14 +181,36 @@ function AdminPage() {
     }
   };
 
-  const handleEditClick = async (event, index) => {
+  const handleEditClick = async (event, item) => {
     event.stopPropagation();
-    setFranchiseName(index.franchiseName);
-    setFranchiseDesc(index.franchiseDesc);
-    setImageUrl(index.imageUrl);
-    setImage(index.imageUrl);
+    setFranchiseName(item.franchiseName);
+    setFranchiseDesc(item.franchiseDesc);
+    setFranchiseIndex(item.index);
+    setImageUrl(item.imageUrl);
+    setImage(item.imageUrl);
+    setNewImage(false);
     setEdit(true);
     setAddDialog(true);
+  };
+
+  const handleDeleteClick = async (event, item) => {
+    event.stopPropagation();
+    try {
+      const docRef = doc(collection(db, "franchise"), item.index);
+      await deleteDoc(docRef);
+      handleFetch();
+      Swal.fire({
+        icon: "success",
+        title: "Franchise Deleted",
+        text: `${item.franchiseName} franchise deleted succesfully`,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error deleting franchise",
+        text: error,
+      });
+    }
   };
 
   return (
@@ -201,7 +242,10 @@ function AdminPage() {
           <div className="admin-card-flex">
             <div
               className="dashed-card card"
-              onClick={() => setAddDialog(true)}
+              onClick={() => {
+                setAddDialog(true);
+                setEdit(false);
+              }}
             >
               <div className="card-img">Franchise Image</div>
               <div className="card-content">
@@ -228,8 +272,19 @@ function AdminPage() {
                         <div className="card-description">
                           <i>{index.franchiseDesc}</i>
                         </div>
-                        <div onClick={(e) => handleEditClick(e, index)}>
-                          Edit
+                        <div className="card-submenu">
+                          <div
+                            className="card-edit"
+                            onClick={(e) => handleEditClick(e, index)}
+                          >
+                            Edit
+                          </div>
+                          <div
+                            className="card-edit"
+                            onClick={(e) => handleDeleteClick(e, index)}
+                          >
+                            Delete
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -291,4 +346,12 @@ function AdminPage() {
   );
 }
 
-export default AdminPage;
+const mapStateToProps = (state) => ({
+  franchise: state.adminReducer.franchise,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchFranchises: () => dispatch(fetchFranchises()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPage);
